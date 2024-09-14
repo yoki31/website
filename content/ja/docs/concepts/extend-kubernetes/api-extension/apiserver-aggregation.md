@@ -8,7 +8,7 @@ weight: 20
 
 アグリゲーションレイヤーを使用すると、KubernetesのコアAPIで提供されている機能を超えて、追加のAPIでKubernetesを拡張できます。追加のAPIは、[service-catalog](/docs/concepts/extend-kubernetes/service-catalog/)のような既製のソリューション、または自分で開発したAPIのいずれかです。
 
-アグリゲーションレイヤーは、[カスタムリソース](/docs/concepts/extend-kubernetes/api-extension/custom-resources/)とは異なり、{{< glossary_tooltip term_id="kube-apiserver" text="kube-apiserver" >}}に新しい種類のオブジェクトを認識させる方法です。
+アグリゲーションレイヤーは、[カスタムリソース](/ja/docs/concepts/extend-kubernetes/api-extension/custom-resources/)とは異なり、{{< glossary_tooltip term_id="kube-apiserver" text="kube-apiserver" >}}に新しい種類のオブジェクトを認識させる方法です。
 
 
 
@@ -16,7 +16,7 @@ weight: 20
 
 ## アグリゲーションレイヤー
 
-アグリゲーションレイヤーは、kube-apiserverのプロセス内で動きます。拡張リソースが登録されるまでは、アグリゲーションレイヤーは何もしません。APIを登録するには、ユーザーはKubernetes APIで使われるURLのパスを"要求"した、_APIService_ オブジェクトを追加します。それを追加すると、アグリゲーションレイヤーはAPIパス(例、`/apis/myextension.mycompany.io/v1/…`)への全てのアクセスを、登録されたAPIServiceにプロキシーします。
+アグリゲーションレイヤーは、kube-apiserverのプロセス内で動きます。拡張リソースが登録されるまでは、アグリゲーションレイヤーは何もしません。APIを登録するには、ユーザーはKubernetes APIで使われるURLのパスを"要求"した、_APIService_ オブジェクトを追加します。それを追加すると、アグリゲーションレイヤーはAPIパス(例、`/apis/myextension.mycompany.io/v1/…`)への全てのアクセスを、登録されたAPIServiceにプロキシします。
 
 APIServiceを実装する最も一般的な方法は、クラスター内で実行されるPodで*拡張APIサーバー* を実行することです。クラスター内のリソース管理に拡張APIサーバーを使用している場合、拡張APIサーバー("extension-apiserver"とも呼ばれます)は通常、1つ以上の{{< glossary_tooltip text="コントローラー" term_id="controller" >}}とペアになっています。apiserver-builderライブラリは、拡張APIサーバーと関連するコントローラーの両方にスケルトンを提供します。
 

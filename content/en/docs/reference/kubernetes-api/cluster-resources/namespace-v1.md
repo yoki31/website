@@ -6,7 +6,7 @@ api_metadata:
 content_type: "api_reference"
 description: "Namespace provides a scope for Names."
 title: "Namespace"
-weight: 2
+weight: 7
 auto_generated: true
 ---
 
@@ -62,6 +62,8 @@ NamespaceSpec describes the attributes on a Namespace.
 
 - **finalizers** ([]string)
 
+  *Atomic: will be replaced during a merge*
+  
   Finalizers is an opaque list of values that must be empty to permanently remove object from storage. More info: https://kubernetes.io/docs/tasks/administer-cluster/namespaces/
 
 
@@ -77,6 +79,8 @@ NamespaceStatus is information about the current status of a Namespace.
 - **conditions** ([]NamespaceCondition)
 
   *Patch strategy: merge on key `type`*
+  
+  *Map: unique values on key type will be kept during a merge*
   
   Represents the latest available observations of a namespace's current state.
 
@@ -251,6 +255,11 @@ GET /api/v1/namespaces
   <a href="{{< ref "../common-parameters/common-parameters#resourceVersionMatch" >}}">resourceVersionMatch</a>
 
 
+- **sendInitialEvents** (*in query*): boolean
+
+  <a href="{{< ref "../common-parameters/common-parameters#sendInitialEvents" >}}">sendInitialEvents</a>
+
+
 - **timeoutSeconds** (*in query*): integer
 
   <a href="{{< ref "../common-parameters/common-parameters#timeoutSeconds" >}}">timeoutSeconds</a>
@@ -292,6 +301,11 @@ POST /api/v1/namespaces
 - **fieldManager** (*in query*): string
 
   <a href="{{< ref "../common-parameters/common-parameters#fieldManager" >}}">fieldManager</a>
+
+
+- **fieldValidation** (*in query*): string
+
+  <a href="{{< ref "../common-parameters/common-parameters#fieldValidation" >}}">fieldValidation</a>
 
 
 - **pretty** (*in query*): string
@@ -341,6 +355,11 @@ PUT /api/v1/namespaces/{name}
   <a href="{{< ref "../common-parameters/common-parameters#fieldManager" >}}">fieldManager</a>
 
 
+- **fieldValidation** (*in query*): string
+
+  <a href="{{< ref "../common-parameters/common-parameters#fieldValidation" >}}">fieldValidation</a>
+
+
 - **pretty** (*in query*): string
 
   <a href="{{< ref "../common-parameters/common-parameters#pretty" >}}">pretty</a>
@@ -384,6 +403,11 @@ PUT /api/v1/namespaces/{name}/finalize
 - **fieldManager** (*in query*): string
 
   <a href="{{< ref "../common-parameters/common-parameters#fieldManager" >}}">fieldManager</a>
+
+
+- **fieldValidation** (*in query*): string
+
+  <a href="{{< ref "../common-parameters/common-parameters#fieldValidation" >}}">fieldValidation</a>
 
 
 - **pretty** (*in query*): string
@@ -431,6 +455,11 @@ PUT /api/v1/namespaces/{name}/status
   <a href="{{< ref "../common-parameters/common-parameters#fieldManager" >}}">fieldManager</a>
 
 
+- **fieldValidation** (*in query*): string
+
+  <a href="{{< ref "../common-parameters/common-parameters#fieldValidation" >}}">fieldValidation</a>
+
+
 - **pretty** (*in query*): string
 
   <a href="{{< ref "../common-parameters/common-parameters#pretty" >}}">pretty</a>
@@ -474,6 +503,11 @@ PATCH /api/v1/namespaces/{name}
 - **fieldManager** (*in query*): string
 
   <a href="{{< ref "../common-parameters/common-parameters#fieldManager" >}}">fieldManager</a>
+
+
+- **fieldValidation** (*in query*): string
+
+  <a href="{{< ref "../common-parameters/common-parameters#fieldValidation" >}}">fieldValidation</a>
 
 
 - **force** (*in query*): boolean
@@ -524,6 +558,11 @@ PATCH /api/v1/namespaces/{name}/status
 - **fieldManager** (*in query*): string
 
   <a href="{{< ref "../common-parameters/common-parameters#fieldManager" >}}">fieldManager</a>
+
+
+- **fieldValidation** (*in query*): string
+
+  <a href="{{< ref "../common-parameters/common-parameters#fieldValidation" >}}">fieldValidation</a>
 
 
 - **force** (*in query*): boolean

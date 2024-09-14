@@ -76,6 +76,11 @@ footer {
     text-decoration: none;
     font-size: 1rem;
     border: 0px;
+
+    &:hover {
+      background-color: darken($blue, 10%);
+      color: white;
+    }
   }
 
   #cellophane {
@@ -89,7 +94,7 @@ footer {
 }
 
 main {
-  .button {
+  .button, .portal-button {
     display: inline-block;
     border-radius: 6px;
     padding: 6px 20px;
@@ -99,7 +104,22 @@ main {
     text-decoration: none;
     font-size: 1rem;
     border: 0px;
+
+    &:hover {
+      background-color: darken($blue, 10%);
+      color: white;
+    }
   }
+}
+
+::selection {
+  background: #326ce5;
+  color: white;
+}
+
+::-moz-selection {
+  background: #326ce5;
+  color: white;
 }
 
 // HEADER
@@ -457,7 +477,8 @@ section#cncf {
 }
 
 // OCEAN NODES
-#oceanNodes {
+#oceanNodes, .td-home .k8s-overview {
+
   padding-top: $ocean-nodes-padding-Y;
   padding-bottom: $ocean-nodes-padding-Y;
 
@@ -537,6 +558,12 @@ section#cncf {
     padding: 20px 10px 20px 10px;
   }
 
+  #desktopKCButton:hover{
+    background-color: #ffffff;
+    color: #326ce5;
+    transition: 150ms;
+  }
+
   #desktopShowVideoButton {
     position: relative;
     font-size: 24px;
@@ -556,6 +583,15 @@ section#cncf {
       border-width: 10px 0 10px 20px;
       border-color: transparent transparent transparent $blue;
     }
+
+    &:hover::before {
+      border-color: transparent transparent transparent $dark-grey;
+    }
+  }
+
+  #desktopShowVideoButton:hover{
+    color: $dark-grey;
+    transition: 150ms;
   }
 
   #mobileShowVideoButton {
@@ -663,18 +699,19 @@ section#cncf {
   width: 100%;
   overflow: hidden;
   clear: both;
+  display: flex;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
 
   h4 {
     line-height: normal;
     margin-bottom: 15px;
   }
 
-  & > div:first-child {
-    float: left;
-  }
-
-  & > div:last-child {
-    float: right;
+  & > div {
+    background-color: #daeaf9;
+    border-radius: 20px;
+    padding: 25px;
   }
 }
 
@@ -861,15 +898,26 @@ section#cncf {
 // nav-tabs and tab-content
 .nav-tabs {
   border-bottom: none !important;
+
+  .nav-item {
+    margin-bottom: 0;
+  }
 }
 
 .td-content .tab-content .highlight {
   margin: 0;
 }
 
+//Table Content
+.tab-content table{
+  border-collapse: separate;
+  border-spacing: 6px;
+}
+
 .tab-pane {
   border-radius: 0.25rem;
   padding: 0 16px 16px;
+  overflow: auto;
 
   border: 1px solid #dee2e6;
   &:first-of-type.active {

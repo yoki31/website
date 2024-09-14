@@ -10,7 +10,7 @@ card:
 
 <!-- overview -->
 
-ダッシュボードは、WebベースのKubernetesユーザーインターフェイスです。
+ダッシュボードは、WebベースのKubernetesユーザーインターフェースです。
 ダッシュボードを使用して、コンテナ化されたアプリケーションをKubernetesクラスターにデプロイしたり、
 コンテナ化されたアプリケーションをトラブルシューティングしたり、クラスターリソースを管理したりすることができます。
 ダッシュボードを使用して、クラスター上で実行されているアプリケーションの概要を把握したり、
@@ -46,7 +46,7 @@ kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v2.0.0/a
 チュートリアルで作成されたサンプルユーザーには管理者権限が与えられ、教育目的のみに使用されます。
 {{< /warning >}}
 
-### コマンドラインプロキシー
+### コマンドラインプロキシ
 以下のコマンドを実行することで、kubectlコマンドラインツールを使ってダッシュボードにアクセスすることができます:
 
 ```
@@ -89,7 +89,7 @@ Kubeconfigの認証方法は、外部IDプロバイダーやx509証明書ベー�
 - **Container image** (必須): 任意のレジストリ上の公開Docker[コンテナイメージ](/docs/concepts/containers/images/)、またはプライベートイメージ(一般的にはGoogle Container RegistryやDocker Hub上でホストされている)のURLです。
   コンテナイメージの指定はコロンで終わらせる必要があります。
 
-  クラスタ全体で必要な数のPodを維持するために、[Deployment](/ja/docs/concepts/workloads/controllers/deployment/)が作成されます。
+  クラスター全体で必要な数のPodを維持するために、[Deployment](/ja/docs/concepts/workloads/controllers/deployment/)が作成されます。
 
 - **Service** (任意): アプリケーションのいくつかの部分(たとえばフロントエンド)では、
   [Service](/ja/docs/concepts/services-networking/service/)をクラスター外の外部、おそらくパブリックIPアドレス(外部サービス)に公開したいと思うかもしれません。
@@ -124,7 +124,7 @@ Kubeconfigの認証方法は、外部IDプロバイダーやx509証明書ベー�
    ```
 
 - **Namespace**: Kubernetesは、同じ物理クラスターを基盤とする複数の仮想クラスターをサポートしています。
-  これらの仮想クラスタは[名前空間](/docs/tasks/administer-cluster/namespaces/) と呼ばれます。
+  これらの仮想クラスターは[名前空間](/docs/tasks/administer-cluster/namespaces/) と呼ばれます。
   これにより、リソースを論理的に名前のついたグループに分割することができます。
 
   ダッシュボードでは、利用可能なすべての名前空間がドロップダウンリストに表示され、新しい名前空間を作成することができます。

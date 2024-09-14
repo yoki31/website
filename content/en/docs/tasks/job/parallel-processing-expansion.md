@@ -43,7 +43,7 @@ pip install --user jinja2
 First, download the following template of a Job to a file called `job-tmpl.yaml`.
 Here's what you'll download:
 
-{{< codenew file="application/job/job-tmpl.yaml" >}}
+{{% code_sample file="application/job/job-tmpl.yaml" %}}
 
 ```shell
 # Use curl to download job-tmpl.yaml
@@ -178,13 +178,13 @@ First, copy and paste the following template of a Job object, into a file called
 
 
 ```liquid
-{%- set params = [{ "name": "apple", "url": "http://dbpedia.org/resource/Apple", },
+{% set params = [{ "name": "apple", "url": "http://dbpedia.org/resource/Apple", },
                   { "name": "banana", "url": "http://dbpedia.org/resource/Banana", },
                   { "name": "cherry", "url": "http://dbpedia.org/resource/Cherry" }]
 %}
-{%- for p in params %}
-{%- set name = p["name"] %}
-{%- set url = p["url"] %}
+{% for p in params %}
+{% set name = p["name"] %}
+{% set url = p["url"] %}
 ---
 apiVersion: batch/v1
 kind: Job
@@ -201,10 +201,10 @@ spec:
     spec:
       containers:
       - name: c
-        image: busybox
+        image: busybox:1.28
         command: ["sh", "-c", "echo Processing URL {{ url }} && sleep 5"]
       restartPolicy: Never
-{%- endfor %}
+{% endfor %}
 ```
 
 The above template defines two parameters for each Job object using a list of

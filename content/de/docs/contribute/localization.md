@@ -22,30 +22,30 @@ Da Mitwirkende nicht ihren eigenen Pull Request freigeben können, brauchst du m
 
 Alle Lokalisierungsteams müssen sich mit ihren eigenen Ressourcen selbst tragen. Die Kubernetes-Website ist gerne bereit, deine Arbeit zu beherbergen, aber es liegt an dir, sie zu übersetzen.
 
-### Finden deinen Zwei-Buchstaben-Sprachcode
+### Ermittlung deines Zwei-Buchstaben-Sprachcodes
 
 Rufe den [ISO 639-1 Standard](https://www.loc.gov/standards/iso639-2/php/code_list.php) auf und finde deinen Zwei-Buchstaben-Ländercode zur Lokalisierung. Zum Beispiel ist der Zwei-Buchstaben-Code für Korea `ko`.
 
-### Duplizieren und klonen des Repositories
+### Duplizieren und Klonen des Repositories
 
-Als erstes [erstells du dir deine eigenes Duplikat](/docs/contribute/new-content/new-content/#fork-the-repo) vom [kubernetes/website] Repository.
+Als erstes [erstellst du dir deine eigenes Duplikat](/docs/contribute/new-content/new-content/#fork-the-repo) vom [kubernetes/website] Repository.
 
-Dann klonst du das Duplikat und `cd` hinein:
+Dann klonst du das Duplikat und wechselst in das neu erstellte Verzeichnis:
 
 ```shell
 git clone https://github.com/<username>/website
 cd website
 ```
 
-### Eröffne ein Pull Request
+### Eröffnen eines Pull Requests
 
 Als nächstes [eröffnest du einen Pull Request](/docs/contribute/new-content/open-a-pr/#open-a-pr) (PR) um eine Lokalisierung zum `kubernetes/website` Repository hinzuzufügen.
 
-Der PR muss die [minimalen Inhaltsanforderungen](#mindestanforderungen) erfüllen bevor dieser genehmigt werden kann.
+Der PR muss die [minimalen Inhaltsanforderungen](#mindestanforderungen) erfüllen, bevor dieser genehmigt werden kann.
 
-Wie der PR für eine neue Lokalisierung aussieht kannst du dir an dem PR für die [Französische Dokumentation](https://github.com/kubernetes/website/pull/12548) ansehen.
+Wie der PR für eine neue Lokalisierung aussieht, kannst du dir an dem PR für die [Französische Dokumentation](https://github.com/kubernetes/website/pull/12548) ansehen.
 
-### Trete der Kubernetes GitHub Organisation bei
+### Tritt der Kubernetes GitHub Organisation bei
 
 Sobald du eine Lokalisierungs-PR eröffnet hast, kannst du Mitglied der Kubernetes GitHub Organisation werden. Jede Person im Team muss einen eigenen [Antrag auf Mitgliedschaft in der Organisation](https://github.com/kubernetes/org/issues/new/choose) im `kubernetes/org`-Repository erstellen.
 
@@ -81,9 +81,9 @@ Du kannst auch einen Slack-Kanal für deine Lokalisierung im `kubernetes/communi
 
 ### Ändere die Website-Konfiguration
 
-Die Kubernetes-Website  verwendet Hugo als Web-Framework. Die Hugo-Konfiguration der Website befindet sich in der Datei [`config.toml`](https://github.com/kubernetes/website/tree/master/config.toml). Um eine neue Lokalisierung zu unterstützen, musst du die Datei `config.toml` modifizieren.
+Die Kubernetes-Website  verwendet Hugo als Web-Framework. Die Hugo-Konfiguration der Website befindet sich in der Datei [`hugo.toml`](https://github.com/kubernetes/website/tree/master/hugo.toml). Um eine neue Lokalisierung zu unterstützen, musst du die Datei `hugo.toml` modifizieren.
 
-Dazu fügst du einen neuen Block für die neue Sprache unter den bereits existierenden `[languages]` Block in das `config.toml` ein, wie folgendes Beispiel zeigt:
+Dazu fügst du einen neuen Block für die neue Sprache unter den bereits existierenden `[languages]` Block in das `hugo.toml` ein, wie folgendes Beispiel zeigt:
 
 ```toml
 [languages.de]
@@ -94,9 +94,9 @@ contentDir = "content/de"
 weight = 3
 ```
 
-Wenn du deinem Block einen Parameter `weight` zuweist, suche den Sprachblock mit dem höchsten Gewicht und addiere  1 zu diesem Wert.
+Wenn du deinem Block einen Parameter `weight` zuweist, suche den Sprachblock mit dem höchsten Gewicht und addiere 1 zu diesem Wert.
 
-Weitere Informationen zu Hugos Multilingualen Support findest du unter "[Multilingual Mode](https://gohugo.io/content-management/multilingual/)" auf in der Hugo Dokumentation.
+Weitere Informationen zu Hugos multilingualem Support findest du unter "[Multilingual Mode](https://gohugo.io/content-management/multilingual/)" auf in der Hugo Dokumentation.
 
 ### Neuen Lokalisierungsordner erstellen
 
@@ -111,7 +111,7 @@ mkdir content/de
 
 ### Lokalisierungs README Datei hinzufügen
 
-Um andere Lokalisierungsmitwirkende anzuleiten, füge eine neue [`README-**.md`](https://help.github.com/articles/about-readmes/) auf der obersten Ebene von k/website hinzu, wobei `**` der aus zwei Buchstaben bestehende Sprachcode ist. Eine deutsche README-Datei wäre zum Beispiel `README-de.md`.
+Um andere Lokalisierungsmitwirkende anzuleiten, füge eine neue [`README-**.md`](https://help.github.com/articles/about-readmes/) auf der obersten Ebene von kubernetes/website hinzu, wobei `**` der aus zwei Buchstaben bestehende Sprachcode ist. Eine deutsche README-Datei wäre zum Beispiel `README-de.md`.
 
 Gebe den Lokalisierungsmitwirkende in der lokalisierten `README-**.md`-Datei Anleitung zum Mitwirken. Füge dieselben Informationen ein, die auch in `README.md` enthalten sind, sowie:
 
@@ -213,7 +213,7 @@ Die neueste Version ist {{< latest-version >}}, so dass der neueste Versionszwei
 
 ### Seitenverlinkung in der Internationalisierung
 
-Lokalisierungen müssen den Inhalt von [`i18n/de.toml`](https://github.com/kubernetes/website/blob/master/i18n/en.toml) in einer neuen sprachspezifischen Datei enthalten. Als Beispiel: `i18n/de.toml`.
+Lokalisierungen müssen den Inhalt von [`i18n/de.toml`](https://github.com/kubernetes/website/blob/main/i18n/en.toml) in einer neuen sprachspezifischen Datei enthalten. Als Beispiel: `i18n/de.toml`.
 
 Füge eine neue Lokalisierungsdatei zu `i18n/` hinzu. Zum Beispiel mit Deutsch (`de`):
 
@@ -262,7 +262,7 @@ In einem Entwicklungszweig zusammenzuarbeiten:
 
     `dev-<Quellversion>-<Sprachcode>.<Team-Meilenstein>`
 
-    Beispielsweise öffnet ein Genehmigender in einem deutschen Lokalisierungsteam den Entwicklungszweig `dev-1.12-de.1` direkt gegen das k/website-Repository, basierend auf dem Quellzweig für Kubernetes v1.12.
+    Beispielsweise öffnet ein Genehmigender in einem deutschen Lokalisierungsteam den Entwicklungszweig `dev-1.12-de.1` direkt gegen das kubernetes/website-Repository, basierend auf dem Quellzweig für Kubernetes v1.12.
 
 2. Einzelne Mitwirkende öffnen Feature-Zweige, die auf dem Entwicklungszweig basieren.
 
@@ -278,7 +278,7 @@ Die Teams müssen den lokalisierten Inhalt in demselben Versionszweig zusammenf�
 
 Ein Genehmiger muss einen Entwicklungszweig aufrechterhalten, indem er seinen Quellzweig auf dem aktuellen Stand hält und Merge-Konflikte auflöst. Je länger ein Entwicklungszweig geöffnet bleibt, desto mehr Wartung erfordert er in der Regel. Ziehe in Betracht, regelmäßig Entwicklungszweige zusammenzuführen und neue zu eröffnen, anstatt einen extrem lang laufenden Entwicklungszweig zu unterhalten.
 
-Zu Beginn jedes Team-Meilensteins ist es hilfreich, ein Problem [Vergleich der Upstream-Änderungen](https://github.com/kubernetes/website/blob/master/scripts/upstream_changes.py) zwischen dem vorherigen Entwicklungszweig und dem aktuellen Entwicklungszweig zu öffnen.
+Zu Beginn jedes Team-Meilensteins ist es hilfreich, ein Problem [Vergleich der Upstream-Änderungen](https://github.com/kubernetes/website/blob/main/scripts/upstream_changes.py) zwischen dem vorherigen Entwicklungszweig und dem aktuellen Entwicklungszweig zu öffnen.
 
  Während nur Genehmiger einen neuen Entwicklungszweig eröffnen und Pull-Anfragen zusammenführen können, kann jeder eine Pull-Anfrage für einen neuen Entwicklungszweig eröffnen. Es sind keine besonderen Genehmigungen erforderlich.
 
@@ -301,5 +301,3 @@ Sobald eine Lokalisierung die Anforderungen an den Arbeitsablauf und die Mindest
 
 - Die Sprachauswahl auf der Website aktivieren
 - Die Verfügbarkeit der Lokalisierung über die Kanäle der [Cloud Native Computing Foundation](https://www.cncf.io/about/) (CNCF), einschließlich des [Kubernetes Blogs](https://kubernetes.io/blog/) veröffentlichen.
-
-

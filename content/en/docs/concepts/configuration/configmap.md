@@ -1,5 +1,8 @@
 ---
 title: ConfigMaps
+api_metadata:
+- apiVersion: "v1"
+  kind: "ConfigMap"
 content_type: concept
 weight: 20
 ---
@@ -15,7 +18,6 @@ If the data you want to store are confidential, use a
 or use additional (third party) tools to keep your data private.
 {{< /caution >}}
 
-
 <!-- body -->
 ## Motivation
 
@@ -30,19 +32,21 @@ that exposes the database component to your cluster.
 This lets you fetch a container image running in the cloud and
 debug the exact same code locally if needed.
 
+{{< note >}}
 A ConfigMap is not designed to hold large chunks of data. The data stored in a
 ConfigMap cannot exceed 1 MiB. If you need to store settings that are
 larger than this limit, you may want to consider mounting a volume or use a
 separate database or file service.
+{{< /note >}}
 
 ## ConfigMap object
 
-A ConfigMap is an API [object](/docs/concepts/overview/working-with-objects/kubernetes-objects/)
+A ConfigMap is an {{< glossary_tooltip text="API object" term_id="object" >}}
 that lets you store configuration for other objects to use. Unlike most
 Kubernetes objects that have a `spec`, a ConfigMap has `data` and `binaryData`
 fields. These fields accept key-value pairs as their values.  Both the `data`
 field and the `binaryData` are optional. The `data` field is designed to
-contain UTF-8 byte sequences while the `binaryData` field is designed to
+contain UTF-8 strings while the `binaryData` field is designed to
 contain binary data as base64-encoded strings.
 
 The name of a ConfigMap must be a valid
@@ -112,46 +116,7 @@ technique also lets you access a ConfigMap in a different namespace.
 
 Here's an example Pod that uses values from `game-demo` to configure a Pod:
 
-```yaml
-apiVersion: v1
-kind: Pod
-metadata:
-  name: configmap-demo-pod
-spec:
-  containers:
-    - name: demo
-      image: alpine
-      command: ["sleep", "3600"]
-      env:
-        # Define the environment variable
-        - name: PLAYER_INITIAL_LIVES # Notice that the case is different here
-                                     # from the key name in the ConfigMap.
-          valueFrom:
-            configMapKeyRef:
-              name: game-demo           # The ConfigMap this value comes from.
-              key: player_initial_lives # The key to fetch.
-        - name: UI_PROPERTIES_FILE_NAME
-          valueFrom:
-            configMapKeyRef:
-              name: game-demo
-              key: ui_properties_file_name
-      volumeMounts:
-      - name: config
-        mountPath: "/config"
-        readOnly: true
-  volumes:
-    # You set volumes at the Pod level, then mount them into containers inside that Pod
-    - name: config
-      configMap:
-        # Provide the name of the ConfigMap you want to mount.
-        name: game-demo
-        # An array of keys from the ConfigMap to create as files
-        items:
-        - key: "game.properties"
-          path: "game.properties"
-        - key: "user-interface.properties"
-          path: "user-interface.properties"
-```
+{{% code_sample file="configmap/configure-pod.yaml" %}}
 
 A ConfigMap doesn't differentiate between single line property values and
 multi-line file-like values.
@@ -228,7 +193,7 @@ own `volumeMounts` block, but only one `.spec.volumes` is needed per ConfigMap.
 When a ConfigMap currently consumed in a volume is updated, projected keys are eventually updated as well.
 The kubelet checks whether the mounted ConfigMap is fresh on every periodic sync.
 However, the kubelet uses its local cache for getting the current value of the ConfigMap.
-The type of the cache is configurable using the `ConfigMapAndSecretChangeDetectionStrategy` field in
+The type of the cache is configurable using the `configMapAndSecretChangeDetectionStrategy` field in
 the [KubeletConfiguration struct](/docs/reference/config-api/kubelet-config.v1beta1/).
 A ConfigMap can be either propagated by watch (default), ttl-based, or by redirecting
 all requests directly to the API server.
@@ -238,6 +203,98 @@ propagation delay, where the cache propagation delay depends on the chosen cache
 (it equals to watch propagation delay, ttl of cache, or zero correspondingly).
 
 ConfigMaps consumed as environment variables are not updated automatically and require a pod restart. 
+
+{{< note >}}
+A container using a ConfigMap as a [subPath](/docs/concepts/storage/volumes#using-subpath) volume mount will not receive ConfigMap updates.
+{{< /note >}}
+
+
+### Using Configmaps as environment variables
+
+To use a Configmap in an {{< glossary_tooltip text="environment variable" term_id="container-env-variables" >}}
+in a Pod:
+
+1. For each container in your Pod specification, add an environment variable
+   for each Configmap key that you want to use to the
+   `env[].valueFrom.configMapKeyRef` field.
+1. Modify your image and/or command line so that the program looks for values
+   in the specified environment variables.
+
+This is an example of defining a ConfigMap as a pod environment variable:
+
+The following ConfigMap (myconfigmap.yaml) stores two properties: username and access_level:
+
+```yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: myconfigmap
+data:
+  username: k8s-admin
+  access_level: "1"
+```
+
+The following command will create the ConfigMap object:
+
+```shell
+kubectl apply -f myconfigmap.yaml
+```
+
+The following Pod consumes the content of the ConfigMap as environment variables:
+
+{{% code_sample file="configmap/env-configmap.yaml" %}}
+
+The `envFrom` field instructs Kubernetes to create environment variables from the sources nested within it.
+The inner `configMapRef` refers to a ConfigMap by its name and selects all its key-value pairs.
+Add the Pod to your cluster, then retrieve its logs to see the output from the printenv command.
+This should confirm that the two key-value pairs from the ConfigMap have been set as environment variables:
+
+```shell
+kubectl apply -f env-configmap.yaml
+```
+```shell
+kubectl logs pod/ env-configmap
+```
+The output is similar to this:
+```console
+...
+username: "k8s-admin"
+access_level: "1"
+...
+```
+
+Sometimes a Pod won't require access to all the values in a ConfigMap.
+For example, you could have another Pod which only uses the username value from the ConfigMap.
+For this use case, you can use the `env.valueFrom` syntax instead, which lets you select individual keys in
+a ConfigMap. The name of the environment variable can also be different from the key within the ConfigMap.
+For example:
+
+```yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: env-configmap
+spec:
+  containers:
+  - name: envars-test-container
+    image: nginx
+    env:
+    - name: CONFIGMAP_USERNAME
+      valueFrom:
+        configMapKeyRef:
+          name: myconfigmap
+          key: username
+```
+
+In the Pod created from this manifest, you will see that the environment variable
+`CONFIGMAP_USERNAME` is set to the value of the `username` value from the ConfigMap.
+Other keys from the ConfigMap data are not copied into the environment.
+
+
+It's important to note that the range of characters allowed for environment
+variable names in pods is [restricted](/docs/tasks/inject-data-application/define-environment-variable-container/#using-environment-variables-inside-of-your-config).
+If any keys do not meet the rules, those keys are not made available to your container, though
+the Pod is allowed to start.
 
 ## Immutable ConfigMaps {#configmap-immutable}
 
@@ -252,8 +309,6 @@ data has the following advantages:
 - improves performance of your cluster by significantly reducing load on kube-apiserver, by
   closing watches for ConfigMaps marked as immutable.
 
-This feature is controlled by the `ImmutableEphemeralVolumes`
-[feature gate](/docs/reference/command-line-tools-reference/feature-gates/).
 You can create an immutable ConfigMap by setting the `immutable` field to `true`.
 For example:
 
@@ -276,7 +331,6 @@ to the deleted ConfigMap, it is recommended to recreate these pods.
 
 * Read about [Secrets](/docs/concepts/configuration/secret/).
 * Read [Configure a Pod to Use a ConfigMap](/docs/tasks/configure-pod-container/configure-pod-configmap/).
+* Read about [changing a ConfigMap (or any other Kubernetes object)](/docs/tasks/manage-kubernetes-objects/update-api-object-kubectl-patch/)
 * Read [The Twelve-Factor App](https://12factor.net/) to understand the motivation for
   separating code from configuration.
-
-

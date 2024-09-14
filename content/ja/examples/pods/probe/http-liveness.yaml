@@ -7,15 +7,15 @@ metadata:
 spec:
   containers:
   - name: liveness
-    image: k8s.gcr.io/liveness
+    image: registry.k8s.io/e2e-test-images/agnhost:2.40
     args:
-    - /server
+    - liveness
     livenessProbe:
       httpGet:
         path: /healthz
         port: 8080
         httpHeaders:
-        - name: X-Custom-Header
+        - name: Custom-Header
           value: Awesome
       initialDelaySeconds: 3
       periodSeconds: 3

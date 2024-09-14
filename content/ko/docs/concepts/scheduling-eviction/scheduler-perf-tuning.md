@@ -1,9 +1,9 @@
 ---
-
-
+# reviewers:
+# - bsalamat
 title: 스케줄러 성능 튜닝
 content_type: concept
-weight: 100
+weight: 70
 ---
 
 <!-- overview -->
@@ -43,7 +43,7 @@ kube-scheduler 의 `percentageOfNodesToScore` 설정을 통해
 마치 100을 설정한 것처럼 작동한다.
 
 값을 변경하려면,
-[kube-scheduler 구성 파일](/docs/reference/config-api/kube-scheduler-config.v1beta2/)을
+[kube-scheduler 구성 파일](/docs/reference/config-api/kube-scheduler-config.v1beta3/)을
 편집한 다음 스케줄러를 재시작한다.
 대부분의 경우, 구성 파일은 `/etc/kubernetes/config/kube-scheduler.yaml` 에서 찾을 수 있다.
 
@@ -102,10 +102,10 @@ percentageOfNodesToScore: 50
 ### percentageOfNodesToScore 튜닝
 
 `percentageOfNodesToScore`는 1과 100 사이의 값이어야 하며
-기본값은 클러스터 크기에 따라 계산된다. 또한 50 노드로 하드 코딩된
+기본값은 클러스터 크기에 따라 계산된다. 또한 100 노드로 하드 코딩된
 최솟값도 있다.
 
-{{< note >}} 클러스터에서 적합한 노드가 50 미만인 경우, 스케줄러는 여전히
+{{< note >}} 클러스터에서 적합한 노드가 100 미만인 경우, 스케줄러는 여전히
 모든 노드를 확인한다. 그 이유는 스케줄러가 탐색을 조기 중단하기에는 적합한
 노드의 수가 충분하지 않기 때문이다.
 
@@ -161,4 +161,4 @@ percentageOfNodesToScore: 50
 
 ## {{% heading "whatsnext" %}}
 
-* [kube-scheduler 구성 레퍼런스(v1beta2)](/docs/reference/config-api/kube-scheduler-config.v1beta2/) 확인
+* [kube-scheduler 구성 레퍼런스(v1beta3)](/docs/reference/config-api/kube-scheduler-config.v1beta3/) 확인

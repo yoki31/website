@@ -38,19 +38,6 @@ tr -s '[[:space:]]' '\n' |\
 sort |\
 uniq -c
 ```
-
-이 커맨드는 결과값으로 나온 모든 아이템 중에 `image` 라고 명명된 필드를
-모두 출력한다.
-
-이와 다른 방법으로 파드 이미지 필드 값의 절대 경로를 사용할 수 있다.
-이것은 필드명이 반복될 때에도
-정확한 값을 출력하도록 보장한다.
-예) 결과값 중에 많은 필드들이 `name`으로 명명되었을 경우,
-
-```shell
-kubectl get pods --all-namespaces -o jsonpath="{.items[*].spec.containers[*].image}"
-```
-
 이 jsonpath는 다음과 같이 해석할 수 있다.
 
 - `.items[*]`: 각 결과값에 대하여
@@ -70,7 +57,7 @@ jsonpath에서 `.items[*]` 부분은 생략해야 하는데, 이는 명령어가
 반복하여 출력할 수 있다.
 
 ```shell
-kubectl get pods --all-namespaces -o=jsonpath='{range .items[*]}{"\n"}{.metadata.name}{":\t"}{range .spec.containers[*]}{.image}{", "}{end}{end}' |\
+kubectl get pods --all-namespaces -o jsonpath='{range .items[*]}{"\n"}{.metadata.name}{":\t"}{range .spec.containers[*]}{.image}{", "}{end}{end}' |\
 sort
 ```
 
@@ -80,7 +67,7 @@ sort
 명령어 결과값은 `app=nginx` 레이블에 일치하는 파드만 출력한다.
 
 ```shell
-kubectl get pods --all-namespaces -o=jsonpath="{.items[*].spec.containers[*].image}" -l app=nginx
+kubectl get pods --all-namespaces -o jsonpath="{.items[*].spec.containers[*].image}" -l app=nginx
 ```
 
 ## 파드 네임스페이스로 필터링된 컨테이너 이미지 목록 보기
@@ -94,7 +81,7 @@ kubectl get pods --namespace kube-system -o jsonpath="{.items[*].spec.containers
 
 ## jsonpath 대신 Go 템플릿을 사용하여 컨테이너 이미지 목록 보기
 
-jsonpath의 대안으로 Kubectl은 [Go 템플릿](https://golang.org/pkg/text/template/)을 지원한다.
+jsonpath의 대안으로 Kubectl은 [Go 템플릿](https://pkg.go.dev/text/template)을 지원한다.
 다음과 같이 결과값의 서식을 지정할 수 있다.
 
 ```shell
@@ -106,4 +93,4 @@ kubectl get pods --all-namespaces -o go-template --template="{{range .items}}{{r
 ### 참조
 
 * [Jsonpath](/ko/docs/reference/kubectl/jsonpath/) 참조
-* [Go 템플릿](https://golang.org/pkg/text/template/) 참조
+* [Go 템플릿](https://pkg.go.dev/text/template) 참조

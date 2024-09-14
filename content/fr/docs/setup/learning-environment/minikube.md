@@ -56,7 +56,7 @@ Suivez les étapes ci-dessous pour commencer et explorer Minikube.
     Créons un déploiement Kubernetes en utilisant une image existante nommée `echoserver`, qui est un serveur HTTP, et exposez-la sur le port 8080 à l’aide de `--port`.
 
     ```shell
-    kubectl create deployment hello-minikube --image=k8s.gcr.io/echoserver:1.10
+    kubectl create deployment hello-minikube --image=registry.k8s.io/echoserver:1.10
     ```
 
     Le résultat est similaire à ceci:
@@ -218,10 +218,10 @@ Pour revenir à ce contexte, exécutez la commande suivante: `kubectl config use
 #### Spécifier la version de Kubernetes
 
 Vous pouvez spécifier la version de Kubernetes pour Minikube à utiliser en ajoutant la chaîne `--kubernetes-version` à la commande `minikube start`.
-Par exemple, pour exécuter la version {{< param "fullversion" >}}, procédez comme suit:
+Par exemple, pour exécuter la version {{< skew currentPatchVersion >}}, procédez comme suit:
 
 ```shell
-minikube start --kubernetes-version {{< param "fullversion" >}}
+minikube start --kubernetes-version v{{< skew currentPatchVersion >}}
 ```
 
 #### Spécification du pilote de machine virtuelle
@@ -527,5 +527,5 @@ Pour plus d'informations sur Minikube, voir la [proposition](https://git.k8s.io/
 
 Les contributions, questions et commentaires sont les bienvenus et sont encouragés !
 Les développeurs de minikube sont dans le canal #minikube du [Slack](https://kubernetes.slack.com) de Kubernetes (recevoir une invitation [ici](http://slack.kubernetes.io/)).
-Nous avons également la liste de diffusion [kubernetes-dev Google Groupes](https://groups.google.com/forum/#!forum/kubernetes-dev).
+Nous avons également la liste de diffusion [dev@kubernetes Google Groupes](https://groups.google.com/a/kubernetes.io/g/dev/).
 Si vous publiez sur la liste, veuillez préfixer votre sujet avec "minikube:".

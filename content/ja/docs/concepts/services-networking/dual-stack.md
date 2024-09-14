@@ -5,7 +5,7 @@ feature:
   description: >
     IPv4およびIPv6のアドレスをPodとServiceに割り当てる
 content_type: concept
-weight: 70
+weight: 90
 ---
 
 <!-- overview -->
@@ -24,14 +24,14 @@ KubernetesクラスターでIPv4/IPv6デュアルスタックを有効にする�
 
    * デュアルスタックのPodネットワーク(PodごとにIPv4とIPv6のアドレスが1つずつ割り当てられます)
    * IPv4およびIPv6が有効化されたService(各Serviceは1つのアドレスファミリーでなければなりません)
-   * IPv4およびIPv6インターフェイスを経由したPodのクラスター外向きの(たとえば、インターネットへの)ルーティング
+   * IPv4およびIPv6インターフェースを経由したPodのクラスター外向きの(たとえば、インターネットへの)ルーティング
 
 ## 前提条件
 
 IPv4/IPv6デュアルスタックのKubernetesクラスターを利用するには、以下の前提条件を満たす必要があります。
 
    * Kubernetesのバージョンが1.16以降である
-   * プロバイダーがデュアルスタックのネットワークをサポートしている(クラウドプロバイダーなどが、ルーティング可能なIPv4/IPv6ネットワークインターフェイスが搭載されたKubernetesを提供可能である)
+   * プロバイダーがデュアルスタックのネットワークをサポートしている(クラウドプロバイダーなどが、ルーティング可能なIPv4/IPv6ネットワークインターフェースが搭載されたKubernetesを提供可能である)
    * ネットワークプラグインがデュアルスタックに対応している(KubenetやCalicoなど)
 
 ## IPv4/IPv6デュアルスタックを有効にする
@@ -74,15 +74,15 @@ IPv6 CIDRの例: `fdXY:IJKL:MNOP:15::/64` (これはフォーマットを示す�
 
 次のServiceのspecには`ipFamily`フィールドが含まれていません。Kubernetesは、最初に設定した`service-cluster-ip-range`の範囲からこのServiceにIPアドレス(別名「cluster IP」)を割り当てます。
 
-{{< codenew file="service/networking/dual-stack-default-svc.yaml" >}}
+{{% codenew file="service/networking/dual-stack-default-svc.yaml" %}}
 
 次のServiceのspecには`ipFamily`フィールドが含まれています。Kubernetesは、最初に設定した`service-cluster-ip-range`の範囲からこのServiceにIPv6のアドレス(別名「cluster IP」)を割り当てます。
 
-{{< codenew file="service/networking/dual-stack-ipv6-svc.yaml" >}}
+{{% codenew file="service/networking/dual-stack-ipv6-svc.yaml" %}}
 
 比較として次のServiceのspecを見ると、このServiceには最初に設定した`service-cluster-ip-range`の範囲からIPv4のアドレス(別名「cluster IP」)が割り当てられます。
 
-{{< codenew file="service/networking/dual-stack-ipv4-svc.yaml" >}}
+{{% codenew file="service/networking/dual-stack-ipv4-svc.yaml" %}}
 
 ### Type LoadBalancer
 
@@ -98,4 +98,4 @@ IPv6が有効になった外部ロードバランサーをサポートしてい�
 
 ## {{% heading "whatsnext" %}}
 
-* [IPv4/IPv6デュアルスタックのネットワークを検証する](/docs/tasks/network/validate-dual-stack)
+* [IPv4/IPv6デュアルスタックのネットワークを検証する](/ja/docs/tasks/network/validate-dual-stack)

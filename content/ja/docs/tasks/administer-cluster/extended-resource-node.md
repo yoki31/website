@@ -1,6 +1,7 @@
 ---
 title: 拡張リソースをNodeにアドバタイズする
 content_type: task
+weight: 70
 ---
 
 <!-- overview -->
@@ -42,7 +43,7 @@ Host: k8s-master:8080
 
 Kubernetesは、ドングルとは何かも、ドングルが何に利用できるのかを知る必要もないことに注意してください。上のPATCHリクエストは、ただNodeが4つのドングルと呼ばれるものを持っているとKubernetesに教えているだけです。
 
-Kubernetes APIサーバーに簡単にリクエストを送れるように、プロキシーを実行します。
+Kubernetes APIサーバーに簡単にリクエストを送れるように、プロキシを実行します。
 
 ```shell
 kubectl proxy
@@ -85,7 +86,7 @@ Capacity:
  example.com/dongle:  4
 ```
 
-これで、アプリケーション開発者は特定の数のdongleをリクエストするPodを作成できるようになりました。詳しくは、[拡張リソースをコンテナに割り当てる](/docs/tasks/configure-pod-container/extended-resource/)を読んでください。
+これで、アプリケーション開発者は特定の数のdongleをリクエストするPodを作成できるようになりました。詳しくは、[拡張リソースをコンテナに割り当てる](/ja/docs/tasks/configure-pod-container/extended-resource/)を読んでください。
 
 ## 議論
 
@@ -131,7 +132,7 @@ Host: k8s-master:8080
 ]
 ```
 
-Kubernetes APIサーバーに簡単にリクエストを送れるように、プロキシーを実行します。
+Kubernetes APIサーバーに簡単にリクエストを送れるように、プロキシを実行します。
 
 ```shell
 kubectl proxy

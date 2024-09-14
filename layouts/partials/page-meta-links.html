@@ -1,6 +1,7 @@
 {{/* template adapted from Docsy theme */}}
-{{ if .Path }}
-  {{ $pathFormatted := replace .Path "\\" "/" }}
+
+{{ if .File.Path }}
+  {{ $pathFormatted := replace .File.Path "\\" "/" }}
   {{ $gh_repo := ($.Param "github_repo") }}
   {{ $gh_subdir := ($.Param "github_subdir") }}
   {{ $gh_project_repo := ($.Param "github_project_repo") }}
@@ -22,6 +23,16 @@
     {{ $newPageQS := querify "value" $newPageStub.Content "filename" "change-me.md" | safeURL }}
     {{ $newPageURL := printf "%s/new/%s?%s"  $gh_repo $gh_repo_path $newPageQS }}
 
+    <!-- Accessing API Reference links from "layouts/api-reference-links.html" -->
+    {{- $apiReferenceMetaLinks := $.Store.Get "apiReferenceMetaLinks" -}}
+    {{- if $apiReferenceMetaLinks -}}
+      <!-- Loop through the API reference links -->
+        {{- range $apiReferenceMetaLinks -}}
+          {{- $apiRefPageLink  := . -}}
+          {{- $apiRefPageLink  | replaceRE "<a([^>]*)>" "<a$1><i class=\"fa fa-code fa-fw\"></i> " | safeHTML -}}
+        {{- end -}}
+    {{- end -}}
+
     {{ if not (.Param "auto_generated") }}
     <a href="{{ $editURL }}" target="_blank"><i class="fa fa-edit fa-fw"></i> {{ T "post_edit_this" }}</a>
     {{- if .HasShortcode "thirdparty-content" -}}
@@ -36,6 +47,9 @@
       {{ $project_issueURL := printf "%s/issues/new" $gh_project_repo }}
       <a href="{{ $project_issueURL }}" target="_blank"><i class="fas fa-tasks fa-fw"></i> {{ T "post_create_project_issue" }}</a>
     {{ end }}
+    {{- if (.Param "auto_generated") -}}
+    <a href="#auto-generated-edit-notice" class="auto-generated-notice-link"><i class="fa fa-icon-circle fa-fw"></i> {{ T "auto_generated_edit_notice" | safeHTML }}</a>
+    {{- end -}}
 
   {{ end }}
   {{ with .CurrentSection.AlternativeOutputFormats.Get "print" }}

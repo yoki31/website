@@ -55,10 +55,12 @@ Sysctl berikut ini didukung dalam kelompok _safe_:
 - `kernel.shm_rmid_forced`,
 - `net.ipv4.ip_local_port_range`,
 - `net.ipv4.tcp_syncookies`,
-- `net.ipv4.ping_group_range` (sejak Kubernetes 1.18).
+- `net.ipv4.ping_group_range` (sejak Kubernetes 1.18),
+- `net.ipv4.ip_unprivileged_port_start` (sejak Kubernetes 1.22).
 
 {{< note >}}
 Contoh `net.ipv4.tcp_syncookies` bukan merupakan Namespace pada kernel Linux versi 4.4 atau lebih rendah.
+{{< /note >}}
 
 Daftar ini akan terus dikembangkan dalam versi Kubernetes berikutnya ketika kubelet
 mendukung mekanisme isolasi yang lebih baik.

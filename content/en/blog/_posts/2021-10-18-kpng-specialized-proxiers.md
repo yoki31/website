@@ -3,9 +3,9 @@ layout: blog
 title: "Use KPNG to Write Specialized kube-proxiers"
 date: 2021-10-18
 slug: use-kpng-to-write-specialized-kube-proxiers
+author: >
+  Lars Ekman (Ericsson)
 ---
-
-**Author**: Lars Ekman (Ericsson)
 
 The post will show you how to create a specialized service kube-proxy
 style network proxier using Kubernetes Proxy NG
@@ -210,7 +210,7 @@ podip=$(cat /tmp/out | jq -r '.Endpoints[]|select(.Local == true)|select(.IPs.V6
 ip6tables -t nat -A PREROUTING -d $xip/128 -j DNAT --to-destination $podip
 ```
 
-Assuming the JSON output above is stored in `/tmp/out` ([jq](https://stedolan.github.io/jq/) is an *awesome* program!).
+Assuming the JSON output above is stored in `/tmp/out` ([jq](https://jqlang.github.io/jq/) is an *awesome* program!).
 
 
 As this is an example we make it really simple for ourselves by using

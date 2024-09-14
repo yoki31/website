@@ -4,8 +4,10 @@
     fields:
     - containers
     - initContainers
+    - ephemeralContainers
     - imagePullSecrets
     - enableServiceLinks
+    - os
   - name: Volumes
     fields:
     - volumes
@@ -19,7 +21,9 @@
     - runtimeClassName
     - priorityClassName
     - priority
+    - preemptionPolicy
     - topologySpreadConstraints
+    - overhead
   - name: Lifecycle
     fields:
     - restartPolicy
@@ -47,13 +51,11 @@
   - name: Security context
     fields:
     - securityContext
-  - name: Beta level
-    fields:
-    - preemptionPolicy
-    - overhead
   - name: Alpha level
     fields:
-    - ephemeralContainers
+    - hostUsers
+    - resourceClaims
+    - schedulingGates
   - name: Deprecated
     fields:
     - serviceAccount
@@ -61,14 +63,16 @@
 - definition: io.k8s.api.core.v1.PodSecurityContext
   field_categories:
   - fields:
+    - appArmorProfile
+    - fsGroup
+    - fsGroupChangePolicy
     - runAsUser
     - runAsNonRoot
     - runAsGroup
-    - supplementalGroups
-    - fsGroup
-    - fsGroupChangePolicy
     - seccompProfile
     - seLinuxOptions
+    - supplementalGroups
+    - supplementalGroupsPolicy
     - sysctls
     - windowsOptions
 
@@ -86,6 +90,7 @@
   - fields:
     - nominatedNodeName
     - hostIP
+    - hostIPs
     - startTime
     - phase
     - message
@@ -97,6 +102,8 @@
     - initContainerStatuses
     - containerStatuses
     - ephemeralContainerStatuses
+    - resourceClaimStatuses
+    - resize
 
 - definition: io.k8s.api.core.v1.Container
   field_categories:
@@ -125,6 +132,7 @@
   - name: Resources
     fields:
     - resources
+    - resizePolicy
   - name: Lifecycle
     fields:
     - lifecycle
@@ -133,6 +141,7 @@
     - livenessProbe
     - readinessProbe
     - startupProbe
+    - restartPolicy
   - name: Security Context
     fields:
     - securityContext
@@ -154,34 +163,41 @@
     - timeoutSeconds
     - failureThreshold
     - successThreshold
+    - grpc
 
 - definition: io.k8s.api.core.v1.SecurityContext
   field_categories:
   - fields:
+    - allowPrivilegeEscalation
+    - appArmorProfile
+    - capabilities
+    - procMount
+    - privileged
+    - readOnlyRootFilesystem
     - runAsUser
     - runAsNonRoot
     - runAsGroup
-    - readOnlyRootFilesystem
-    - procMount
-    - privileged
-    - allowPrivilegeEscalation
-    - capabilities
-    - seccompProfile
     - seLinuxOptions
+    - seccompProfile
     - windowsOptions
 
 - definition: io.k8s.api.core.v1.ContainerStatus
   field_categories:
   - fields:
-    - name
+    - allocatedResources
+    - allocatedResourcesStatus
+    - containerID
     - image
     - imageID
-    - containerID
-    - state
     - lastState
+    - name
     - ready
+    - resources
     - restartCount
     - started
+    - state
+    - user
+    - volumeMounts
 
 - definition: io.k8s.api.core.v1.ContainerStateTerminated
   field_categories:
@@ -216,15 +232,22 @@
     fields:
     - volumeMounts
     - volumeDevices
+  - name: Resources
+    fields:
+    - resizePolicy
   - name: Lifecycle
     fields:
     - terminationMessagePath
     - terminationMessagePolicy
+    - restartPolicy
   - name: Debugging
     fields:
     - stdin
     - stdinOnce
     - tty
+  - name: Security context
+    fields:
+    - securityContext
   - name: Not allowed
     fields:
     - ports
@@ -232,7 +255,6 @@
     - lifecycle
     - livenessProbe
     - readinessProbe
-    - securityContext
     - startupProbe
 
 - definition: io.k8s.api.core.v1.ReplicationControllerSpec
@@ -313,6 +335,8 @@
     - revisionHistoryLimit
     - volumeClaimTemplates
     - minReadySeconds
+    - persistentVolumeClaimRetentionPolicy
+    - ordinals
 
 - definition: io.k8s.api.apps.v1.StatefulSetUpdateStrategy
   field_categories:
@@ -381,6 +405,16 @@
     fields:
     - selector
     - manualSelector
+  - name: Beta level
+    fields:
+    - podFailurePolicy
+    - successPolicy
+  - name: Alpha level
+    fields:
+    - backoffLimitPerIndex
+    - managedBy
+    - maxFailedIndexes
+    - podReplacementPolicy
 
 - definition: io.k8s.api.batch.v1.JobStatus
   field_categories:
@@ -393,12 +427,20 @@
     - completedIndexes
     - conditions
     - uncountedTerminatedPods
+  - name: Beta level
+    fields:
+    - ready
+  - name: Alpha level
+    fields:
+    - failedIndexes
+    - terminating
 
 - definition: io.k8s.api.batch.v1.CronJobSpec
   field_categories:
   - fields:
     - jobTemplate
     - schedule
+    - timeZone
     - concurrencyPolicy
     - startingDeadlineSeconds
     - suspend
@@ -415,6 +457,22 @@
     - metrics
 
 - definition: io.k8s.api.autoscaling.v2beta2.HPAScalingPolicy
+  field_categories:
+  - fields:
+    - type
+    - value
+    - periodSeconds
+
+- definition: io.k8s.api.autoscaling.v2.HorizontalPodAutoscalerSpec
+  field_categories:
+  - fields:
+    - maxReplicas
+    - scaleTargetRef
+    - minReplicas
+    - behavior
+    - metrics
+
+- definition: io.k8s.api.autoscaling.v2.HPAScalingPolicy
   field_categories:
   - fields:
     - type
@@ -443,6 +501,7 @@
     - publishNotReadyAddresses
     - sessionAffinityConfig
     - allocateLoadBalancerNodePorts
+    - trafficDistribution
 
 - definition: io.k8s.api.core.v1.ServicePort
   field_categories:
@@ -502,12 +561,14 @@
     - cephfs
     - cinder
     - csi
+    - ephemeral
     - fc
     - flexVolume
     - flocker
     - gcePersistentDisk
     - glusterfs
     - iscsi
+    - image
     - nfs
     - photonPersistentDisk
     - portworxVolume
@@ -516,9 +577,6 @@
     - scaleIO
     - storageos
     - vsphereVolume
-  - name: Alpha level
-    fields:
-    - ephemeral
   - name: Deprecated
     fields:
     - gitRepo
@@ -568,10 +626,11 @@
     - volumeName
     - storageClassName
     - volumeMode
-  - name: Alpha level
+  - name: Beta level
     fields:
     - dataSource
     - dataSourceRef
+    - volumeAttributesClassName
 
 - definition: io.k8s.api.core.v1.PersistentVolumeSpec
   field_categories:
@@ -583,6 +642,7 @@
     - nodeAffinity
     - persistentVolumeReclaimPolicy
     - storageClassName
+    - volumeAttributesClassName
     - volumeMode
   - name: Local
     fields:
@@ -620,6 +680,11 @@
     - resourceNames
     - nonResourceURLs
 
+- definition: io.k8s.api.networking.v1beta1.IPAddressSpec
+  field_categories:
+  - fields:
+    - parentRef
+
 - definition: io.k8s.api.networking.v1.NetworkPolicySpec
   field_categories:
   - fields:
@@ -640,6 +705,11 @@
     - port
     - endPort
     - protocol
+
+- definition: io.k8s.api.networking.v1beta1.ServiceCIDRSpec
+  field_categories:
+  - fields:
+    - cidrs
 
 - definition: io.k8s.api.policy.v1beta1.PodSecurityPolicySpec
   field_categories:
@@ -691,6 +761,38 @@
     - resourceVersion
     - selfLink
     - uid
-  - name: Ignored
-    fields:
-    - clusterName
+
+- definition: io.k8s.api.storagemigration.v1alpha1.StorageVersionMigrationSpec
+  field_categories:
+  - fields:
+    - continueToken
+    - resource
+
+- definition: io.k8s.api.storagemigration.v1alpha1.StorageVersionMigrationSpec
+  field_categories:
+  - fields:
+    - driverName
+    - parameters
+
+- definition: io.k8s.api.resource.v1alpha3.DeviceClassSpec
+  field_categories:
+  - fields:
+    - config
+    - selectors
+    - suitableNodes
+
+- definition: io.k8s.api.flowcontrol.v1.FlowSchemaSpec
+  field_categories:
+  - fields:
+    - distinguisherMethod
+    - matchingPrecedence
+    - priorityLevelConfiguration
+    - rules
+
+- definition: io.k8s.api.flowcontrol.v1.PriorityLevelConfigurationSpec
+  field_categories:
+  - fields:
+    - exempt
+    - limited
+    - type
+

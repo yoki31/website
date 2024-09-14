@@ -1,6 +1,7 @@
 ---
 title: クラウドコントローラーマネージャーの運用管理
 content_type: concept
+weight: 110
 ---
 
 <!-- overview -->
@@ -54,7 +55,7 @@ Kubernetesのコアリポジトリにないクラウドコントローラーマ�
 
 すでにKubernetesのコアリポジトリにあるプロバイダーの場合、クラスター内でデーモンセットとしてKubernetesリポジトリ内部のクラウドコントローラーマネージャーを実行できます。以下をガイドラインとして使用してください。
 
-{{< codenew file="admin/cloud/ccm-example.yaml" >}}
+{{% codenew file="admin/cloud/ccm-example.yaml" %}}
 
 
 ## 制限
@@ -63,7 +64,7 @@ Kubernetesのコアリポジトリにないクラウドコントローラーマ�
 
 ### ボリュームのサポート
 
-ボリュームの統合にはkubeletとの調整も必要になるためクラウドコントローラーマネージャーは`kube-controller-manager`にあるボリュームコントローラーを実装しません。CSI(コンテナストレージインターフェイス)が進化してFlexボリュームプラグインの強力なサポートが追加されるにつれ、クラウドがボリュームと完全に統合できるようクラウドコントローラーマネージャーに必要なサポートが追加されます。Kubernetesリポジトリの外部にあるCSIボリュームプラグインの詳細については[こちら](https://github.com/kubernetes/features/issues/178)をご覧ください。
+ボリュームの統合にはkubeletとの調整も必要になるためクラウドコントローラーマネージャーは`kube-controller-manager`にあるボリュームコントローラーを実装しません。CSI(コンテナストレージインターフェース)が進化してFlexボリュームプラグインの強力なサポートが追加されるにつれ、クラウドがボリュームと完全に統合できるようクラウドコントローラーマネージャーに必要なサポートが追加されます。Kubernetesリポジトリの外部にあるCSIボリュームプラグインの詳細については[こちら](https://github.com/kubernetes/features/issues/178)をご覧ください。
 
 ### スケーラビリティ
 

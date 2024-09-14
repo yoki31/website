@@ -1,9 +1,12 @@
 <!doctype html>
 <html lang="{{ .Site.Language.Lang }}" class="{{.Params.class}} no-js">
-  <head>
+{{- if eq hugo.Environment "preview" -}}
+  <!-- deploy preview -->
+{{- end -}}
+  <head{{- if hugo.IsProduction}} class="live-site"{{- end -}}>
     {{ partial "head.html" . }}
   </head>
-  <body class="td-{{ .Kind }}{{- if ne .Params.cid "" -}}{{- printf " cid-%s" (lower .Params.cid) -}}{{- end -}}">
+  <body class="td-{{ .Kind }}{{- if ne (lower .Params.cid) "" -}}{{- printf " cid-%s" (lower .Params.cid) -}}{{- end -}}{{ with .Page.Params.body_class }} {{ . }}{{ end }}">
     <header>
       {{ partial "navbar.html" . }}
       {{ block "announcement" . }}
@@ -29,7 +32,7 @@
     {{ end }}
 		{{ end }}
     <div class="td-outer">
-      <main role="main" class="td-main">
+      <main role="main" class="td-main" {{ if (or (ne .FirstSection "case-studies") (not .IsSection) ) }}data-pagefind-body{{ end }}>
         {{ block "main" . }}{{ end }}
       </main>
     </div>

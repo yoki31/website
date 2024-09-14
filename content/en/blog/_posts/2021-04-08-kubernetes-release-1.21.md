@@ -3,9 +3,10 @@ layout: blog
 title: 'Kubernetes 1.21: Power to the Community'
 date: 2021-04-08
 slug: kubernetes-1-21-release-announcement
+evergreen: true
+author: >
+  [Kubernetes 1.21 Release Team](https://github.com/kubernetes/sig-release/blob/master/releases/release-1.21/release-team.md)
 ---
-
-**Authors:** [Kubernetes 1.21 Release Team](https://github.com/kubernetes/sig-release/blob/master/releases/release-1.21/release-team.md)
 
 We’re pleased to announce the release of Kubernetes 1.21, our first release of 2021! This release consists of 51 enhancements: 13 enhancements have graduated to stable, 16 enhancements are moving to beta, 20 enhancements are entering alpha, and 2 features have been deprecated.
 
@@ -54,7 +55,7 @@ What's next? We're developing a new built-in mechanism to help limit Pod privile
 
 ### TopologyKeys Deprecation
 The Service field `topologyKeys` is now deprecated; all the component features that used this field were previously alpha, and are now also deprecated.
-We've replaced `topologyKeys` with a way to implement topology-aware routing, called topology-aware hints.  Topology-aware hints are an alpha feature in Kubernetes 1.21. You can read more details about the replacement feature in [Topology Aware Hints](/docs/concepts/services-networking/service-topology/); the related [KEP](https://github.com/kubernetes/enhancements/blob/master/keps/sig-network/2433-topology-aware-hints/README.md) explains the context for why we switched.
+We've replaced `topologyKeys` with a way to implement topology-aware routing, called topology-aware hints.  Topology-aware hints are an alpha feature in Kubernetes 1.21. You can read more details about the replacement feature in [Topology Aware Hints](/docs/concepts/services-networking/topology-aware-hints/); the related [KEP](https://github.com/kubernetes/enhancements/blob/master/keps/sig-network/2433-topology-aware-hints/README.md) explains the context for why we switched.
 
 ## Other Updates
 

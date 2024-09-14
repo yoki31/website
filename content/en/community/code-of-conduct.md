@@ -1,27 +1,25 @@
 ---
-title: Community
-layout: basic
-cid: community
-css: /css/community.css
+title: Kubernetes Community Code of Conduct
+body_class: code-of-conduct
+cid: code-of-conduct
 ---
 
-<div class="community_main">
-<h1>Kubernetes Community Code of Conduct</h1>
-
-Kubernetes follows the
-<a href="https://github.com/cncf/foundation/blob/master/code-of-conduct.md">CNCF Code of Conduct</a>.
+_Kubernetes follows the
+[CNCF Code of Conduct](https://github.com/cncf/foundation/blob/main/code-of-conduct.md).
 The text of the CNCF CoC is replicated below, as of
-<a href="https://github.com/cncf/foundation/blob/214585e24aab747fb85c2ea44fbf4a2442e30de6/code-of-conduct.md">commit 214585e</a>.
-If you notice that this is out of date, please
-<a href="https://github.com/kubernetes/website/issues/new">file an issue</a>.
+[commit 71412bb02](https://github.com/cncf/foundation/blob/71412bb029090d42ecbeadb39374a337bfb48a9c/code-of-conduct.md)._
+
+<div id="cncf-code-of-conduct">
+{{< include "static/cncf-code-of-conduct.md" >}}
+</div>
+
+---
 
 If you notice a violation of the Code of Conduct at an event or meeting, in
 Slack, or in another communication mechanism, reach out to
-the <a href="https://git.k8s.io/community/committee-code-of-conduct">Kubernetes Code of Conduct Committee</a>. 
-You can reach us by email at <a href="mailto:conduct@kubernetes.io">conduct@kubernetes.io</a>.
+the [Kubernetes Code of Conduct Committee](https://git.k8s.io/community/committee-code-of-conduct)
+
+You can reach them by email at [conduct@kubernetes.io](mailto:conduct@kubernetes.io).
 Your anonymity will be protected.
 
-<div class="cncf_coc_container">
-{{< include "/static/cncf-code-of-conduct.md" >}}
-</div>
-</div>
+If you notice that this page is out of date, please [file an issue](https://github.com/kubernetes/website/issues/new/choose).

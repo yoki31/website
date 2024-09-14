@@ -3,9 +3,10 @@ title: "Introducing PodTopologySpread"
 date: 2020-05-05
 slug: introducing-podtopologyspread
 url: /blog/2020/05/Introducing-PodTopologySpread
+author: >
+  Wei Huang (IBM),
+  Aldo Culquicondor (Google)
 ---
-
-**Author:** Wei Huang (IBM), Aldo Culquicondor (Google)
 
 Managing Pods distribution across a cluster is hard. The well-known Kubernetes
 features for Pod affinity and anti-affinity, allow some control of Pod placement
@@ -67,7 +68,7 @@ Let's see an example of a cluster to understand this API.
 As the feature name "PodTopologySpread" implies, the basic usage of this feature
 is to run your workload with an absolute even manner (maxSkew=1), or relatively
 even manner (maxSkew>=2). See the [official
-document](/docs/concepts/workloads/pods/pod-topology-spread-constraints/)
+document](/docs/concepts/scheduling-eviction/topology-spread-constraints/)
 for more details.
 
 In addition to this basic usage, there are some advanced usage examples that

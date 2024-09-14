@@ -6,7 +6,7 @@ api_metadata:
 content_type: "api_reference"
 description: "PodTemplate describes a template for creating copies of a predefined pod."
 title: "PodTemplate"
-weight: 2
+weight: 3
 auto_generated: true
 ---
 
@@ -190,6 +190,11 @@ GET /api/v1/namespaces/{namespace}/podtemplates
   <a href="{{< ref "../common-parameters/common-parameters#resourceVersionMatch" >}}">resourceVersionMatch</a>
 
 
+- **sendInitialEvents** (*in query*): boolean
+
+  <a href="{{< ref "../common-parameters/common-parameters#sendInitialEvents" >}}">sendInitialEvents</a>
+
+
 - **timeoutSeconds** (*in query*): integer
 
   <a href="{{< ref "../common-parameters/common-parameters#timeoutSeconds" >}}">timeoutSeconds</a>
@@ -258,6 +263,11 @@ GET /api/v1/podtemplates
   <a href="{{< ref "../common-parameters/common-parameters#resourceVersionMatch" >}}">resourceVersionMatch</a>
 
 
+- **sendInitialEvents** (*in query*): boolean
+
+  <a href="{{< ref "../common-parameters/common-parameters#sendInitialEvents" >}}">sendInitialEvents</a>
+
+
 - **timeoutSeconds** (*in query*): integer
 
   <a href="{{< ref "../common-parameters/common-parameters#timeoutSeconds" >}}">timeoutSeconds</a>
@@ -304,6 +314,11 @@ POST /api/v1/namespaces/{namespace}/podtemplates
 - **fieldManager** (*in query*): string
 
   <a href="{{< ref "../common-parameters/common-parameters#fieldManager" >}}">fieldManager</a>
+
+
+- **fieldValidation** (*in query*): string
+
+  <a href="{{< ref "../common-parameters/common-parameters#fieldValidation" >}}">fieldValidation</a>
 
 
 - **pretty** (*in query*): string
@@ -358,6 +373,11 @@ PUT /api/v1/namespaces/{namespace}/podtemplates/{name}
   <a href="{{< ref "../common-parameters/common-parameters#fieldManager" >}}">fieldManager</a>
 
 
+- **fieldValidation** (*in query*): string
+
+  <a href="{{< ref "../common-parameters/common-parameters#fieldValidation" >}}">fieldValidation</a>
+
+
 - **pretty** (*in query*): string
 
   <a href="{{< ref "../common-parameters/common-parameters#pretty" >}}">pretty</a>
@@ -406,6 +426,11 @@ PATCH /api/v1/namespaces/{namespace}/podtemplates/{name}
 - **fieldManager** (*in query*): string
 
   <a href="{{< ref "../common-parameters/common-parameters#fieldManager" >}}">fieldManager</a>
+
+
+- **fieldValidation** (*in query*): string
+
+  <a href="{{< ref "../common-parameters/common-parameters#fieldValidation" >}}">fieldValidation</a>
 
 
 - **force** (*in query*): boolean
@@ -551,6 +576,11 @@ DELETE /api/v1/namespaces/{namespace}/podtemplates
 - **resourceVersionMatch** (*in query*): string
 
   <a href="{{< ref "../common-parameters/common-parameters#resourceVersionMatch" >}}">resourceVersionMatch</a>
+
+
+- **sendInitialEvents** (*in query*): boolean
+
+  <a href="{{< ref "../common-parameters/common-parameters#sendInitialEvents" >}}">sendInitialEvents</a>
 
 
 - **timeoutSeconds** (*in query*): integer

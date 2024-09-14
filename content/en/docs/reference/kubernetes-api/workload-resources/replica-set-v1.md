@@ -6,7 +6,7 @@ api_metadata:
 content_type: "api_reference"
 description: "ReplicaSet ensures that a specified number of pod replicas are running at any given time."
 title: "ReplicaSet"
-weight: 4
+weight: 5
 auto_generated: true
 ---
 
@@ -88,7 +88,7 @@ ReplicaSetStatus represents the current status of a ReplicaSet.
 
 - **replicas** (int32), required
 
-  Replicas is the most recently oberved number of replicas. More info: https://kubernetes.io/docs/concepts/workloads/controllers/replicationcontroller/#what-is-a-replicationcontroller
+  Replicas is the most recently observed number of replicas. More info: https://kubernetes.io/docs/concepts/workloads/controllers/replicationcontroller/#what-is-a-replicationcontroller
 
 - **availableReplicas** (int32)
 
@@ -96,7 +96,7 @@ ReplicaSetStatus represents the current status of a ReplicaSet.
 
 - **readyReplicas** (int32)
 
-  The number of ready replicas for this replica set.
+  readyReplicas is the number of pods targeted by this ReplicaSet with a Ready Condition.
 
 - **fullyLabeledReplicas** (int32)
 
@@ -105,6 +105,8 @@ ReplicaSetStatus represents the current status of a ReplicaSet.
 - **conditions** ([]ReplicaSetCondition)
 
   *Patch strategy: merge on key `type`*
+  
+  *Map: unique values on key type will be kept during a merge*
   
   Represents the latest available observations of a replica set's current state.
 
@@ -297,6 +299,11 @@ GET /apis/apps/v1/namespaces/{namespace}/replicasets
   <a href="{{< ref "../common-parameters/common-parameters#resourceVersionMatch" >}}">resourceVersionMatch</a>
 
 
+- **sendInitialEvents** (*in query*): boolean
+
+  <a href="{{< ref "../common-parameters/common-parameters#sendInitialEvents" >}}">sendInitialEvents</a>
+
+
 - **timeoutSeconds** (*in query*): integer
 
   <a href="{{< ref "../common-parameters/common-parameters#timeoutSeconds" >}}">timeoutSeconds</a>
@@ -365,6 +372,11 @@ GET /apis/apps/v1/replicasets
   <a href="{{< ref "../common-parameters/common-parameters#resourceVersionMatch" >}}">resourceVersionMatch</a>
 
 
+- **sendInitialEvents** (*in query*): boolean
+
+  <a href="{{< ref "../common-parameters/common-parameters#sendInitialEvents" >}}">sendInitialEvents</a>
+
+
 - **timeoutSeconds** (*in query*): integer
 
   <a href="{{< ref "../common-parameters/common-parameters#timeoutSeconds" >}}">timeoutSeconds</a>
@@ -411,6 +423,11 @@ POST /apis/apps/v1/namespaces/{namespace}/replicasets
 - **fieldManager** (*in query*): string
 
   <a href="{{< ref "../common-parameters/common-parameters#fieldManager" >}}">fieldManager</a>
+
+
+- **fieldValidation** (*in query*): string
+
+  <a href="{{< ref "../common-parameters/common-parameters#fieldValidation" >}}">fieldValidation</a>
 
 
 - **pretty** (*in query*): string
@@ -465,6 +482,11 @@ PUT /apis/apps/v1/namespaces/{namespace}/replicasets/{name}
   <a href="{{< ref "../common-parameters/common-parameters#fieldManager" >}}">fieldManager</a>
 
 
+- **fieldValidation** (*in query*): string
+
+  <a href="{{< ref "../common-parameters/common-parameters#fieldValidation" >}}">fieldValidation</a>
+
+
 - **pretty** (*in query*): string
 
   <a href="{{< ref "../common-parameters/common-parameters#pretty" >}}">pretty</a>
@@ -515,6 +537,11 @@ PUT /apis/apps/v1/namespaces/{namespace}/replicasets/{name}/status
   <a href="{{< ref "../common-parameters/common-parameters#fieldManager" >}}">fieldManager</a>
 
 
+- **fieldValidation** (*in query*): string
+
+  <a href="{{< ref "../common-parameters/common-parameters#fieldValidation" >}}">fieldValidation</a>
+
+
 - **pretty** (*in query*): string
 
   <a href="{{< ref "../common-parameters/common-parameters#pretty" >}}">pretty</a>
@@ -563,6 +590,11 @@ PATCH /apis/apps/v1/namespaces/{namespace}/replicasets/{name}
 - **fieldManager** (*in query*): string
 
   <a href="{{< ref "../common-parameters/common-parameters#fieldManager" >}}">fieldManager</a>
+
+
+- **fieldValidation** (*in query*): string
+
+  <a href="{{< ref "../common-parameters/common-parameters#fieldValidation" >}}">fieldValidation</a>
 
 
 - **force** (*in query*): boolean
@@ -618,6 +650,11 @@ PATCH /apis/apps/v1/namespaces/{namespace}/replicasets/{name}/status
 - **fieldManager** (*in query*): string
 
   <a href="{{< ref "../common-parameters/common-parameters#fieldManager" >}}">fieldManager</a>
+
+
+- **fieldValidation** (*in query*): string
+
+  <a href="{{< ref "../common-parameters/common-parameters#fieldValidation" >}}">fieldValidation</a>
 
 
 - **force** (*in query*): boolean
@@ -763,6 +800,11 @@ DELETE /apis/apps/v1/namespaces/{namespace}/replicasets
 - **resourceVersionMatch** (*in query*): string
 
   <a href="{{< ref "../common-parameters/common-parameters#resourceVersionMatch" >}}">resourceVersionMatch</a>
+
+
+- **sendInitialEvents** (*in query*): boolean
+
+  <a href="{{< ref "../common-parameters/common-parameters#sendInitialEvents" >}}">sendInitialEvents</a>
 
 
 - **timeoutSeconds** (*in query*): integer

@@ -3,6 +3,8 @@ title: " Dynamic Provisioning and Storage Classes in Kubernetes "
 date: 2016-10-07
 slug: dynamic-provisioning-and-storage-in-kubernetes
 url: /blog/2016/10/Dynamic-Provisioning-And-Storage-In-Kubernetes
+author: >
+  Saad Ali (Google)
 ---
 
 Storage is a critical part of running containers, and Kubernetes offers some powerful primitives for managing it. Dynamic volume provisioning, a feature unique to Kubernetes, allows storage volumes to be created on-demand. Without dynamic provisioning, cluster administrators have to manually make calls to their cloud or storage provider to create new storage volumes, and then create PersistentVolume objects to represent them in Kubernetes. The dynamic provisioning feature eliminates the need for cluster administrators to pre-provision storage. Instead, it automatically provisions storage when it is requested by users. This feature was introduced as alpha in Kubernetes 1.2, and has been improved and promoted to beta in the [latest release, 1.4](https://kubernetes.io/blog/2016/09/kubernetes-1-4-making-it-easy-to-run-on-kuberentes-anywhere/). This release makes dynamic provisioning far more flexible and useful.
@@ -143,7 +145,7 @@ When a default StorageClass exists and a user creates a PersistentVolumeClaim wi
 
 
 
-Kubernetes 1.4 maintains backwards compatibility with the alpha version of the dynamic provisioning feature to allow for a smoother transition to the beta version. The alpha behavior is triggered by the existance of the alpha dynamic provisioning annotation (volume. **alpha**.kubernetes.io/storage-class). Keep in mind that if the beta annotation (volume. **beta**.kubernetes.io/storage-class) is present, it takes precedence, and triggers the beta behavior.
+Kubernetes 1.4 maintains backwards compatibility with the alpha version of the dynamic provisioning feature to allow for a smoother transition to the beta version. The alpha behavior is triggered by the existence of the alpha dynamic provisioning annotation (volume. **alpha**.kubernetes.io/storage-class). Keep in mind that if the beta annotation (volume. **beta**.kubernetes.io/storage-class) is present, it takes precedence, and triggers the beta behavior.
 
 
 
@@ -179,7 +181,6 @@ If you’re interested in getting involved with the design and development of Ku
 
 
 
-_-- Saad Ali, Software Engineer, Google_
 
 
 

@@ -6,7 +6,7 @@ api_metadata:
 content_type: "api_reference"
 description: "Deployment enables declarative updates for Pods and ReplicaSets."
 title: "Deployment"
-weight: 5
+weight: 6
 auto_generated: true
 ---
 
@@ -66,7 +66,7 @@ DeploymentSpec is the specification of the desired behavior of the Deployment.
 
 - **template** (<a href="{{< ref "../workload-resources/pod-template-v1#PodTemplateSpec" >}}">PodTemplateSpec</a>), required
 
-  Template describes the pods that will be created.
+  Template describes the pods that will be created. The only allowed template.spec.restartPolicy value is "Always".
 
 - **replicas** (int32)
 
@@ -142,7 +142,7 @@ DeploymentStatus is the most recently observed status of the Deployment.
 
 - **readyReplicas** (int32)
 
-  Total number of ready pods targeted by this deployment.
+  readyReplicas is the number of pods targeted by this Deployment with a Ready Condition.
 
 - **unavailableReplicas** (int32)
 
@@ -159,6 +159,8 @@ DeploymentStatus is the most recently observed status of the Deployment.
 - **conditions** ([]DeploymentCondition)
 
   *Patch strategy: merge on key `type`*
+  
+  *Map: unique values on key type will be kept during a merge*
   
   Represents the latest available observations of a deployment's current state.
 
@@ -358,6 +360,11 @@ GET /apis/apps/v1/namespaces/{namespace}/deployments
   <a href="{{< ref "../common-parameters/common-parameters#resourceVersionMatch" >}}">resourceVersionMatch</a>
 
 
+- **sendInitialEvents** (*in query*): boolean
+
+  <a href="{{< ref "../common-parameters/common-parameters#sendInitialEvents" >}}">sendInitialEvents</a>
+
+
 - **timeoutSeconds** (*in query*): integer
 
   <a href="{{< ref "../common-parameters/common-parameters#timeoutSeconds" >}}">timeoutSeconds</a>
@@ -426,6 +433,11 @@ GET /apis/apps/v1/deployments
   <a href="{{< ref "../common-parameters/common-parameters#resourceVersionMatch" >}}">resourceVersionMatch</a>
 
 
+- **sendInitialEvents** (*in query*): boolean
+
+  <a href="{{< ref "../common-parameters/common-parameters#sendInitialEvents" >}}">sendInitialEvents</a>
+
+
 - **timeoutSeconds** (*in query*): integer
 
   <a href="{{< ref "../common-parameters/common-parameters#timeoutSeconds" >}}">timeoutSeconds</a>
@@ -472,6 +484,11 @@ POST /apis/apps/v1/namespaces/{namespace}/deployments
 - **fieldManager** (*in query*): string
 
   <a href="{{< ref "../common-parameters/common-parameters#fieldManager" >}}">fieldManager</a>
+
+
+- **fieldValidation** (*in query*): string
+
+  <a href="{{< ref "../common-parameters/common-parameters#fieldValidation" >}}">fieldValidation</a>
 
 
 - **pretty** (*in query*): string
@@ -526,6 +543,11 @@ PUT /apis/apps/v1/namespaces/{namespace}/deployments/{name}
   <a href="{{< ref "../common-parameters/common-parameters#fieldManager" >}}">fieldManager</a>
 
 
+- **fieldValidation** (*in query*): string
+
+  <a href="{{< ref "../common-parameters/common-parameters#fieldValidation" >}}">fieldValidation</a>
+
+
 - **pretty** (*in query*): string
 
   <a href="{{< ref "../common-parameters/common-parameters#pretty" >}}">pretty</a>
@@ -576,6 +598,11 @@ PUT /apis/apps/v1/namespaces/{namespace}/deployments/{name}/status
   <a href="{{< ref "../common-parameters/common-parameters#fieldManager" >}}">fieldManager</a>
 
 
+- **fieldValidation** (*in query*): string
+
+  <a href="{{< ref "../common-parameters/common-parameters#fieldValidation" >}}">fieldValidation</a>
+
+
 - **pretty** (*in query*): string
 
   <a href="{{< ref "../common-parameters/common-parameters#pretty" >}}">pretty</a>
@@ -624,6 +651,11 @@ PATCH /apis/apps/v1/namespaces/{namespace}/deployments/{name}
 - **fieldManager** (*in query*): string
 
   <a href="{{< ref "../common-parameters/common-parameters#fieldManager" >}}">fieldManager</a>
+
+
+- **fieldValidation** (*in query*): string
+
+  <a href="{{< ref "../common-parameters/common-parameters#fieldValidation" >}}">fieldValidation</a>
 
 
 - **force** (*in query*): boolean
@@ -679,6 +711,11 @@ PATCH /apis/apps/v1/namespaces/{namespace}/deployments/{name}/status
 - **fieldManager** (*in query*): string
 
   <a href="{{< ref "../common-parameters/common-parameters#fieldManager" >}}">fieldManager</a>
+
+
+- **fieldValidation** (*in query*): string
+
+  <a href="{{< ref "../common-parameters/common-parameters#fieldValidation" >}}">fieldValidation</a>
 
 
 - **force** (*in query*): boolean
@@ -824,6 +861,11 @@ DELETE /apis/apps/v1/namespaces/{namespace}/deployments
 - **resourceVersionMatch** (*in query*): string
 
   <a href="{{< ref "../common-parameters/common-parameters#resourceVersionMatch" >}}">resourceVersionMatch</a>
+
+
+- **sendInitialEvents** (*in query*): boolean
+
+  <a href="{{< ref "../common-parameters/common-parameters#sendInitialEvents" >}}">sendInitialEvents</a>
 
 
 - **timeoutSeconds** (*in query*): integer

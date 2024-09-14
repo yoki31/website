@@ -1,9 +1,10 @@
 ---
 title: 도커 사용자를 위한 kubectl
 content_type: concept
-
-
-
+# reviewers:
+# - brendandburns
+# - thockin
+weight: 50
 ---
 
 <!-- overview -->
@@ -14,6 +15,7 @@ content_type: concept
 ## docker run
 
 nginx 디플로이먼트(Deployment)를 실행하고 해당 디플로이먼트를 노출시키려면, [kubectl create deployment](/docs/reference/generated/kubectl/kubectl-commands#-em-deployment-em-)을 참고한다.
+
 docker:
 
 ```shell
@@ -187,7 +189,7 @@ kubectl exec -ti nginx-app-5jyvm -- /bin/sh
 # exit
 ```
 
-자세한 내용은 [실행 중인 컨테이너의 셸 얻기](/docs/tasks/debug-application-cluster/get-shell-running-container/)를 참고한다.
+자세한 내용은 [실행 중인 컨테이너의 셸 얻기](/ko/docs/tasks/debug/debug-application/get-shell-running-container/)를 참고한다.
 
 ## docker logs
 

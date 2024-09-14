@@ -198,7 +198,7 @@ baseurl=https://packages.cloud.google.com/yum/repos/kubernetes-el7-\$basearch
 enabled=1
 gpgcheck=1
 repo_gpgcheck=1
-gpgkey=https://packages.cloud.google.com/yum/doc/yum-key.gpg https://packages.cloud.google.com/yum/doc/rpm-package-key.gpg
+gpgkey=https://packages.cloud.google.com/yum/doc/rpm-package-key.gpg
 exclude=kubelet kubeadm kubectl
 EOF
 
@@ -233,7 +233,7 @@ curl -L "https://github.com/containernetworking/plugins/releases/download/${CNI_
 Menginstal crictl (dibutuhkan untuk kubeadm / Kubelet Container Runtime Interface (CRI))
 
 ```bash
-CRICTL_VERSION="v1.17.0"
+CRICTL_VERSION="v1.22.0"
 ARCH="amd64"
 mkdir -p /opt/bin
 curl -L "https://github.com/kubernetes-sigs/cri-tools/releases/download/${CRICTL_VERSION}/crictl-${CRICTL_VERSION}-linux-${ARCH}.tar.gz" | sudo tar -C $DOWNLOAD_DIR -xz
@@ -247,7 +247,7 @@ RELEASE="$(curl -sSL https://dl.k8s.io/release/stable.txt)"
 mkdir -p /opt/bin
 ARCH="amd64"
 cd /opt/bin
-curl -L --remote-name-all https://storage.googleapis.com/kubernetes-release/release/${RELEASE}/bin/linux/${ARCH}/{kubeadm,kubelet,kubectl}
+curl -L --remote-name-all https://dl.k8s.io/release/${RELEASE}/bin/linux/${ARCH}/{kubeadm,kubelet,kubectl}
 chmod +x {kubeadm,kubelet,kubectl}
 
 RELEASE_VERSION="v0.2.7"

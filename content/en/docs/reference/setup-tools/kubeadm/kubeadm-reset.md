@@ -10,14 +10,13 @@ weight: 60
 Performs a best effort revert of changes made by `kubeadm init` or `kubeadm join`.
 
 <!-- body -->
-{{< include "generated/kubeadm_reset.md" >}}
+{{< include "generated/kubeadm_reset/_index.md" >}}
 
 ### Reset workflow {#reset-workflow}
 
 `kubeadm reset` is responsible for cleaning up a node local file system from files that were created using
 the `kubeadm init` or `kubeadm join` commands. For control-plane nodes `reset` also removes the local stacked
-etcd member of this node from the etcd cluster and also removes this node's information from the kubeadm
-`ClusterStatus` object. `ClusterStatus` is a kubeadm managed Kubernetes API object that holds a list of kube-apiserver endpoints.
+etcd member of this node from the etcd cluster.
 
 `kubeadm reset phase` can be used to execute the separate phases of the above workflow.
 To skip a list of phases you can use the `--skip-phases` flag, which works in a similar way to
@@ -34,6 +33,17 @@ etcdctl del "" --prefix
 ```
 
 See the [etcd documentation](https://github.com/coreos/etcd/tree/master/etcdctl) for more information.
+
+### Graceful kube-apiserver shutdown
+
+If you have your `kube-apiserver` configured with the `--shutdown-delay-duration` flag,
+you can run the following commands to attempt a graceful shutdown for the running API server Pod,
+before you run `kubeadm reset`:
+
+```bash
+yq eval -i '.spec.containers[0].command = []' /etc/kubernetes/manifests/kube-apiserver.yaml
+timeout 60 sh -c 'while pgrep kube-apiserver >/dev/null; do sleep 1; done' || true
+```
 
 ## {{% heading "whatsnext" %}}
 

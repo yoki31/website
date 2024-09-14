@@ -81,6 +81,8 @@ CustomResourceDefinitionSpec describes how a user wants their resource to appear
 
   - **names.categories** ([]string)
 
+    *Atomic: will be replaced during a merge*
+    
     categories is a list of grouped resources this custom resource belongs to (e.g. 'all'). This is published in API discovery documents, and used by clients to support invocations like `kubectl get all`.
 
   - **names.listKind** (string)
@@ -89,6 +91,8 @@ CustomResourceDefinitionSpec describes how a user wants their resource to appear
 
   - **names.shortNames** ([]string)
 
+    *Atomic: will be replaced during a merge*
+    
     shortNames are short names for the resource, exposed in API discovery documents, and used by clients to support invocations like `kubectl get \<shortname>`. It must be all lowercase.
 
   - **names.singular** (string)
@@ -101,6 +105,8 @@ CustomResourceDefinitionSpec describes how a user wants their resource to appear
 
 - **versions** ([]CustomResourceDefinitionVersion), required
 
+  *Atomic: will be replaced during a merge*
+  
   versions is the list of all API versions of the defined custom resource. Version names are used to compute the order in which served versions are listed in API discovery. If the version string is "kube-like", it will sort above non "kube-like" version strings, which are ordered lexicographically. "Kube-like" versions start with a "v", then are followed by a number (the major version), then optionally the string "alpha" or "beta" and another number (the minor version). These are sorted first by GA > beta > alpha (where GA is a version with no suffix such as beta or alpha), and then by comparing major version, then minor version. An example sorted list of versions: v10, v2, v1, v11beta2, v10beta3, v3beta1, v12alpha1, v11alpha2, foo1, foo10.
 
   <a name="CustomResourceDefinitionVersion"></a>
@@ -120,6 +126,8 @@ CustomResourceDefinitionSpec describes how a user wants their resource to appear
 
   - **versions.additionalPrinterColumns** ([]CustomResourceColumnDefinition)
 
+    *Atomic: will be replaced during a merge*
+    
     additionalPrinterColumns specifies additional columns returned in Table output. See https://kubernetes.io/docs/reference/using-api/api-concepts/#receiving-resources-as-tables for details. If no columns are specified, a single column displaying the age of the custom resource is used.
 
     <a name="CustomResourceColumnDefinition"></a>
@@ -168,6 +176,19 @@ CustomResourceDefinitionSpec describes how a user wants their resource to appear
 
       openAPIV3Schema is the OpenAPI v3 schema to use for validation and pruning.
 
+  - **versions.selectableFields** ([]SelectableField)
+
+    *Atomic: will be replaced during a merge*
+    
+    selectableFields specifies paths to fields that may be used as field selectors. A maximum of 8 selectable fields are allowed. See https://kubernetes.io/docs/concepts/overview/working-with-objects/field-selectors
+
+    <a name="SelectableField"></a>
+    *SelectableField specifies the JSON path of a field that may be used with field selectors.*
+
+    - **versions.selectableFields.jsonPath** (string), required
+
+      jsonPath is a simple JSON path which is evaluated against each custom resource to produce a field selector value. Only JSON paths without the array notation are allowed. Must point to a field of type string, boolean or integer. Types with enum values and strings with formats are allowed. If jsonPath refers to absent field in a resource, the jsonPath evaluates to an empty string. Must not point to metdata fields. Required.
+
   - **versions.subresources** (CustomResourceSubresources)
 
     subresources specify what subresources this version of the defined custom resource have.
@@ -210,18 +231,20 @@ CustomResourceDefinitionSpec describes how a user wants their resource to appear
 
   - **conversion.strategy** (string), required
 
-    strategy specifies how custom resources are converted between versions. Allowed values are: - `None`: The converter only change the apiVersion and would not touch any other field in the custom resource. - `Webhook`: API Server will call to an external webhook to do the conversion. Additional information
+    strategy specifies how custom resources are converted between versions. Allowed values are: - `"None"`: The converter only change the apiVersion and would not touch any other field in the custom resource. - `"Webhook"`: API Server will call to an external webhook to do the conversion. Additional information
       is needed for this option. This requires spec.preserveUnknownFields to be false, and spec.conversion.webhook to be set.
 
   - **conversion.webhook** (WebhookConversion)
 
-    webhook describes how to call the conversion webhook. Required when `strategy` is set to `Webhook`.
+    webhook describes how to call the conversion webhook. Required when `strategy` is set to `"Webhook"`.
 
     <a name="WebhookConversion"></a>
     *WebhookConversion describes how to call a conversion webhook*
 
     - **conversion.webhook.conversionReviewVersions** ([]string), required
 
+      *Atomic: will be replaced during a merge*
+      
       conversionReviewVersions is an ordered list of preferred `ConversionReview` versions the Webhook expects. The API server will use the first version in the list which it supports. If none of the versions specified in this list are supported by API server, conversion will fail for the custom resource. If a persisted Webhook configuration specifies allowed versions and does not include any versions known to the API Server, calls to the webhook will fail.
 
     - **conversion.webhook.clientConfig** (WebhookClientConfig)
@@ -276,7 +299,7 @@ CustomResourceDefinitionSpec describes how a user wants their resource to appear
 
 - **preserveUnknownFields** (boolean)
 
-  preserveUnknownFields indicates that object fields which are not specified in the OpenAPI schema should be preserved when persisting to storage. apiVersion, kind, metadata and known fields inside metadata are always preserved. This field is deprecated in favor of setting `x-preserve-unknown-fields` to true in `spec.versions[*].schema.openAPIV3Schema`. See https://kubernetes.io/docs/tasks/access-kubernetes-api/custom-resources/custom-resource-definitions/#pruning-versus-preserving-unknown-fields for details.
+  preserveUnknownFields indicates that object fields which are not specified in the OpenAPI schema should be preserved when persisting to storage. apiVersion, kind, metadata and known fields inside metadata are always preserved. This field is deprecated in favor of setting `x-preserve-unknown-fields` to true in `spec.versions[*].schema.openAPIV3Schema`. See https://kubernetes.io/docs/tasks/extend-kubernetes/custom-resources/custom-resource-definitions/#field-pruning for details.
 
 
 
@@ -308,9 +331,15 @@ JSONSchemaProps is a JSON-Schema following Specification Draft 4 (http://json-sc
 
 - **allOf** ([]<a href="{{< ref "../extend-resources/custom-resource-definition-v1#JSONSchemaProps" >}}">JSONSchemaProps</a>)
 
+  *Atomic: will be replaced during a merge*
+  
+  
 
 - **anyOf** ([]<a href="{{< ref "../extend-resources/custom-resource-definition-v1#JSONSchemaProps" >}}">JSONSchemaProps</a>)
 
+  *Atomic: will be replaced during a merge*
+  
+  
 
 - **default** (JSON)
 
@@ -333,6 +362,9 @@ JSONSchemaProps is a JSON-Schema following Specification Draft 4 (http://json-sc
 
 - **enum** ([]JSON)
 
+  *Atomic: will be replaced during a merge*
+  
+  
 
   <a name="JSON"></a>
   *JSON represents any valid JSON value. These types are supported: bool, int64, float64, string, []interface{}, map[string]interface{} and nil.*
@@ -411,6 +443,9 @@ JSONSchemaProps is a JSON-Schema following Specification Draft 4 (http://json-sc
 
 - **oneOf** ([]<a href="{{< ref "../extend-resources/custom-resource-definition-v1#JSONSchemaProps" >}}">JSONSchemaProps</a>)
 
+  *Atomic: will be replaced during a merge*
+  
+  
 
 - **pattern** (string)
 
@@ -423,6 +458,9 @@ JSONSchemaProps is a JSON-Schema following Specification Draft 4 (http://json-sc
 
 - **required** ([]string)
 
+  *Atomic: will be replaced during a merge*
+  
+  
 
 - **title** (string)
 
@@ -452,6 +490,8 @@ JSONSchemaProps is a JSON-Schema following Specification Draft 4 (http://json-sc
 
 - **x-kubernetes-list-map-keys** ([]string)
 
+  *Atomic: will be replaced during a merge*
+  
   x-kubernetes-list-map-keys annotates an array with the x-kubernetes-list-type `map` by specifying the keys used as the index of the map.
   
   This tag MUST only be used on lists that have the "x-kubernetes-list-type" extension set to "map". Also, the values specified for this attribute must be a scalar typed field of the child structure (no nesting is supported).
@@ -490,6 +530,79 @@ JSONSchemaProps is a JSON-Schema following Specification Draft 4 (http://json-sc
 
   x-kubernetes-preserve-unknown-fields stops the API server decoding step from pruning fields which are not specified in the validation schema. This affects fields recursively, but switches back to normal pruning behaviour if nested properties or additionalProperties are specified in the schema. This can either be true or undefined. False is forbidden.
 
+- **x-kubernetes-validations** ([]ValidationRule)
+
+  *Patch strategy: merge on key `rule`*
+  
+  *Map: unique values on key rule will be kept during a merge*
+  
+  x-kubernetes-validations describes a list of validation rules written in the CEL expression language.
+
+  <a name="ValidationRule"></a>
+  *ValidationRule describes a validation rule written in the CEL expression language.*
+
+  - **x-kubernetes-validations.rule** (string), required
+
+    Rule represents the expression which will be evaluated by CEL. ref: https://github.com/google/cel-spec The Rule is scoped to the location of the x-kubernetes-validations extension in the schema. The `self` variable in the CEL expression is bound to the scoped value. Example: - Rule scoped to the root of a resource with a status subresource: {"rule": "self.status.actual \<= self.spec.maxDesired"}
+    
+    If the Rule is scoped to an object with properties, the accessible properties of the object are field selectable via `self.field` and field presence can be checked via `has(self.field)`. Null valued fields are treated as absent fields in CEL expressions. If the Rule is scoped to an object with additionalProperties (i.e. a map) the value of the map are accessible via `self[mapKey]`, map containment can be checked via `mapKey in self` and all entries of the map are accessible via CEL macros and functions such as `self.all(...)`. If the Rule is scoped to an array, the elements of the array are accessible via `self[i]` and also by macros and functions. If the Rule is scoped to a scalar, `self` is bound to the scalar value. Examples: - Rule scoped to a map of objects: {"rule": "self.components['Widget'].priority \< 10"} - Rule scoped to a list of integers: {"rule": "self.values.all(value, value >= 0 && value \< 100)"} - Rule scoped to a string value: {"rule": "self.startsWith('kube')"}
+    
+    The `apiVersion`, `kind`, `metadata.name` and `metadata.generateName` are always accessible from the root of the object and from any x-kubernetes-embedded-resource annotated objects. No other metadata properties are accessible.
+    
+    Unknown data preserved in custom resources via x-kubernetes-preserve-unknown-fields is not accessible in CEL expressions. This includes: - Unknown field values that are preserved by object schemas with x-kubernetes-preserve-unknown-fields. - Object properties where the property schema is of an "unknown type". An "unknown type" is recursively defined as:
+      - A schema with no type and x-kubernetes-preserve-unknown-fields set to true
+      - An array where the items schema is of an "unknown type"
+      - An object where the additionalProperties schema is of an "unknown type"
+    
+    Only property names of the form `[a-zA-Z_.-/][a-zA-Z0-9_.-/]*` are accessible. Accessible property names are escaped according to the following rules when accessed in the expression: - '__' escapes to '__underscores__' - '.' escapes to '__dot__' - '-' escapes to '__dash__' - '/' escapes to '__slash__' - Property names that exactly match a CEL RESERVED keyword escape to '__{keyword}__'. The keywords are:
+    	  "true", "false", "null", "in", "as", "break", "const", "continue", "else", "for", "function", "if",
+    	  "import", "let", "loop", "package", "namespace", "return".
+    Examples:
+      - Rule accessing a property named "namespace": {"rule": "self.__namespace__ > 0"}
+      - Rule accessing a property named "x-prop": {"rule": "self.x__dash__prop > 0"}
+      - Rule accessing a property named "redact__d": {"rule": "self.redact__underscores__d > 0"}
+    
+    Equality on arrays with x-kubernetes-list-type of 'set' or 'map' ignores element order, i.e. [1, 2] == [2, 1]. Concatenation on arrays with x-kubernetes-list-type use the semantics of the list type:
+      - 'set': `X + Y` performs a union where the array positions of all elements in `X` are preserved and
+        non-intersecting elements in `Y` are appended, retaining their partial order.
+      - 'map': `X + Y` performs a merge where the array positions of all keys in `X` are preserved but the values
+        are overwritten by values in `Y` when the key sets of `X` and `Y` intersect. Elements in `Y` with
+        non-intersecting keys are appended, retaining their partial order.
+    
+    If `rule` makes use of the `oldSelf` variable it is implicitly a `transition rule`.
+    
+    By default, the `oldSelf` variable is the same type as `self`. When `optionalOldSelf` is true, the `oldSelf` variable is a CEL optional
+     variable whose value() is the same type as `self`.
+    See the documentation for the `optionalOldSelf` field for details.
+    
+    Transition rules by default are applied only on UPDATE requests and are skipped if an old value could not be found. You can opt a transition rule into unconditional evaluation by setting `optionalOldSelf` to true.
+
+  - **x-kubernetes-validations.fieldPath** (string)
+
+    fieldPath represents the field path returned when the validation fails. It must be a relative JSON path (i.e. with array notation) scoped to the location of this x-kubernetes-validations extension in the schema and refer to an existing field. e.g. when validation checks if a specific attribute `foo` under a map `testMap`, the fieldPath could be set to `.testMap.foo` If the validation checks two lists must have unique attributes, the fieldPath could be set to either of the list: e.g. `.testList` It does not support list numeric index. It supports child operation to refer to an existing field currently. Refer to [JSONPath support in Kubernetes](https://kubernetes.io/docs/reference/kubectl/jsonpath/) for more info. Numeric index of array is not supported. For field name which contains special characters, use `['specialName']` to refer the field name. e.g. for attribute `foo.34$` appears in a list `testList`, the fieldPath could be set to `.testList['foo.34$']`
+
+  - **x-kubernetes-validations.message** (string)
+
+    Message represents the message displayed when validation fails. The message is required if the Rule contains line breaks. The message must not contain line breaks. If unset, the message is "failed rule: {Rule}". e.g. "must be a URL with the host matching spec.host"
+
+  - **x-kubernetes-validations.messageExpression** (string)
+
+    MessageExpression declares a CEL expression that evaluates to the validation failure message that is returned when this rule fails. Since messageExpression is used as a failure message, it must evaluate to a string. If both message and messageExpression are present on a rule, then messageExpression will be used if validation fails. If messageExpression results in a runtime error, the runtime error is logged, and the validation failure message is produced as if the messageExpression field were unset. If messageExpression evaluates to an empty string, a string with only spaces, or a string that contains line breaks, then the validation failure message will also be produced as if the messageExpression field were unset, and the fact that messageExpression produced an empty string/string with only spaces/string with line breaks will be logged. messageExpression has access to all the same variables as the rule; the only difference is the return type. Example: "x must be less than max ("+string(self.max)+")"
+
+  - **x-kubernetes-validations.optionalOldSelf** (boolean)
+
+    optionalOldSelf is used to opt a transition rule into evaluation even when the object is first created, or if the old object is missing the value.
+    
+    When enabled `oldSelf` will be a CEL optional whose value will be `None` if there is no old value, or when the object is initially created.
+    
+    You may check for presence of oldSelf using `oldSelf.hasValue()` and unwrap it after checking using `oldSelf.value()`. Check the CEL documentation for Optional types for more information: https://pkg.go.dev/github.com/google/cel-go/cel#OptionalTypes
+    
+    May not be set unless `oldSelf` is used in `rule`.
+
+  - **x-kubernetes-validations.reason** (string)
+
+    reason provides a machine-readable validation failure reason that is returned to the caller when a request fails this validation rule. The HTTP status code returned to the caller will match the reason of the reason of the first failed validation rule. The currently supported reasons are: "FieldValueInvalid", "FieldValueForbidden", "FieldValueRequired", "FieldValueDuplicate". If not set, default to use "FieldValueInvalid". All future added reasons must be accepted by clients when reading this value and unknown reasons should be treated as FieldValueInvalid.
+
 
 
 
@@ -517,6 +630,8 @@ CustomResourceDefinitionStatus indicates the state of the CustomResourceDefiniti
 
   - **acceptedNames.categories** ([]string)
 
+    *Atomic: will be replaced during a merge*
+    
     categories is a list of grouped resources this custom resource belongs to (e.g. 'all'). This is published in API discovery documents, and used by clients to support invocations like `kubectl get all`.
 
   - **acceptedNames.listKind** (string)
@@ -525,6 +640,8 @@ CustomResourceDefinitionStatus indicates the state of the CustomResourceDefiniti
 
   - **acceptedNames.shortNames** ([]string)
 
+    *Atomic: will be replaced during a merge*
+    
     shortNames are short names for the resource, exposed in API discovery documents, and used by clients to support invocations like `kubectl get \<shortname>`. It must be all lowercase.
 
   - **acceptedNames.singular** (string)
@@ -565,6 +682,8 @@ CustomResourceDefinitionStatus indicates the state of the CustomResourceDefiniti
 
 - **storedVersions** ([]string)
 
+  *Atomic: will be replaced during a merge*
+  
   storedVersions lists all versions of CustomResources that were ever persisted. Tracking these versions allows a migration path for stored versions in etcd. The field is mutable so a migration controller can finish a migration to another version (ensuring no old objects are left in storage), and then remove the rest of the versions from this list. Versions may not be removed from `spec.versions` while they exist in this list.
 
 
@@ -713,6 +832,11 @@ GET /apis/apiextensions.k8s.io/v1/customresourcedefinitions
   <a href="{{< ref "../common-parameters/common-parameters#resourceVersionMatch" >}}">resourceVersionMatch</a>
 
 
+- **sendInitialEvents** (*in query*): boolean
+
+  <a href="{{< ref "../common-parameters/common-parameters#sendInitialEvents" >}}">sendInitialEvents</a>
+
+
 - **timeoutSeconds** (*in query*): integer
 
   <a href="{{< ref "../common-parameters/common-parameters#timeoutSeconds" >}}">timeoutSeconds</a>
@@ -754,6 +878,11 @@ POST /apis/apiextensions.k8s.io/v1/customresourcedefinitions
 - **fieldManager** (*in query*): string
 
   <a href="{{< ref "../common-parameters/common-parameters#fieldManager" >}}">fieldManager</a>
+
+
+- **fieldValidation** (*in query*): string
+
+  <a href="{{< ref "../common-parameters/common-parameters#fieldValidation" >}}">fieldValidation</a>
 
 
 - **pretty** (*in query*): string
@@ -803,6 +932,11 @@ PUT /apis/apiextensions.k8s.io/v1/customresourcedefinitions/{name}
   <a href="{{< ref "../common-parameters/common-parameters#fieldManager" >}}">fieldManager</a>
 
 
+- **fieldValidation** (*in query*): string
+
+  <a href="{{< ref "../common-parameters/common-parameters#fieldValidation" >}}">fieldValidation</a>
+
+
 - **pretty** (*in query*): string
 
   <a href="{{< ref "../common-parameters/common-parameters#pretty" >}}">pretty</a>
@@ -848,6 +982,11 @@ PUT /apis/apiextensions.k8s.io/v1/customresourcedefinitions/{name}/status
   <a href="{{< ref "../common-parameters/common-parameters#fieldManager" >}}">fieldManager</a>
 
 
+- **fieldValidation** (*in query*): string
+
+  <a href="{{< ref "../common-parameters/common-parameters#fieldValidation" >}}">fieldValidation</a>
+
+
 - **pretty** (*in query*): string
 
   <a href="{{< ref "../common-parameters/common-parameters#pretty" >}}">pretty</a>
@@ -891,6 +1030,11 @@ PATCH /apis/apiextensions.k8s.io/v1/customresourcedefinitions/{name}
 - **fieldManager** (*in query*): string
 
   <a href="{{< ref "../common-parameters/common-parameters#fieldManager" >}}">fieldManager</a>
+
+
+- **fieldValidation** (*in query*): string
+
+  <a href="{{< ref "../common-parameters/common-parameters#fieldValidation" >}}">fieldValidation</a>
 
 
 - **force** (*in query*): boolean
@@ -941,6 +1085,11 @@ PATCH /apis/apiextensions.k8s.io/v1/customresourcedefinitions/{name}/status
 - **fieldManager** (*in query*): string
 
   <a href="{{< ref "../common-parameters/common-parameters#fieldManager" >}}">fieldManager</a>
+
+
+- **fieldValidation** (*in query*): string
+
+  <a href="{{< ref "../common-parameters/common-parameters#fieldValidation" >}}">fieldValidation</a>
 
 
 - **force** (*in query*): boolean
@@ -1076,6 +1225,11 @@ DELETE /apis/apiextensions.k8s.io/v1/customresourcedefinitions
 - **resourceVersionMatch** (*in query*): string
 
   <a href="{{< ref "../common-parameters/common-parameters#resourceVersionMatch" >}}">resourceVersionMatch</a>
+
+
+- **sendInitialEvents** (*in query*): boolean
+
+  <a href="{{< ref "../common-parameters/common-parameters#sendInitialEvents" >}}">sendInitialEvents</a>
 
 
 - **timeoutSeconds** (*in query*): integer

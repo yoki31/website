@@ -2,9 +2,9 @@
 title: "Introducing Indexed Jobs"
 date: 2021-04-19
 slug: introducing-indexed-jobs
+author: >
+  Aldo Culquicondor (Google)
 ---
-
-**Author:** Aldo Culquicondor (Google)
 
 Once you have containerized a non-parallel [Job](/docs/concepts/workloads/controllers/job/),
 it is quite easy to get it up and running on Kubernetes without modifications to
@@ -62,7 +62,7 @@ spec:
 Note that completion mode is an alpha feature in the 1.21 release. To be able to
 use it in your cluster, make sure to enable the `IndexedJob` [feature
 gate](/docs/reference/command-line-tools-reference/feature-gates/) on the
-[API server](docs/reference/command-line-tools-reference/kube-apiserver/) and
+[API server](/docs/reference/command-line-tools-reference/kube-apiserver/) and
 the [controller manager](/docs/reference/command-line-tools-reference/kube-controller-manager/).
 
 When you run the example, you will see that each of the three created Pods gets a

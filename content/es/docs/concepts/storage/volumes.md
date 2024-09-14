@@ -72,7 +72,7 @@ metadata:
   name: test-ebs
 spec:
   containers:
-    - image: k8s.gcr.io/test-webserver
+    - image: registry.k8s.io/test-webserver
       name: test-container
       volumeMounts:
         - mountPath: /test-ebs
@@ -105,7 +105,7 @@ Para desactivar el complemento de almacenamiento `awsElasticBlockStore` de ser c
 
 El tipo de volumen `azureDisk` monta un [Data Disk](https://docs.microsoft.com/en-us/azure/aks/csi-storage-drivers) de Microsoft Azure en el Pod.
 
-Para más detalles, mira el [`azureDisk` volume plugin](https://github.com/kubernetes/examples/tree/{{< param "githubbranch" >}}/staging/volumes/azure_disk/README.md).
+Para más detalles, mira el [`azureDisk` volume plugin](https://github.com/kubernetes/examples/tree/master/staging/volumes/azure_disk/README.md).
 
 #### Migración CSI azureDisk
 
@@ -119,7 +119,7 @@ de complemento desde el complemento existente dentro del árbol existente al con
 
 El tipo de volumen `azureFile` monta un volumen de ficheros de Microsoft Azure (SMB 2.1 and 3.0) en un Pod.
 
-Para más detalles, mira el [`azureFile` volume plugin](https://github.com/kubernetes/examples/tree/{{< param "githubbranch" >}}/staging/volumes/azure_file/README.md).
+Para más detalles, mira el [`azureFile` volume plugin](https://github.com/kubernetes/examples/tree/master/staging/volumes/azure_file/README.md).
 
 #### Migración CSI azureFile CSI
 
@@ -141,7 +141,7 @@ A diferencia de `emptydir`, que es borrado cuando se remueve el Pod, el contenid
 Debes tener tu propio servidor Ceph corriendo con el recurso compartido exportado antes de usarlo.
 {{< /note >}}
 
-Mira el [CephFS example](https://github.com/kubernetes/examples/tree/{{< param "githubbranch" >}}/volumes/cephfs/) para más detalles.
+Mira el [CephFS example](https://github.com/kubernetes/examples/tree/master/volumes/cephfs/) para más detalles.
 
 ### cinder
 
@@ -160,7 +160,7 @@ metadata:
   name: test-cinder
 spec:
   containers:
-    - image: k8s.gcr.io/test-webserver
+    - image: registry.k8s.io/test-webserver
       name: test-cinder-container
       volumeMounts:
         - mountPath: /test-cinder
@@ -203,7 +203,8 @@ metadata:
 spec:
   containers:
     - name: test
-      image: busybox
+      image: busybox:1.28
+      command: ['sh', '-c', 'echo "The app is running!" && tail -f /dev/null']
       volumeMounts:
         - name: config-vol
           mountPath: /etc/config
@@ -271,7 +272,7 @@ metadata:
   name: test-pd
 spec:
   containers:
-    - image: k8s.gcr.io/test-webserver
+    - image: registry.k8s.io/test-webserver
       name: test-container
       volumeMounts:
         - mountPath: /cache
@@ -292,7 +293,7 @@ Debes configurar FC SAN zoning para asignar y enmascarar esos (volúmenes) LUNs 
 para que los hosts Kubernetes pueda acceder a ellos.
 {{< /note >}}
 
-Revisa el [ejemplo de canal de fibra](https://github.com/kubernetes/examples/tree/{{< param "githubbranch" >}}/staging/volumes/fibre_channel) para más detalles.
+Revisa el [ejemplo de canal de fibra](https://github.com/kubernetes/examples/tree/master/staging/volumes/fibre_channel) para más detalles.
 
 ### flocker (deprecado) {#flocker}
 
@@ -306,7 +307,7 @@ de nuevo por Flocker al nodo donde el Pod está programado. Esto significa que l
 Debes tener una instalación propia de Flocker ejecutándose antes de poder usarla.
 {{< /note >}}
 
-Mira el [ejemplo de Flocker ](https://github.com/kubernetes/examples/tree/{{< param "githubbranch" >}}/staging/volumes/flocker) para más detalles.
+Mira el [ejemplo de Flocker ](https://github.com/kubernetes/examples/tree/master/staging/volumes/flocker) para más detalles.
 
 ### gcePersistentDisk
 
@@ -349,7 +350,7 @@ metadata:
   name: test-pd
 spec:
   containers:
-    - image: k8s.gcr.io/test-webserver
+    - image: registry.k8s.io/test-webserver
       name: test-container
       volumeMounts:
         - mountPath: /test-pd
@@ -370,7 +371,7 @@ Para usar esta función, el volumen debe ser provisto como un PersistentVolumen;
 
 #### Aprovisionamiento manual de un PD PersistentVolume Regional
 
-El aprovisionamiento dinámico es posible usando un [StorageClass para el DP GCE](/docs/concepts/storage/storage-classes/#gce).
+El aprovisionamiento dinámico es posible usando un [StorageClass para el DP GCE](/docs/concepts/storage/storage-classes/#gce-pd).
 Antes de crear un PersistentVolume, debes crear el disco persistente:
 
 ```shell
@@ -453,7 +454,7 @@ y que los datos pueden ser compartidos entre pods. GlusterFS puede ser montado p
 Debes tener tu propia instalación de GlusterFS ejecutándose antes de poder usarla.
 {{< /note >}}
 
-Mira el [ejemplo de GlusterFS](https://github.com/kubernetes/examples/tree/{{< param "githubbranch" >}}/volumes/glusterfs) para más detalles.
+Mira el [ejemplo de GlusterFS](https://github.com/kubernetes/examples/tree/master/volumes/glusterfs) para más detalles.
 
 ### hostPath {#hostpath}
 
@@ -496,7 +497,7 @@ metadata:
   name: test-pd
 spec:
   containers:
-    - image: k8s.gcr.io/test-webserver
+    - image: registry.k8s.io/test-webserver
       name: test-container
       volumeMounts:
         - mountPath: /test-pd
@@ -526,7 +527,7 @@ metadata:
 spec:
   containers:
     - name: test-webserver
-      image: k8s.gcr.io/test-webserver:latest
+      image: registry.k8s.io/test-webserver:latest
       volumeMounts:
         - mountPath: /var/local/aaa
           name: mydir
@@ -560,7 +561,7 @@ Esto significa que puedes pre-poblar un volumen con tu conjunto de datos y servi
 Desafortunadamente, los volúmenes ISCSI solo se pueden montar por un único consumidor en modo lectura-escritura.
 Escritores simultáneos no está permitido.
 
-Mira el [ejemplo iSCSI](https://github.com/kubernetes/examples/tree/{{< param "githubbranch" >}}/volumes/iscsi) para más detalles.
+Mira el [ejemplo iSCSI](https://github.com/kubernetes/examples/tree/master/volumes/iscsi) para más detalles.
 
 ### local
 
@@ -634,11 +635,11 @@ NFS puede ser montado por múltiples escritores simultáneamente.
 Debes tener tu propio servidor NFS en ejecución con el recurso compartido exportado antes de poder usarlo.
 {{< /note >}}
 
-Mira el [ ejemplo NFS ](https://github.com/kubernetes/examples/tree/{{< param "githubbranch" >}}/staging/volumes/nfs) para más información.
+Mira el [ ejemplo NFS ](https://github.com/kubernetes/examples/tree/master/staging/volumes/nfs) para más información.
 
 ### persistentVolumeClaim {#persistentvolumeclaim}
 
-Un volumen `persistenceVolumeClain` se utiliza para montar un [PersistentVolume](/docs/concepts/storage/persistent-volumes/) en tu Pod. PersistentVolumeClaims son una forma en que el usuario "reclama" almacenamiento duradero (como un PersistentDisk GCE o un volumen ISCSI) sin conocer los detalles del ambiente de la nube en particular.
+Un volumen `persistenceVolumeClain` se utiliza para montar un [PersistentVolume](/docs/concepts/storage/persistent-volumes/) en tu Pod. PersistentVolumeClaims son una forma en que el usuario "reclama" almacenamiento duradero (como un PersistentDisk GCE o un volumen ISCSI) sin conocer los detalles del entorno de la nube en particular.
 
 Mira la información spbre [PersistentVolumes](/docs/concepts/storage/persistent-volumes/) para más detalles.
 
@@ -657,7 +658,7 @@ metadata:
   name: test-portworx-volume-pod
 spec:
   containers:
-    - image: k8s.gcr.io/test-webserver
+    - image: registry.k8s.io/test-webserver
       name: test-container
       volumeMounts:
         - mountPath: /mnt
@@ -674,7 +675,7 @@ spec:
 Asegúrate de tener un PortworxVolume con el nombre `pxvol` antes de usarlo en el Pod.
 {{< /note >}}
 
-Para más detalles, mira los ejemplos de [volumen Portworx](https://github.com/kubernetes/examples/tree/{{< param "githubbranch" >}}/staging/volumes/portworx/README.md).
+Para más detalles, mira los ejemplos de [volumen Portworx](https://github.com/kubernetes/examples/tree/master/staging/volumes/portworx/README.md).
 
 ### projected
 
@@ -687,7 +688,7 @@ Actualmente, se pueden los siguientes tipos de volúmenes:
 - [`configMap`](#configmap)
 - `serviceAccountToken`
 
-Se requiere que todas las fuentes estén en el mismo namespace que el Pod. Para más detalles mira el [all-in-one volume design document](https://github.com/kubernetes/community/blob/{{< param "githubbranch" >}}/contributors/design-proposals/node/all-in-one-volume.md).
+Se requiere que todas las fuentes estén en el mismo namespace que el Pod. Para más detalles mira el [all-in-one volume design document](https://github.com/kubernetes/community/blob/master/contributors/design-proposals/node/all-in-one-volume.md).
 
 #### Configuración de ejemplo con un secret, un downwardAPI, y un configMap {#example-configuration-secret-downwardapi-configmap}
 
@@ -828,7 +829,7 @@ Debes tener una instalación de Ceph ejecutándose antes de usar RBD.
 Una función de RBD es que solo se puede montar como de solo lectura por múltiples consumidores simultáneamente.
 Esto significa que puedes pre-poblar un volumen con tu conjunto de datos y luego servirlo en paralelo desde tantos pods como necesites. Desafortunadamente, los volúmenes RBD solo se pueden montar por un único consumidor en modo lectura-escritura. No se permiten escritores simultáneos.
 
-Mira el [ejemplo RBD](https://github.com/kubernetes/examples/tree/{{< param "githubbranch" >}}/volumes/rbd) para más detalles.
+Mira el [ejemplo RBD](https://github.com/kubernetes/examples/tree/master/volumes/rbd) para más detalles.
 
 ### scaleIO (deprecado) {#scaleio}
 
@@ -847,7 +848,7 @@ metadata:
   name: pod-0
 spec:
   containers:
-    - image: k8s.gcr.io/test-webserver
+    - image: registry.k8s.io/test-webserver
       name: pod-0
       volumeMounts:
         - mountPath: /test-pd
@@ -865,7 +866,7 @@ spec:
         fsType: xfs
 ```
 
-Para más detalles, mira los ejemplos de [ScaleIO](https://github.com/kubernetes/examples/tree/{{< param "githubbranch" >}}/staging/volumes/scaleio)
+Para más detalles, mira los ejemplos de [ScaleIO](https://github.com/kubernetes/examples/tree/master/staging/volumes/scaleio)
 
 ### secret
 
@@ -976,7 +977,7 @@ metadata:
   name: test-vmdk
 spec:
   containers:
-    - image: k8s.gcr.io/test-webserver
+    - image: registry.k8s.io/test-webserver
       name: test-container
       volumeMounts:
         - mountPath: /test-vmdk
@@ -1021,7 +1022,7 @@ Para apagar el complemento `vsphereVolume` y no cargarlo por el administrador de
 ## Uso de subPath {#using-subpath}
 
 Algunas veces es útil compartir un volumen para múltiples usos en un único Pod.
-La propiedad `volumeMounts.subPath` especifica una sub-ruta dentro del volumen referenciado en lugar de su raíz.
+La propiedad `volumeMounts[*].subPath` especifica una sub-ruta dentro del volumen referenciado en lugar de su raíz.
 
 El siguiente ejemplo muestra cómo configurar un Pod con la pila LAMP (Linux Apache MySQL PHP) usando un único volumen compartido. Esta configuración de ejemplo usando `subPath` no se recomienda para su uso en producción.
 
@@ -1139,9 +1140,9 @@ Una vez que se despliega un controlador de volumen CSI compatible, los usuarios 
 Un volumen `csi` puede ser usado en un Pod en tres maneras distintas:
 
 - a través de una referencia a [PersistentVolumeClaim](#persistentvolumeclaim)
-- con un [volumen general efímero](/docs/concepts/storage/ephemeral-volumes/#generic-ephemeral-volume)
+- con un [volumen general efímero](/docs/concepts/storage/ephemeral-volumes/#generic-ephemeral-volumes)
   (característica alpha)
-- con un [volumen efímero CSI](/docs/concepts/storage/ephemeral-volumes/#csi-ephemeral-volume) si el controlador permite esta (característica beta)
+- con un [volumen efímero CSI](/docs/concepts/storage/ephemeral-volumes/#csi-ephemeral-volumes) si el controlador permite esta (característica beta)
 
 Los siguientes campos están disponibles para que los administradores de almacenamiento configuren el volumen persistente CSI
 
@@ -1168,7 +1169,7 @@ You can set up your [PersistentVolume/PersistentVolumeClaim with raw block volum
 {{< feature-state for_k8s_version="v1.16" state="beta" >}}
 
 Puedes configurar directamente volúmenes CSI dentro de la especificación del Pod.
-Los volúmenes especificados de esta manera son efímeros y no se persisten entre reinicios del Pod. Mira [Volúmenes efímeros](/docs/concepts/storage/ephemeral-volumes/#csi-ephemeral-volume) para más información.
+Los volúmenes especificados de esta manera son efímeros y no se persisten entre reinicios del Pod. Mira [Volúmenes efímeros](/docs/concepts/storage/ephemeral-volumes/#csi-ephemeral-volumes) para más información.
 
 Para más información de cómo desarrollador un controlador CSI, mira la [documentación kubernetes-csi](https://kubernetes-csi.github.io/docs/)
 
@@ -1197,7 +1198,7 @@ For more details, see the [FlexVolume](https://github.com/kubernetes/community/b
 
 La propagación del montaje permite compartir volúmenes montados por un contenedor para otros contenedores en el mismo Pod, o aun para otros pods en el mismo nodo.
 
-La propagación del montaje de un volumen es controlada por el campo `mountPropagation` en `Container.volumeMounts`. Sus valores son:
+La propagación del montaje de un volumen es controlada por el campo `mountPropagation` en `containers[*].volumeMounts`. Sus valores son:
 
 - `None` - Este montaje de volumen no recibirá ningún montaje posterior que el host haya montado en este volumen o en cualquiera de sus subdirectorios. De manera similar, los montajes creados por el contenedor no serán visibles en el host. Este es el modo por defecto.
 

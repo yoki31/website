@@ -3,10 +3,9 @@ layout: blog
 title: "Kubernetes 1.22: A New Design for Volume Populators"
 date: 2021-08-30
 slug: volume-populators-redesigned
+author: >
+  Ben Swartzlander (NetApp)
 ---
-
-**Authors:**
-Ben Swartzlander (NetApp)
 
 Kubernetes v1.22, released earlier this month, introduced a redesigned approach for volume
 populators. Originally implemented
@@ -96,15 +95,16 @@ out.
 First install the volume-data-source-validator controller.
 
 ```terminal
-kubectl apply -f https://github.com/kubernetes-csi/volume-data-source-validator/blob/master/deploy/kubernetes/rbac-data-source-validator.yaml
-kubectl apply -f https://github.com/kubernetes-csi/volume-data-source-validator/blob/master/deploy/kubernetes/setup-data-source-validator.yaml
+kubectl apply -f https://raw.githubusercontent.com/kubernetes-csi/volume-data-source-validator/master/client/config/crd/populator.storage.k8s.io_volumepopulators.yaml
+kubectl apply -f https://raw.githubusercontent.com/kubernetes-csi/volume-data-source-validator/master/deploy/kubernetes/rbac-data-source-validator.yaml
+kubectl apply -f https://raw.githubusercontent.com/kubernetes-csi/volume-data-source-validator/master/deploy/kubernetes/setup-data-source-validator.yaml
 ```
 
 Next install the example populator.
 
 ```terminal
-kubectl apply -f https://github.com/kubernetes-csi/lib-volume-populator/blob/master/example/hello-populator/crd.yaml
-kubectl apply -f https://github.com/kubernetes-csi/lib-volume-populator/blob/master/example/hello-populator/deploy.yaml
+kubectl apply -f https://raw.githubusercontent.com/kubernetes-csi/lib-volume-populator/master/example/hello-populator/crd.yaml
+kubectl apply -f https://raw.githubusercontent.com/kubernetes-csi/lib-volume-populator/master/example/hello-populator/deploy.yaml
 ```
 
 Create an instance of the `Hello` CR, with some text.

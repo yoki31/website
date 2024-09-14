@@ -11,7 +11,11 @@ communication.
 
 ## {{% heading "prerequisites" %}}
 
-{{< include "task-tutorial-prereqs.md" >}}
+You need to have a Kubernetes cluster, and the kubectl command-line tool must
+be configured to communicate with your cluster. It is recommended to run this
+tutorial on a cluster with at least two nodes that are not acting as control
+plane hosts. If you do not already have a cluster, you can create one by using
+[minikube](https://minikube.sigs.k8s.io/docs/tutorials/multi_node/).
 
 <!-- steps -->
 
@@ -19,13 +23,13 @@ communication.
 
 The following steps require an egress configuration, for example:
 
-{{< codenew file="admin/konnectivity/egress-selector-configuration.yaml" >}}
+{{% code_sample file="admin/konnectivity/egress-selector-configuration.yaml" %}}
 
 You need to configure the API Server to use the Konnectivity service
 and direct the network traffic to the cluster nodes:
 
 1. Make sure that
-[Service Account Token Volume Projection](/docs/tasks/configure-pod-container/configure-service-account/#service-account-token-volume-projection)
+[Service Account Token Volume Projection](/docs/tasks/configure-pod-container/configure-service-account/#serviceaccount-token-volume-projection)
 feature enabled in your cluster. It is enabled by default since Kubernetes v1.20.
 1. Create an egress configuration file such as `admin/konnectivity/egress-selector-configuration.yaml`.
 1. Set the `--egress-selector-config-file` flag of the API Server to the path of
@@ -50,7 +54,7 @@ For example, you can use the OpenSSL command line tool to issue a X.509 certific
 using the cluster CA certificate `/etc/kubernetes/pki/ca.crt` from a control-plane host.
 
 ```bash
-openssl req -subj "/CN=system:konnectivity-server" -new -newkey rsa:2048 -nodes -out konnectivity.csr -keyout konnectivity.key -out konnectivity.csr
+openssl req -subj "/CN=system:konnectivity-server" -new -newkey rsa:2048 -nodes -out konnectivity.csr -keyout konnectivity.key
 openssl x509 -req -in konnectivity.csr -CA /etc/kubernetes/pki/ca.crt -CAkey /etc/kubernetes/pki/ca.key -CAcreateserial -out konnectivity.crt -days 375 -sha256
 SERVER=$(kubectl config view -o jsonpath='{.clusters..server}')
 kubectl --kubeconfig /etc/kubernetes/konnectivity-server.conf config set-credentials system:konnectivity-server --client-certificate konnectivity.crt --client-key konnectivity.key --embed-certs=true
@@ -70,12 +74,12 @@ that the Kubernetes components are deployed as a {{< glossary_tooltip text="stat
 term_id="static-pod" >}} in your cluster. If not, you can deploy the Konnectivity
 server as a DaemonSet.
 
-{{< codenew file="admin/konnectivity/konnectivity-server.yaml" >}}
+{{% code_sample file="admin/konnectivity/konnectivity-server.yaml" %}}
 
 Then deploy the Konnectivity agents in your cluster:
 
-{{< codenew file="admin/konnectivity/konnectivity-agent.yaml" >}}
+{{% code_sample file="admin/konnectivity/konnectivity-agent.yaml" %}}
 
 Last, if RBAC is enabled in your cluster, create the relevant RBAC rules:
 
-{{< codenew file="admin/konnectivity/konnectivity-rbac.yaml" >}}
+{{% code_sample file="admin/konnectivity/konnectivity-rbac.yaml" %}}

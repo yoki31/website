@@ -6,7 +6,7 @@ api_metadata:
 content_type: "api_reference"
 description: "StatefulSet represents a set of pods with consistent identities."
 title: "StatefulSet"
-weight: 6
+weight: 7
 auto_generated: true
 ---
 
@@ -29,8 +29,9 @@ guide. You can file document formatting bugs against the
 ## StatefulSet {#StatefulSet}
 
 StatefulSet represents a set of pods with consistent identities. Identities are defined as:
- - Network: A single stable DNS and hostname.
- - Storage: As many VolumeClaims as requested.
+  - Network: A single stable DNS and hostname.
+  - Storage: As many VolumeClaims as requested.
+
 The StatefulSet guarantees that a given network identity will always map to the same storage identity.
 
 <hr>
@@ -73,7 +74,7 @@ A StatefulSetSpec is the specification of a StatefulSet.
 
 - **template** (<a href="{{< ref "../workload-resources/pod-template-v1#PodTemplateSpec" >}}">PodTemplateSpec</a>), required
 
-  template is the object that describes the pod that will be created if insufficient replicas are detected. Each pod stamped out by the StatefulSet will fulfill this Template, but have a unique identity from the rest of the StatefulSet.
+  template is the object that describes the pod that will be created if insufficient replicas are detected. Each pod stamped out by the StatefulSet will fulfill this Template, but have a unique identity from the rest of the StatefulSet. Each pod will be named with the format \<statefulsetname>-\<podindex>. For example, a pod in a StatefulSet named "web" with index number "3" would be named "web-3". The only allowed template.spec.restartPolicy value is "Always".
 
 - **replicas** (int32)
 
@@ -97,9 +98,16 @@ A StatefulSetSpec is the specification of a StatefulSet.
     <a name="RollingUpdateStatefulSetStrategy"></a>
     *RollingUpdateStatefulSetStrategy is used to communicate parameter for RollingUpdateStatefulSetStrategyType.*
 
+    - **updateStrategy.rollingUpdate.maxUnavailable** (IntOrString)
+
+      The maximum number of pods that can be unavailable during the update. Value can be an absolute number (ex: 5) or a percentage of desired pods (ex: 10%). Absolute number is calculated from percentage by rounding up. This can not be 0. Defaults to 1. This field is alpha-level and is only honored by servers that enable the MaxUnavailableStatefulSet feature. The field applies to all pods in the range 0 to Replicas-1. That means if there is any unavailable pod in the range 0 to Replicas-1, it will be counted towards MaxUnavailable.
+
+      <a name="IntOrString"></a>
+      *IntOrString is a type that can hold an int32 or a string.  When used in JSON or YAML marshalling and unmarshalling, it produces or consumes the inner type.  This allows you to have, for example, a JSON field that can accept a name or number.*
+
     - **updateStrategy.rollingUpdate.partition** (int32)
 
-      Partition indicates the ordinal at which the StatefulSet should be partitioned. Default value is 0.
+      Partition indicates the ordinal at which the StatefulSet should be partitioned for updates. During a rolling update, all pods from ordinal Replicas-1 to Partition are updated. All pods from ordinal Partition-1 to 0 remain untouched. This is helpful in being able to do a canary based deployment. The default value is 0.
 
 - **podManagementPolicy** (string)
 
@@ -111,11 +119,42 @@ A StatefulSetSpec is the specification of a StatefulSet.
 
 - **volumeClaimTemplates** ([]<a href="{{< ref "../config-and-storage-resources/persistent-volume-claim-v1#PersistentVolumeClaim" >}}">PersistentVolumeClaim</a>)
 
+  *Atomic: will be replaced during a merge*
+  
   volumeClaimTemplates is a list of claims that pods are allowed to reference. The StatefulSet controller is responsible for mapping network identities to claims in a way that maintains the identity of a pod. Every claim in this list must have at least one matching (by name) volumeMount in one container in the template. A claim in this list takes precedence over any volumes in the template, with the same name.
 
 - **minReadySeconds** (int32)
 
-  Minimum number of seconds for which a newly created pod should be ready without any of its container crashing for it to be considered available. Defaults to 0 (pod will be considered available as soon as it is ready) This is an alpha field and requires enabling StatefulSetMinReadySeconds feature gate.
+  Minimum number of seconds for which a newly created pod should be ready without any of its container crashing for it to be considered available. Defaults to 0 (pod will be considered available as soon as it is ready)
+
+- **persistentVolumeClaimRetentionPolicy** (StatefulSetPersistentVolumeClaimRetentionPolicy)
+
+  persistentVolumeClaimRetentionPolicy describes the lifecycle of persistent volume claims created from volumeClaimTemplates. By default, all persistent volume claims are created as needed and retained until manually deleted. This policy allows the lifecycle to be altered, for example by deleting persistent volume claims when their stateful set is deleted, or when their pod is scaled down. This requires the StatefulSetAutoDeletePVC feature gate to be enabled, which is beta.
+
+  <a name="StatefulSetPersistentVolumeClaimRetentionPolicy"></a>
+  *StatefulSetPersistentVolumeClaimRetentionPolicy describes the policy used for PVCs created from the StatefulSet VolumeClaimTemplates.*
+
+  - **persistentVolumeClaimRetentionPolicy.whenDeleted** (string)
+
+    WhenDeleted specifies what happens to PVCs created from StatefulSet VolumeClaimTemplates when the StatefulSet is deleted. The default policy of `Retain` causes PVCs to not be affected by StatefulSet deletion. The `Delete` policy causes those PVCs to be deleted.
+
+  - **persistentVolumeClaimRetentionPolicy.whenScaled** (string)
+
+    WhenScaled specifies what happens to PVCs created from StatefulSet VolumeClaimTemplates when the StatefulSet is scaled down. The default policy of `Retain` causes PVCs to not be affected by a scaledown. The `Delete` policy causes the associated PVCs for any excess pods above the replica count to be deleted.
+
+- **ordinals** (StatefulSetOrdinals)
+
+  ordinals controls the numbering of replica indices in a StatefulSet. The default ordinals behavior assigns a "0" index to the first replica and increments the index by one for each additional replica requested.
+
+  <a name="StatefulSetOrdinals"></a>
+  *StatefulSetOrdinals describes the policy used for replica ordinal assignment in this StatefulSet.*
+
+  - **ordinals.start** (int32)
+
+    start is the number representing the first replica's index. It may be used to number replicas from an alternate index (eg: 1-indexed) over the default 0-indexed names, or to orchestrate progressive movement of replicas from one StatefulSet to another. If set, replica indices will be in the range:
+      [.spec.ordinals.start, .spec.ordinals.start + .spec.replicas).
+    If unset, defaults to 0. Replica indices will be in the range:
+      [0, .spec.replicas).
 
 
 
@@ -133,7 +172,7 @@ StatefulSetStatus represents the current state of a StatefulSet.
 
 - **readyReplicas** (int32)
 
-  readyReplicas is the number of Pods created by the StatefulSet controller that have a Ready Condition.
+  readyReplicas is the number of pods created for this StatefulSet with a Ready Condition.
 
 - **currentReplicas** (int32)
 
@@ -145,7 +184,7 @@ StatefulSetStatus represents the current state of a StatefulSet.
 
 - **availableReplicas** (int32)
 
-  Total number of available pods (ready for at least minReadySeconds) targeted by this statefulset. This is an alpha field and requires enabling StatefulSetMinReadySeconds feature gate. Remove omitempty when graduating to beta
+  Total number of available pods (ready for at least minReadySeconds) targeted by this statefulset.
 
 - **collisionCount** (int32)
 
@@ -154,6 +193,8 @@ StatefulSetStatus represents the current state of a StatefulSet.
 - **conditions** ([]StatefulSetCondition)
 
   *Patch strategy: merge on key `type`*
+  
+  *Map: unique values on key type will be kept during a merge*
   
   Represents the latest available observations of a statefulset's current state.
 
@@ -354,6 +395,11 @@ GET /apis/apps/v1/namespaces/{namespace}/statefulsets
   <a href="{{< ref "../common-parameters/common-parameters#resourceVersionMatch" >}}">resourceVersionMatch</a>
 
 
+- **sendInitialEvents** (*in query*): boolean
+
+  <a href="{{< ref "../common-parameters/common-parameters#sendInitialEvents" >}}">sendInitialEvents</a>
+
+
 - **timeoutSeconds** (*in query*): integer
 
   <a href="{{< ref "../common-parameters/common-parameters#timeoutSeconds" >}}">timeoutSeconds</a>
@@ -422,6 +468,11 @@ GET /apis/apps/v1/statefulsets
   <a href="{{< ref "../common-parameters/common-parameters#resourceVersionMatch" >}}">resourceVersionMatch</a>
 
 
+- **sendInitialEvents** (*in query*): boolean
+
+  <a href="{{< ref "../common-parameters/common-parameters#sendInitialEvents" >}}">sendInitialEvents</a>
+
+
 - **timeoutSeconds** (*in query*): integer
 
   <a href="{{< ref "../common-parameters/common-parameters#timeoutSeconds" >}}">timeoutSeconds</a>
@@ -468,6 +519,11 @@ POST /apis/apps/v1/namespaces/{namespace}/statefulsets
 - **fieldManager** (*in query*): string
 
   <a href="{{< ref "../common-parameters/common-parameters#fieldManager" >}}">fieldManager</a>
+
+
+- **fieldValidation** (*in query*): string
+
+  <a href="{{< ref "../common-parameters/common-parameters#fieldValidation" >}}">fieldValidation</a>
 
 
 - **pretty** (*in query*): string
@@ -522,6 +578,11 @@ PUT /apis/apps/v1/namespaces/{namespace}/statefulsets/{name}
   <a href="{{< ref "../common-parameters/common-parameters#fieldManager" >}}">fieldManager</a>
 
 
+- **fieldValidation** (*in query*): string
+
+  <a href="{{< ref "../common-parameters/common-parameters#fieldValidation" >}}">fieldValidation</a>
+
+
 - **pretty** (*in query*): string
 
   <a href="{{< ref "../common-parameters/common-parameters#pretty" >}}">pretty</a>
@@ -572,6 +633,11 @@ PUT /apis/apps/v1/namespaces/{namespace}/statefulsets/{name}/status
   <a href="{{< ref "../common-parameters/common-parameters#fieldManager" >}}">fieldManager</a>
 
 
+- **fieldValidation** (*in query*): string
+
+  <a href="{{< ref "../common-parameters/common-parameters#fieldValidation" >}}">fieldValidation</a>
+
+
 - **pretty** (*in query*): string
 
   <a href="{{< ref "../common-parameters/common-parameters#pretty" >}}">pretty</a>
@@ -620,6 +686,11 @@ PATCH /apis/apps/v1/namespaces/{namespace}/statefulsets/{name}
 - **fieldManager** (*in query*): string
 
   <a href="{{< ref "../common-parameters/common-parameters#fieldManager" >}}">fieldManager</a>
+
+
+- **fieldValidation** (*in query*): string
+
+  <a href="{{< ref "../common-parameters/common-parameters#fieldValidation" >}}">fieldValidation</a>
 
 
 - **force** (*in query*): boolean
@@ -675,6 +746,11 @@ PATCH /apis/apps/v1/namespaces/{namespace}/statefulsets/{name}/status
 - **fieldManager** (*in query*): string
 
   <a href="{{< ref "../common-parameters/common-parameters#fieldManager" >}}">fieldManager</a>
+
+
+- **fieldValidation** (*in query*): string
+
+  <a href="{{< ref "../common-parameters/common-parameters#fieldValidation" >}}">fieldValidation</a>
 
 
 - **force** (*in query*): boolean
@@ -820,6 +896,11 @@ DELETE /apis/apps/v1/namespaces/{namespace}/statefulsets
 - **resourceVersionMatch** (*in query*): string
 
   <a href="{{< ref "../common-parameters/common-parameters#resourceVersionMatch" >}}">resourceVersionMatch</a>
+
+
+- **sendInitialEvents** (*in query*): boolean
+
+  <a href="{{< ref "../common-parameters/common-parameters#sendInitialEvents" >}}">sendInitialEvents</a>
 
 
 - **timeoutSeconds** (*in query*): integer

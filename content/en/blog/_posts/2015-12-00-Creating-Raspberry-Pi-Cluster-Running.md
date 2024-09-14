@@ -3,6 +3,8 @@ title: " Creating a Raspberry Pi cluster running Kubernetes, the installation (P
 date: 2015-12-22
 slug: creating-raspberry-pi-cluster-running
 url: /blog/2015/12/Creating-Raspberry-Pi-Cluster-Running
+author: >
+  Arjen Wassink (Quintor)
 ---
 At Devoxx Belgium and Devoxx Morocco, [Ray Tsang](https://twitter.com/saturnism) and I ([Arjen Wassink](https://twitter.com/ArjenWassink)) showed a Raspberry Pi cluster we built at Quintor running HypriotOS, Docker and Kubernetes. While we received many compliments on the talk, the most common question was about how to build a Pi cluster themselves! We’ll be doing just that, in two parts. The [first part covered the shopping list for the cluster](https://kubernetes.io/blog/2015/11/creating-a-Raspberry-Pi-cluster-running-Kubernetes-the-shopping-list-Part-1), and this second one will show you how to get kubernetes up and running . . .
 
@@ -85,7 +87,7 @@ f017f405ff4b        gcr.io/google\_containers/hyperkube-arm:v1.1.2   "/hyperkube
 
 When that’s looking good we’re able to access the master node of the Kubernetes cluster with kubectl. Kubectl for ARM can be downloaded from googleapis storage. kubectl get nodes shows which cluster nodes are registered with its status. The master node is named 127.0.0.1.
 ```
-$ curl -fsSL -o /usr/bin/kubectl https://storage.googleapis.com/kubernetes-release/release/v1.1.2/bin/linux/arm/kubectl
+$ curl -fsSL -o /usr/bin/kubectl https://dl.k8s.io/release/v1.1.2/bin/linux/arm/kubectl
 
 $ kubectl get nodes
 
@@ -194,6 +196,3 @@ k8s-master-127.0.0.1   3/3       Running   6          2h        127.0.0.1
 ### Enjoy your Kubernetes cluster!
 
 Congratulations! You now have your Kubernetes Raspberry Pi cluster running and can start playing with Kubernetes and start learning. Checkout the [Kubernetes User Guide](https://github.com/kubernetes/kubernetes/blob/master/docs/user-guide/README.md) to find out what you all can do. And don’t forget to pull some plugs occasionally like Ray and I do :-)
-
-
-Arjen Wassink, Java Architect and Team Lead, Quintor

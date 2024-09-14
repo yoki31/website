@@ -6,16 +6,14 @@ noedit: true
 cid: docsHome
 layout: docsportal_home
 class: gridPage gridPageHome
-linkTitle: "Home"
+linkTitle: "Documentation"
 main_menu: true
 weight: 10
 hide_feedback: true
 menu:
   main:
     title: "Documentation"
-    weight: 20
-    post: >
-      <p>Learn how to use Kubernetes with conceptual, tutorial, and reference documentation. You can even <a href="/editdocs/" data-auto-burger-exclude data-proofer-ignore>help contribute to the docs</a>!</p>
+    weight: 10
 description: >
   Kubernetes is an open source container orchestration engine for automating deployment, scaling, and management of containerized applications. The open source project is hosted by the Cloud Native Computing Foundation.
 overview: >
@@ -41,27 +39,29 @@ cards:
   description: "Look up common tasks and how to perform them using a short sequence of steps."
   button: "View Tasks"
   button_path: "/docs/tasks"
-- name: training
-  title: "Training"
-  description: "Get certified in Kubernetes and make your cloud native projects successful!"
-  button: "View training"
-  button_path: "/training"
 - name: reference
   title: Look up reference information
   description: Browse terminology, command line syntax, API resource types, and setup tool documentation.
   button: View Reference
   button_path: /docs/reference
 - name: contribute
-  title: Contribute to the docs
-  description: Anyone can contribute, whether you're new to the project or you've been around a long time.
-  button: Contribute to the docs
-  button_path: /docs/contribute
-- name: release-notes
-  title: K8s Release Notes
-  description: If you are installing Kubernetes or upgrading to the newest version, refer to the current release notes.
+  title: Contribute to Kubernetes
+  description: Find out how you can help make Kubernetes better.
+  button: See Ways to Contribute
+  button_path: "/docs/contribute"
+- name: training
+  title: "Training"
+  description: "Get certified in Kubernetes and make your cloud native projects successful!"
+  button: "View training"
+  button_path: "/training"
+- name: Download
+  title: Download Kubernetes
+  description: Install Kubernetes or upgrade to the newest version.
   button: "Download Kubernetes"
-  button_path: "/docs/setup/release/notes"
+  button_path: "/releases/download"
 - name: about
   title: About the documentation
   description: This website contains documentation for the current and previous 4 versions of Kubernetes.
+  button: "See available versions"
+  button_path: "/docs/home/supported-doc-versions"
 ---

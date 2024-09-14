@@ -62,7 +62,7 @@ jsonpathは次のように解釈されます:
 `range`を使用して要素を個別に繰り返し処理することにより、フォーマットをさらに制御できます。
 
 ```shell
-kubectl get pods --all-namespaces -o=jsonpath='{range .items[*]}{"\n"}{.metadata.name}{":\t"}{range .spec.containers[*]}{.image}{", "}{end}{end}' |\
+kubectl get pods --all-namespaces -o jsonpath='{range .items[*]}{"\n"}{.metadata.name}{":\t"}{range .spec.containers[*]}{.image}{", "}{end}{end}' |\
 sort
 ```
 
@@ -71,7 +71,7 @@ sort
 特定のラベルに一致するPodのみを対象とするには、-lフラグを使用します。以下は、`app=nginx`に一致するラベルを持つPodのみに一致します。
 
 ```shell
-kubectl get pods --all-namespaces -o=jsonpath="{..image}" -l app=nginx
+kubectl get pods --all-namespaces -o jsonpath="{..image}" -l app=nginx
 ```
 
 ## Podの名前空間でコンテナイメージ一覧をフィルタリングする {#list-container-images-filtering-by-pod-namespace}
@@ -84,7 +84,7 @@ kubectl get pods --namespace kube-system -o jsonpath="{..image}"
 
 ## jsonpathの代わりにgo-templateを使用してコンテナイメージを一覧表示する {#list-container-images-using-a-go-template-instead-of-jsonpath}
 
-jsonpathの代わりに、kubectlは[go-templates](https://golang.org/pkg/text/template/)を使用した出力のフォーマットをサポートしています:
+jsonpathの代わりに、kubectlは[go-templates](https://pkg.go.dev/text/template)を使用した出力のフォーマットをサポートしています:
 
 
 ```shell
@@ -105,7 +105,7 @@ kubectl get pods --all-namespaces -o go-template --template="{{range .items}}{{r
 ### 参照
 
 * [jsonpath](/docs/reference/kubectl/jsonpath/)参照ガイド
-* [Go template](https://golang.org/pkg/text/template/)参照ガイド
+* [Go template](https://pkg.go.dev/text/template)参照ガイド
 
 
 

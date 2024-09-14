@@ -32,11 +32,12 @@ is the default scheduler for Kubernetes and runs as part of the
 kube-scheduler is designed so that, if you want and need to, you can
 write your own scheduling component and use that instead.
 
-For every newly created pod or other unscheduled pods, kube-scheduler
-selects an optimal node for them to run on. However, every container in
-pods has different requirements for resources and every pod also has
-different requirements. Therefore, existing nodes need to be filtered
-according to the specific scheduling requirements.
+Kube-scheduler selects an optimal node to run newly created or not yet
+scheduled (unscheduled) pods. Since containers in pods - and pods themselves -
+can have different requirements, the scheduler filters out any nodes that
+don't meet a Pod's specific scheduling needs. Alternatively, the API lets
+you specify a node for a Pod when you create it, but this is unusual
+and is only done in special cases.
 
 In a cluster, Nodes that meet the scheduling requirements for a Pod
 are called _feasible_ nodes. If none of the nodes are suitable, the pod
@@ -61,7 +62,7 @@ kube-scheduler selects a node for the pod in a 2-step operation:
 
 The _filtering_ step finds the set of Nodes where it's feasible to
 schedule the Pod. For example, the PodFitsResources filter checks whether a
-candidate Node has enough available resource to meet a Pod's specific
+candidate Node has enough available resources to meet a Pod's specific
 resource requests. After this step, the node list contains any suitable
 Nodes; often, there will be more than one. If the list is empty, that
 Pod isn't (yet) schedulable.
@@ -83,9 +84,9 @@ of the scheduler:
 ## {{% heading "whatsnext" %}}
 
 * Read about [scheduler performance tuning](/docs/concepts/scheduling-eviction/scheduler-perf-tuning/)
-* Read about [Pod topology spread constraints](/docs/concepts/workloads/pods/pod-topology-spread-constraints/)
+* Read about [Pod topology spread constraints](/docs/concepts/scheduling-eviction/topology-spread-constraints/)
 * Read the [reference documentation](/docs/reference/command-line-tools-reference/kube-scheduler/) for kube-scheduler
-* Read the [kube-scheduler config (v1beta2)](/docs/reference/config-api/kube-scheduler-config.v1beta2/) reference
+* Read the [kube-scheduler config (v1)](/docs/reference/config-api/kube-scheduler-config.v1/) reference
 * Learn about [configuring multiple schedulers](/docs/tasks/extend-kubernetes/configure-multiple-schedulers/)
 * Learn about [topology management policies](/docs/tasks/administer-cluster/topology-manager/)
 * Learn about [Pod Overhead](/docs/concepts/scheduling-eviction/pod-overhead/)

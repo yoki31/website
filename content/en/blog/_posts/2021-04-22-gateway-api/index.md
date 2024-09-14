@@ -1,12 +1,15 @@
-
 ---
 layout: blog
 title: 'Evolving Kubernetes networking with the Gateway API'
 date: 2021-04-22
 slug: evolving-kubernetes-networking-with-the-gateway-api
+author: >
+   Mark Church (Google),
+   Harry Bagdi (Kong),
+   Daneyon Hanson (Red Hat),
+   Nick Young (VMware),
+   Manuel Zapf (Traefik Labs)
 ---
-
-**Authors:** Mark Church (Google), Harry Bagdi (Kong), Daneyon Hanson (Red Hat), Nick Young (VMware), Manuel Zapf (Traefik Labs)
 
 The Ingress resource is one of the many Kubernetes success stories. It created a [diverse ecosystem of Ingress controllers](/docs/concepts/services-networking/ingress-controllers/) which were used across hundreds of thousands of clusters in a standardized and consistent way. This standardization helped users adopt Kubernetes. However, five years after the creation of Ingress, there are signs of fragmentation into different but [strikingly similar CRDs](https://dave.cheney.net/paste/ingress-is-dead-long-live-ingressroute.pdf) and [overloaded annotations](https://kubernetes.github.io/ingress-nginx/user-guide/nginx-configuration/annotations/). The same portability that made Ingress pervasive also limited its future.
 
@@ -30,15 +33,15 @@ This led to design principles that allow the Gateway API to improve upon Ingress
 
 The Gateway API introduces a few new resource types:
 
-- **[GatewayClasses](https://gateway-api.sigs.k8s.io/references/spec/#networking.x-k8s.io/v1alpha1.GatewayClass)** are cluster-scoped resources that act as templates to explicitly define behavior for Gateways derived from them. This is similar in concept to StorageClasses, but for networking data-planes.
-- **[Gateways](https://gateway-api.sigs.k8s.io/references/spec/#networking.x-k8s.io/v1alpha1.Gateway)** are the deployed instances of GatewayClasses. They are the logical representation of the data-plane which performs routing, which may be in-cluster proxies, hardware LBs, or cloud LBs.
-- **Routes** are not a single resource, but represent many different protocol-specific Route resources. The [HTTPRoute](https://gateway-api.sigs.k8s.io/references/spec/#networking.x-k8s.io/v1alpha1.HTTPRoute) has matching, filtering, and routing rules that get applied to Gateways that can process HTTP and HTTPS traffic. Similarly, there are [TCPRoutes](https://gateway-api.sigs.k8s.io/references/spec/#networking.x-k8s.io/v1alpha1.TCPRoute), [UDPRoutes](https://gateway-api.sigs.k8s.io/references/spec/#networking.x-k8s.io/v1alpha1.UDPRoute), and [TLSRoutes](https://gateway-api.sigs.k8s.io/references/spec/#networking.x-k8s.io/v1alpha1.TLSRoute) which also have protocol-specific semantics. This model also allows the Gateway API to incrementally expand its protocol support in the future.
+- **[GatewayClasses](https://gateway-api.sigs.k8s.io/concepts/api-overview/#gatewayclass)** are cluster-scoped resources that act as templates to explicitly define behavior for Gateways derived from them. This is similar in concept to StorageClasses, but for networking data-planes.
+- **[Gateways](https://gateway-api.sigs.k8s.io/concepts/api-overview/#gateway)** are the deployed instances of GatewayClasses. They are the logical representation of the data-plane which performs routing, which may be in-cluster proxies, hardware LBs, or cloud LBs.
+- **Routes** are not a single resource, but represent many different protocol-specific Route resources. The [HTTPRoute](https://gateway-api.sigs.k8s.io/concepts/api-overview/#httproute) has matching, filtering, and routing rules that get applied to Gateways that can process HTTP and HTTPS traffic. Similarly, there are [TCPRoutes](https://gateway-api.sigs.k8s.io/concepts/api-overview/#tcproute-and-udproute), [UDPRoutes](https://gateway-api.sigs.k8s.io/concepts/api-overview/#tcproute-and-udproute), and [TLSRoutes](https://gateway-api.sigs.k8s.io/concepts/api-overview/#gateway) which also have protocol-specific semantics. This model also allows the Gateway API to incrementally expand its protocol support in the future.
 
 ![The resources of the Gateway API](gateway-api-resources.png)
 
 ### Gateway Controller Implementations
 
-The good news is that although Gateway is in [Alpha](https://github.com/kubernetes-sigs/gateway-api/releases), there are already several [Gateway controller implementations](https://gateway-api.sigs.k8s.io/references/implementations/) that you can run. Since it’s a standardized spec, the following example could be run on any of them and should function the exact same way. Check out [getting started](https://gateway-api.sigs.k8s.io/guides/getting-started/) to see how to install and use one of these Gateway controllers.
+The good news is that although Gateway is in [Alpha](https://github.com/kubernetes-sigs/gateway-api/releases), there are already several [Gateway controller implementations](https://gateway-api.sigs.k8s.io/implementations/) that you can run. Since it’s a standardized spec, the following example could be run on any of them and should function the exact same way. Check out [getting started](https://gateway-api.sigs.k8s.io/v1alpha1/guides/getting-started/) to see how to install and use one of these Gateway controllers.
 
 ## Getting Hands-on with the Gateway API
 
@@ -134,7 +137,7 @@ spec:
 
 So we have two HTTPRoutes matching and routing traffic to different Services. You might be wondering, where are these Services accessible? Through which networks or IPs are they exposed? 
 
-How Routes are exposed to clients is governed by [Route binding](https://gateway-api.sigs.k8s.io/concepts/api-overview/#route-binding), which describes how Routes and Gateways create a bidirectional relationship between each other. When Routes are bound to a Gateway it means their collective routing rules are configured on the underlying load balancers or proxies and the Routes are accessible through the Gateway. Thus, a Gateway is a logical representation of a networking data plane that can be configured through Routes.
+How Routes are exposed to clients is governed by [Route binding](https://gateway-api.sigs.k8s.io/concepts/api-overview/#route-resources), which describes how Routes and Gateways create a bidirectional relationship between each other. When Routes are bound to a Gateway it means their collective routing rules are configured on the underlying load balancers or proxies and the Routes are accessible through the Gateway. Thus, a Gateway is a logical representation of a networking data plane that can be configured through Routes.
 
 
 ![How Routes bind with Gateways](route-binding.png )
@@ -192,6 +195,6 @@ When you put it all together, you have a single load balancing infrastructure th
 
 There are many resources to check out to learn more. 
 
-*   Check out the [user guides](https://gateway-api.sigs.k8s.io/guides/getting-started/) to see what use-cases can be addressed. 
-*   Try out one of the [existing Gateway controllers ](https://gateway-api.sigs.k8s.io/references/implementations/)
+*   Check out the [user guides](https://gateway-api.sigs.k8s.io/v1alpha1/guides/getting-started/) to see what use-cases can be addressed. 
+*   Try out one of the [existing Gateway controllers ](https://gateway-api.sigs.k8s.io/implementations/)
 *   Or [get involved](https://gateway-api.sigs.k8s.io/contributing/community/) and help design and influence the future of Kubernetes service networking!

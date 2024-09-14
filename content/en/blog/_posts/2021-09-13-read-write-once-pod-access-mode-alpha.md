@@ -3,9 +3,9 @@ layout: blog
 title: "Introducing Single Pod Access Mode for PersistentVolumes"
 date: 2021-09-13
 slug: read-write-once-pod-access-mode-alpha
+author: >
+  Chris Henzie (Google)
 ---
-
-**Author:** Chris Henzie (Google)
 
 Last month's release of Kubernetes v1.22 introduced a new ReadWriteOncePod access mode for [PersistentVolumes](/docs/concepts/storage/persistent-volumes/#persistent-volumes) and [PersistentVolumeClaims](/docs/concepts/storage/persistent-volumes/#persistentvolumeclaims).
 With this alpha feature, Kubernetes allows you to restrict volume access to a single pod in the cluster.
@@ -28,7 +28,7 @@ metadata:
   name: shared-cache
 spec:
   accessModes:
-  - ReadWriteMany # Allow many pods to access shared-cache simultaneously.
+  - ReadWriteMany # Allow many nodes to access shared-cache simultaneously.
   resources:
     requests:
       storage: 1Gi
@@ -255,7 +255,7 @@ The minimum required versions are:
 
 ## What’s next?
 
-As part of the beta graduation for this feature, SIG Storage plans to update the Kubenetes scheduler to support pod preemption in relation to ReadWriteOncePod storage.
+As part of the beta graduation for this feature, SIG Storage plans to update the Kubernetes scheduler to support pod preemption in relation to ReadWriteOncePod storage.
 This means if two pods request a PersistentVolumeClaim with ReadWriteOncePod, the pod with highest priority will gain access to the PersistentVolumeClaim and any pod with lower priority will be preempted from the node and be unable to access the PersistentVolumeClaim.
 
 ## How can I learn more?

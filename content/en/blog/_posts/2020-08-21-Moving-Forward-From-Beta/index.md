@@ -3,16 +3,23 @@ layout: blog
 title: "Moving Forward From Beta"
 date: 2020-08-21
 slug: moving-forward-from-beta
----
 
-**Author**: Tim Bannister, The Scale Factory
+# note to localizers: including this means you are marking
+# the article as maintained. That should be fine, but if
+# there is ever an update, you're committing to also updating
+# the localized version.
+# If unsure: omit this next field.
+evergreen: true
+author: >
+   Tim Bannister (The Scale Factory)
+---
 
 In Kubernetes, features follow a defined
 [lifecycle](/docs/reference/command-line-tools-reference/feature-gates/#feature-stages).
 First, as the twinkle of an eye in an interested developer. Maybe, then,
 sketched in online discussions, drawn on the online equivalent of a cafe
 napkin. This rough work typically becomes a
-[Kubernetes Enhancement Proposal](https://github.com/kubernetes/enhancements/blob/master/keps/0001-kubernetes-enhancement-proposal-process.md#kubernetes-enhancement-proposal-process) (KEP), and
+[Kubernetes Enhancement Proposal](https://github.com/kubernetes/enhancements/blob/master/keps/sig-architecture/0000-kep-process/README.md#kubernetes-enhancement-proposal-process) (KEP), and
 from there it usually turns into code.
 
 For Kubernetes v1.20 and onwards, we're focusing on helping that code

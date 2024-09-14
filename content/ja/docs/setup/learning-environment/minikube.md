@@ -7,7 +7,7 @@ content_type: concept
 
 <!-- overview -->
 
-Minikubeはローカル環境でKubernetesを簡単に実行するためのツールです。Kubernetesを試したり日々の開発への使用を検討するユーザー向けに、PC上のVM内でシングルノードのKubernetesクラスタを実行することができます。
+Minikubeはローカル環境でKubernetesを簡単に実行するためのツールです。Kubernetesを試したり日々の開発への使用を検討するユーザー向けに、PC上のVM内でシングルノードのKubernetesクラスターを実行することができます。
 
 
 <!-- body -->
@@ -54,7 +54,7 @@ MinikubeのサポートするKubernetesの機能:
    単純なHTTPサーバーである`echoserver`という既存のイメージを使用して、Kubernetes Deploymentを作りましょう。そして`--port`を使用して8080番ポートで公開しましょう。
 
    ```shell
-   kubectl create deployment hello-minikube --image=k8s.gcr.io/echoserver:1.10
+   kubectl create deployment hello-minikube --image=registry.k8s.io/echoserver:1.10
    ```
 
    出力はこのようになります:
@@ -198,10 +198,10 @@ MinikubeのサポートするKubernetesの機能:
 
 `minikube start`コマンドを使用してクラスターを起動することができます。
 このコマンドはシングルノードのKubernetesクラスターを実行する仮想マシンを作成・設定します。
-また、このクラスターと通信する[kubectl](/ja/docs/reference/kubectl/overview/)のインストールも設定します。
+また、このクラスターと通信する[kubectl](/ja/docs/reference/kubectl/)のインストールも設定します。
 
 {{< note >}}
-もしWebプロキシーを通している場合、そのプロキシー情報を`minikube start`コマンドに渡す必要があります:
+もしWebプロキシを通している場合、そのプロキシ情報を`minikube start`コマンドに渡す必要があります:
 
 ```shell
 https_proxy=<my proxy> minikube start --docker-env http_proxy=<my proxy> --docker-env https_proxy=<my proxy> --docker-env no_proxy=192.168.99.0/24
@@ -217,10 +217,10 @@ Minikubeは"minikube"コンテキストも作成し、そのコンテキスト�
 
 `minikube start`コマンドに`--kubernetes-version`文字列を追加することで、
 MinikubeにKubernetesの特定のバージョンを指定することができます。
-例えば、{{< param "fullversion" >}}のバージョンを実行するには以下を実行します:
+例えば、{{< skew currentPatchVersion >}}のバージョンを実行するには以下を実行します:
 
 ```
-minikube start --kubernetes-version {{< param "fullversion" >}}
+minikube start --kubernetes-version {{< skew currentPatchVersion >}}
 ```
 
 #### VMドライバーの指定
@@ -484,7 +484,7 @@ Minikubeで起動したいアドオンを `~/.minikube/addons` ディレクト�
 MinikubeはKubernetesとDockerデーモンを含む仮想マシンを作成します。
 KubernetesがDockerを使用してコンテナをスケジュールしようとする際、Dockerデーモンはコンテナをプルするために外部ネットワークを必要とする場合があります。
 
-HTTPプロキシーを通している場合には、プロキシー設定をDockerに提供する必要があります。
+HTTPプロキシを通している場合には、プロキシ設定をDockerに提供する必要があります。
 これを行うには、`minikube start` に必要な環境変数をフラグとして渡します。
 
 例:
@@ -494,8 +494,8 @@ minikube start --docker-env http_proxy=http://$YOURPROXY:PORT \
                --docker-env https_proxy=https://$YOURPROXY:PORT
 ```
 
-仮想マシンのアドレスが192.168.99.100の場合、プロキシーの設定により `kubectl` が直接アクセスできない可能性があります。
-このIPアドレスのプロキシー設定を迂回するには、以下のようにno_proxy設定を変更する必要があります。
+仮想マシンのアドレスが192.168.99.100の場合、プロキシの設定により `kubectl` が直接アクセスできない可能性があります。
+このIPアドレスのプロキシ設定を迂回するには、以下のようにno_proxy設定を変更する必要があります。
 
 ```shell
 export no_proxy=$no_proxy,$(minikube ip)
@@ -522,4 +522,4 @@ Minikubeの詳細については、[proposal](https://git.k8s.io/community/contr
 
 ## コミュニティ
 
-コントリビューションや質問、コメントは歓迎・奨励されています! Minikubeの開発者は[Slack](https://kubernetes.slack.com)の`#minikube`チャンネルにいます(Slackへの招待状は[こちら](http://slack.kubernetes.io/))。[kubernetes-dev Google Groupsメーリングリスト](https://groups.google.com/forum/#!forum/kubernetes-dev)もあります。メーリングリストに投稿する際は件名の最初に "minikube: " をつけてください。
+コントリビューションや質問、コメントは歓迎・奨励されています! Minikubeの開発者は[Slack](https://kubernetes.slack.com)の`#minikube`チャンネルにいます(Slackへの招待状は[こちら](http://slack.kubernetes.io/))。[dev@kubernetes Google Groupsメーリングリスト](https://groups.google.com/a/kubernetes.io/g/dev/)もあります。メーリングリストに投稿する際は件名の最初に "minikube: " をつけてください。

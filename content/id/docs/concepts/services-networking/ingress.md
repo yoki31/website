@@ -37,7 +37,7 @@ Sebuah *Ingress* dapat dikonfigurasi agar berbagai *Service* memiliki URL yang d
 Sebuah [kontroler Ingress](/id/docs/concepts/services-networking/ingress-controllers) bertanggung jawab untuk menjalankan fungsi Ingress yaitu sebagai *loadbalancer*, meskipun dapat juga digunakan untuk mengatur *edge router* atau *frontend* tambahan untuk menerima trafik.
 
 Sebuah *Ingress* tidak mengekspos sembarang *port* atau protokol. Mengekspos *Service* untuk protokol selain HTTP ke HTTPS internet biasanya dilakukan dengan menggunakan
-*service* dengan tipe [Service.Type=NodePort](/id/docs/concepts/services-networking/service/#nodeport) atau
+*service* dengan tipe [Service.Type=NodePort](/id/docs/concepts/services-networking/service/#type-nodeport) atau
 [Service.Type=LoadBalancer](/id/docs/concepts/services-networking/service/#loadbalancer).
 
 ## Prasyarat
@@ -91,7 +91,7 @@ spec:
  Seperti layaknya *resource* Kubernetes yang lain, sebuah Ingress membutuhkan *field* `apiVersion`, `kind`, dan `metadata`.
  Untuk informasi umum soal bagaimana cara bekerja dengan menggunakan berkas konfigurasi, silahkan merujuk pada [melakukan deploy aplikasi](/docs/tasks/run-application/run-stateless-application-deployment/), [konfigurasi kontainer](/id/docs/tasks/configure-pod-container/configure-pod-configmap/), [mengatur *resource*](/id/docs/concepts/cluster-administration/manage-deployment/).
  Ingress seringkali menggunakan anotasi untuk melakukan konfigurasi beberapa opsi yang ada bergantung pada kontroler Ingress yang digunakan, sebagai contohnya
- adalah [anotasi rewrite-target](https://github.com/kubernetes/ingress-nginx/blob/master/docs/examples/rewrite/README.md).
+ adalah [anotasi rewrite-target](https://github.com/kubernetes/ingress-nginx/blob/main/docs/examples/rewrite/README.md).
  [Kontroler Ingress](/id/docs/concepts/services-networking/ingress-controllers) yang berbeda memiliki jenis anotasi yang berbeda. Pastikan kamu sudah terlebih dahulu memahami dokumentasi
  kontroler Ingress yang akan kamu pakai untuk mengetahui jenis anotasi apa sajakah yang disediakan.
 
@@ -132,7 +132,7 @@ akan diarahkan pada *backend default*.
 Terdapat konsep Kubernetes yang memungkinkan kamu untuk mengekspos sebuah Service, lihat [alternatif lain](#alternatif-lain).
 Kamu juga bisa membuat spesifikasi Ingress dengan  *backend default* yang tidak memiliki *rules*.
 
-{{< codenew file="service/networking/ingress.yaml" >}}
+{{% codenew file="service/networking/ingress.yaml" %}}
 
 Jika kamu menggunakan `kubectl apply -f` kamu dapat melihat:
 
@@ -464,7 +464,7 @@ soal perubahan berbagai kontroler.
 Kamu dapat mengekspos sebuah *Service* dalam berbagai cara, tanpa harus menggunakan *resource* Ingress, dengan menggunakan:
 
 * [Service.Type=LoadBalancer](/id/docs/concepts/services-networking/service/#loadbalancer)
-* [Service.Type=NodePort](/id/docs/concepts/services-networking/service/#nodeport)
+* [Service.Type=NodePort](/id/docs/concepts/services-networking/service/#type-nodeport)
 * [Port Proxy](https://git.k8s.io/contrib/for-demos/proxy-to-service)
 
 

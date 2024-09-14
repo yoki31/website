@@ -76,7 +76,7 @@ Format dapat dikontrol lebih lanjut dengan menggunakan operasi `range` untuk
 melakukan iterasi untuk setiap elemen secara individual.
 
 ```sh
-kubectl get pods --all-namespaces -o=jsonpath='{range .items[*]}{"\n"}{.metadata.name}{":\t"}{range .spec.containers[*]}{.image}{", "}{end}{end}' |\
+kubectl get pods --all-namespaces -o jsonpath='{range .items[*]}{"\n"}{.metadata.name}{":\t"}{range .spec.containers[*]}{.image}{", "}{end}{end}' |\
 sort
 ```
 
@@ -86,7 +86,7 @@ Untuk menargetkan hanya Pod yang cocok dengan label tertentu saja, gunakan tanda
 dibawah ini akan menghasilkan Pod dengan label yang cocok dengan `app=nginx`.
 
 ```sh
-kubectl get pods --all-namespaces -o=jsonpath="{.items[*].spec.containers[*].image}" -l app=nginx
+kubectl get pods --all-namespaces -o jsonpath="{.items[*].spec.containers[*].image}" -l app=nginx
 ```
 
 ## Membuat daftar _image_ Container yang difilter berdasarkan Namespace Pod
@@ -100,7 +100,7 @@ kubectl get pods --namespace kube-system -o jsonpath="{.items[*].spec.containers
 
 ## Membuat daftar _image_ Container dengan menggunakan go-template sebagai alternatif dari jsonpath
 
-Sebagai alternatif untuk `jsonpath`, kubectl mendukung penggunaan [go-template](https://golang.org/pkg/text/template/)
+Sebagai alternatif untuk `jsonpath`, kubectl mendukung penggunaan [go-template](https://pkg.go.dev/text/template)
 untuk memformat keluaran seperti berikut:
 
 
@@ -122,7 +122,7 @@ kubectl get pods --all-namespaces -o go-template --template="{{range .items}}{{r
 ### Referensi
 
 * Referensi panduan [Jsonpath](/docs/user-guide/jsonpath/).
-* Referensi panduan [Go template](https://golang.org/pkg/text/template/).
+* Referensi panduan [Go template](https://pkg.go.dev/text/template).
 
 
 

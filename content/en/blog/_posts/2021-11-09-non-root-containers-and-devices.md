@@ -3,9 +3,9 @@ layout: blog
 title: 'Non-root Containers And Devices'
 date: 2021-11-09
 slug: non-root-containers-and-devices
+author: >
+  Mikko Ylinen (Intel)
 ---
-
-**Author:** Mikko Ylinen (Intel)
 
 The user/group ID related security settings in Pod's `securityContext` trigger a problem when users want to
 deploy containers that use accelerator devices (via [Kubernetes Device Plugins](/docs/concepts/extend-kubernetes/compute-storage-net/device-plugins/)) on Linux. In this blog
@@ -18,7 +18,7 @@ One of the key security principles for running containers in Kubernetes is the
 principle of least privilege. The Pod/container `securityContext` specifies the config
 options to set, e.g., Linux capabilities, MAC policies, and user/group ID values to achieve this.
 
-Furthermore, the cluster admins are supported with tools like [PodSecurityPolicy](/docs/concepts/policy/pod-security-policy/) (deprecated) or
+Furthermore, the cluster admins are supported with tools like [PodSecurityPolicy](/docs/concepts/security/pod-security-policy/) (deprecated) or
 [Pod Security Admission](/docs/concepts/security/pod-security-admission/) (alpha) to enforce the desired security settings for pods that are being deployed in
 the cluster. These settings could, for instance, require that containers must be `runAsNonRoot` or
 that they are forbidden from running with root's group ID in `runAsGroup` or `supplementalGroups`.

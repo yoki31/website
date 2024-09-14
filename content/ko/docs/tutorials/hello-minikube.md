@@ -2,12 +2,6 @@
 title: Hello Minikube
 content_type: tutorial
 weight: 5
-menu:
-  main:
-    title: "Get Started"
-    weight: 10
-    post: >
-      <p>작업할 준비가 되었나요? 샘플 애플리케이션을 실행하는 간단한 쿠버네티스 클러스터를 구축합니다.</p>
 card:
   name: tutorials
   weight: 10
@@ -94,7 +88,7 @@ minikube dashboard --url
 파드는 제공된 Docker 이미지를 기반으로 한 컨테이너를 실행한다.
 
     ```shell
-    kubectl create deployment hello-node --image=k8s.gcr.io/echoserver:1.4
+    kubectl create deployment hello-node --image=registry.k8s.io/e2e-test-images/agnhost:2.39 -- /agnhost netexec --http-port=8080
     ```
 
 2. 디플로이먼트 보기
@@ -136,7 +130,7 @@ minikube dashboard --url
     ```
 
 {{< note >}}
-`kubectl` 명령어에 관해 자세히 알기 원하면 [kubectl 개요](/ko/docs/reference/kubectl/overview/)을 살펴보자.
+`kubectl` 명령어에 관해 자세히 알기 원하면 [kubectl 개요](/ko/docs/reference/kubectl/)을 살펴보자.
 {{< /note >}}
 
 ## 서비스 만들기
@@ -155,7 +149,7 @@ minikube dashboard --url
     `--type=LoadBalancer`플래그는 클러스터 밖의 서비스로 노출하기
     원한다는 뜻이다.
 
-    `k8s.gcr.io/echoserver` 이미지 내의 애플리케이션 코드는 TCP 포트 8080에서만 수신한다. `kubectl expose`를
+    `registry.k8s.io/echoserver` 이미지 내의 애플리케이션 코드는 TCP 포트 8080에서만 수신한다. `kubectl expose`를
     사용하여 다른 포트를 노출한 경우, 클라이언트는 다른 포트에 연결할 수 없다.
 
 2. 생성한 서비스 살펴보기
@@ -301,5 +295,6 @@ minikube delete
 
 
 * [디플로이먼트 오브젝트](/ko/docs/concepts/workloads/controllers/deployment/)에 대해서 더 배워 본다.
-* [애플리케이션 배포](/docs/tasks/run-application/run-stateless-application-deployment/)에 대해서 더 배워 본다.
+* [애플리케이션 배포](/ko/docs/tasks/run-application/run-stateless-application-deployment/)에 대해서 더 배워 본다.
 * [서비스 오브젝트](/ko/docs/concepts/services-networking/service/)에 대해서 더 배워 본다.
+

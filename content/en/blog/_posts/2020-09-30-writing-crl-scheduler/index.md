@@ -3,9 +3,9 @@ layout: blog
 title: "A Custom Kubernetes Scheduler to Orchestrate Highly Available Applications"
 date: 2020-12-21
 slug: writing-crl-scheduler
+author: >
+   Chris Seto (Cockroach Labs)
 ---
-
-**Author**: Chris Seto (Cockroach Labs)
 
 As long as you're willing to follow the rules, deploying on Kubernetes and air travel can be quite pleasant. More often than not, things will "just work". However, if one is interested in travelling with an alligator that must remain alive or scaling a database that must remain available, the situation is likely to become a bit more complicated. It may even be easier to build one's own plane or database for that matter. Travelling with reptiles aside, scaling a highly available stateful system is no trivial task.
 
@@ -70,7 +70,7 @@ To correct the latter issue, we now employ a "hunt and peck" approach to removin
 ### 1. Upgrade to kubernetes 1.18 and make use of Pod Topology Spread Constraints
 
 While this seems like it could have been the perfect solution, at the time of writing Kubernetes 1.18 was unavailable on the two most common managed Kubernetes services in public cloud, EKS and GKE.
-Furthermore, [pod topology spread constraints](/docs/concepts/workloads/pods/pod-topology-spread-constraints/) were still a [beta feature in 1.18](https://v1-18.docs.kubernetes.io/docs/concepts/workloads/pods/pod-topology-spread-constraints/) which meant that it [wasn't guaranteed to be available in managed clusters](https://cloud.google.com/kubernetes-engine/docs/concepts/types-of-clusters#kubernetes_feature_choices) even when v1.18 became available.
+Furthermore, [pod topology spread constraints](/docs/concepts/scheduling-eviction/topology-spread-constraints/) were still a beta feature in 1.18 which meant that it [wasn't guaranteed to be available in managed clusters](https://cloud.google.com/kubernetes-engine/docs/concepts/types-of-clusters#kubernetes_feature_choices) even when v1.18 became available.
 The entire endeavour was concerningly reminiscent of checking [caniuse.com](https://caniuse.com/) when Internet Explorer 8 was still around.
 
 ### 2. Deploy a statefulset _per zone_.

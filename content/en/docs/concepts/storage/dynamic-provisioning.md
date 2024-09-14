@@ -6,7 +6,7 @@ reviewers:
 - msau42
 title: Dynamic Volume Provisioning
 content_type: concept
-weight: 40
+weight: 50
 ---
 
 <!-- overview -->
@@ -17,10 +17,8 @@ calls to their cloud or storage provider to create new storage volumes, and
 then create [`PersistentVolume` objects](/docs/concepts/storage/persistent-volumes/)
 to represent them in Kubernetes. The dynamic provisioning feature eliminates
 the need for cluster administrators to pre-provision storage. Instead, it
-automatically provisions storage when it is requested by users.
-
-
-
+automatically provisions storage when users create
+[`PersistentVolumeClaim` objects](/docs/concepts/storage/persistent-volumes/).
 
 <!-- body -->
 
@@ -116,21 +114,21 @@ can enable this behavior by:
   is enabled on the API server.
 
 An administrator can mark a specific `StorageClass` as default by adding the
-`storageclass.kubernetes.io/is-default-class` annotation to it.
+[`storageclass.kubernetes.io/is-default-class` annotation](/docs/reference/labels-annotations-taints/#storageclass-kubernetes-io-is-default-class) to it.
 When a default `StorageClass` exists in a cluster and a user creates a
 `PersistentVolumeClaim` with `storageClassName` unspecified, the
 `DefaultStorageClass` admission controller automatically adds the
 `storageClassName` field pointing to the default storage class.
 
-Note that there can be at most one *default* storage class on a cluster, or
-a `PersistentVolumeClaim` without `storageClassName` explicitly specified cannot
-be created.
+Note that if you set the `storageclass.kubernetes.io/is-default-class`
+annotation to true on more than one StorageClass in your cluster, and you then
+create a `PersistentVolumeClaim` with no `storageClassName` set, Kubernetes
+uses the most recently created default StorageClass.
 
 ## Topology Awareness
 
-In [Multi-Zone](/docs/setup/multiple-zones) clusters, Pods can be spread across
+In [Multi-Zone](/docs/setup/best-practices/multiple-zones/) clusters, Pods can be spread across
 Zones in a Region. Single-Zone storage backends should be provisioned in the Zones where
-Pods are scheduled. This can be accomplished by setting the [Volume Binding
-Mode](/docs/concepts/storage/storage-classes/#volume-binding-mode).
-
+Pods are scheduled. This can be accomplished by setting the
+[Volume Binding Mode](/docs/concepts/storage/storage-classes/#volume-binding-mode).
 

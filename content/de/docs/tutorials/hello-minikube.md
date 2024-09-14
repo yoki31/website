@@ -2,12 +2,6 @@
 title: Hallo Minikube
 content_type: tutorial
 weight: 5
-menu:
-  main:
-    title: "Loslegen"
-    weight: 10
-    post: >
-      <p>Sind Sie bereit, Ihre Hände schmutzig zu machen? Erstellen Sie einen einfachen Kubernetes-Cluster, auf dem "Hallo Welt" für Node.js ausgeführt wird.</p>
 card:
   name: tutorials
   weight: 10
@@ -38,9 +32,9 @@ Sie können dieses Tutorial auch verwenden, wenn Sie [Minikube lokal](/docs/task
 
 Dieses Lernprogramm enthält ein aus den folgenden Dateien erstelltes Container-Image:
 
-{{< codenew language="js" file="minikube/server.js" >}}
+{{% codenew language="js" file="minikube/server.js" %}}
 
-{{< codenew language="conf" file="minikube/Dockerfile" >}}
+{{% codenew language="conf" file="minikube/Dockerfile" %}}
 
 Weitere Informationen zum `docker build` Befehl, lesen Sie die [Docker Dokumentation](https://docs.docker.com/engine/reference/commandline/build/).
 
@@ -77,7 +71,7 @@ Deployments sind die empfohlene Methode zum Verwalten der Erstellung und Skalier
 Der Pod führt einen Container basierend auf dem bereitgestellten Docker-Image aus.
 
     ```shell
-    kubectl create deployment hello-node --image=k8s.gcr.io/echoserver:1.4
+    kubectl create deployment hello-node --image=registry.k8s.io/echoserver:1.4
     ```
 
 2. Anzeigen des Deployments:
@@ -105,7 +99,7 @@ Der Pod führt einen Container basierend auf dem bereitgestellten Docker-Image a
     hello-node-5f76cf6ccf-br9b5   1/1       Running   0          1m
     ```
 
-4. Cluster Events anzigen:
+4. Cluster Events anzeigen:
 
     ```shell
     kubectl get events

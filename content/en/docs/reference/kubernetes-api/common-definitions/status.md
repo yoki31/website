@@ -40,6 +40,8 @@ Status is a return value for calls that don't return other objects.
 
 - **details** (StatusDetails)
 
+  *Atomic: will be replaced during a merge*
+  
   Extended data associated with the reason.  Each reason may define its own extended details. This field is optional and the data returned is not guaranteed to conform to any schema except that defined by the reason type.
 
   <a name="StatusDetails"></a>
@@ -47,6 +49,8 @@ Status is a return value for calls that don't return other objects.
 
   - **details.causes** ([]StatusCause)
 
+    *Atomic: will be replaced during a merge*
+    
     The Causes array includes more details associated with the StatusReason failure. Not all StatusReasons may provide detailed causes.
 
     <a name="StatusCause"></a>
@@ -86,7 +90,7 @@ Status is a return value for calls that don't return other objects.
 
   - **details.uid** (string)
 
-    UID of the resource. (when there is a single resource which can be described). More info: http://kubernetes.io/docs/user-guide/identifiers#uids
+    UID of the resource. (when there is a single resource which can be described). More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names#uids
 
 - **kind** (string)
 

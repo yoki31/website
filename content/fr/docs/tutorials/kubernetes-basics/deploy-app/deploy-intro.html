@@ -9,7 +9,6 @@ weight: 10
 
 <body>
 
-<link href="/docs/tutorials/kubernetes-basics/public/css/styles.css" rel="stylesheet">
 
 <div class="layout" id="top">
 
@@ -27,12 +26,7 @@ weight: 10
 
             <div class="col-md-8">
                 <h3>Déploiements Kubernetes</h3>
-                <p>
-                Une fois que vous avez un cluster Kubernetes en cours d'exécution, vous pouvez déployer vos applications conteneurisées par dessus.
-                Pour ce faire, vous créez une configuration de <b>Déploiement (Deployments) </b> Kubernetes. Le déploiement instruit Kubernetes
-                de comment créer et mettre à jour des instances de votre application. Une fois que vous avez créé un déploiement, le plannificateur de Kubernetes (kube-scheduler)
-                planifient les instanciations d'application sur des nœuds du cluster.
-                </p>
+                <p>Une fois que vous avez un cluster Kubernetes en cours d'exécution, vous pouvez déployer vos applications conteneurisées par dessus. Pour ce faire, vous créez une configuration de <b>Déploiement (Deployments) </b> Kubernetes. Le déploiement instruit Kubernetes de comment créer et mettre à jour des instances de votre application. Une fois que vous avez créé un déploiement, le plannificateur de Kubernetes (kube-scheduler) planifient les instanciations d'application sur des nœuds du cluster.</p>
 
                 <p>Une fois les instances d’application créées, un contrôleur de déploiement Kubernetes surveille en permanence ces instances. Si le nœud hébergeant une instance tombe en panne ou est supprimé, le contrôleur de déploiement remplace l'instance par une instance située sur un autre nœud du cluster. <b> Ceci fournit un mécanisme d'auto-réparation pour faire face aux pannes ou à la maintenance de la machine.</b></p>
 
@@ -76,7 +70,7 @@ weight: 10
                 <p>Vous pouvez créer et gérer un déploiement à l'aide de l'interface de ligne de commande, <b>Kubectl</b>.</p>
                 <p>Kubectl utilise l'API Kubernetes pour interagir avec le cluster. Dans ce module, vous apprendrez les commandes Kubectl les plus courantes nécessaires à la création de déploiements exécutant vos applications sur un cluster Kubernetes.</p>
 
-                <p>Lorsque vous créez un déploiement, vous devez spécifier l'image de conteneur de votre application et le nombre de réplicas que vous souhaitez exécuter. Vous pouvez modifier ces informations ultérieurement en mettant à jour votre déploiement.; Modules <a href="/docs/tutorials/kubernetes-basics/scale-intro/">5</a> et <a href="/docs/tutorials/kubernetes-basics/update-intro/">6</a> du bootcamp, expliquez comment vous pouvez faire évoluer et mettre à jour vos déploiements.</p>
+                <p>Lorsque vous créez un déploiement, vous devez spécifier l'image de conteneur de votre application et le nombre de réplicas que vous souhaitez exécuter. Vous pouvez modifier ces informations ultérieurement en mettant à jour votre déploiement.; Modules <a href="/fr/docs/tutorials/kubernetes-basics/scale-intro/">5</a> et <a href="/fr/docs/tutorials/kubernetes-basics/update-intro/">6</a> du bootcamp, expliquez comment vous pouvez faire évoluer et mettre à jour vos déploiements.</p>
 
 
 
@@ -104,7 +98,7 @@ weight: 10
 
         <div class="row">
             <div class="col-md-12">
-                <a class="btn btn-lg btn-success" href="/docs/tutorials/kubernetes-basics/deploy-app/deploy-interactive/" role="button">Lancer le didacticiel interactif <span class="btn__next">›</span></a>
+                <a class="btn btn-lg btn-success" href="/fr/docs/tutorials/kubernetes-basics/deploy-app/deploy-interactive/" role="button">Lancer le didacticiel interactif <span class="btn__next">›</span></a>
             </div>
         </div>
 

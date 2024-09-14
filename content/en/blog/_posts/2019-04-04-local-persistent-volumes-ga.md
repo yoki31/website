@@ -2,9 +2,11 @@
 layout: blog
 title: 'Kubernetes 1.14: Local Persistent Volumes GA'
 date: 2019-04-04
+author: >
+  Michelle Au (Google),
+  Matt Schallert (Uber),
+  Celina Ward (Uber)
 ---
-
-**Authors**: Michelle Au (Google), Matt Schallert (Uber), Celina Ward (Uber)
 
 The [Local Persistent Volumes](https://kubernetes.io/docs/concepts/storage/volumes/#local)
 feature has been promoted to GA in Kubernetes 1.14.
@@ -129,7 +131,7 @@ spec:
     spec:
       containers:
       - name: test-container
-        image: k8s.gcr.io/busybox
+        image: registry.k8s.io/busybox # updated after publication (previously used k8s.gcr.io/busybox)
         command:
         - "/bin/sh"
         args:

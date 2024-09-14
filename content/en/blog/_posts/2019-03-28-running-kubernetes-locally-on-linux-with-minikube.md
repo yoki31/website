@@ -1,8 +1,9 @@
 ---                                           
 title: 'Running Kubernetes locally on Linux with Minikube - now with Kubernetes 1.14 support'                                                           
-date: 2019-03-28                                  
+date: 2019-03-28
+author: >
+  [Ihor Dvoretskyi](https://twitter.com/idvoretskyi) (Cloud Native Computing Foundation)
 ---
-**Author**: [Ihor Dvoretskyi](https://twitter.com/idvoretskyi), Developer Advocate, Cloud Native Computing Foundation
 
 <center>{{<figure width="600" src="/images/blog/2019-03-28-running-kubernetes-locally-on-linux-with-minikube/ihor-dvoretskyi-1470985-unsplash.jpg">}}</center>
 
@@ -80,7 +81,7 @@ In order to manage the Kubernetes cluster, we need to install [kubectl](https://
 The recommended way to install it on Linux is to download the pre-built binary and move it to a directory under the `$PATH`.
 
 ```shell
-curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl \
+curl -LO https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl \
     && sudo install kubectl /usr/local/bin && rm kubectl
 ```
 

@@ -52,7 +52,7 @@ Tim GitHub dan berkas OWNERS.
 Terdapat dua kategori tim dalam SIG Docs [tim (_teams_)](https://github.com/orgs/kubernetes/teams?query=sig-docs) dalam GitHub:
 
 - `@sig-docs-{language}-owners` merupakan pemberi persetujuan (_approver_) dan pemimpin (_lead_)
-- `@sig-docs-{language}-reviewers` merupakan pengulas (_reviewer_)
+- `@sig-docs-{language}-reviews` merupakan pengulas (_reviewer_)
 
 Setiap tim dapat direferensikan dengan `@name` mereka dalam komen GitHub untuk berkomunikasi dengan setiap orang di dalam grup.
 
@@ -65,14 +65,14 @@ otomatisasi menggunakan informasi dari berkas `OWNERS`.
 Proyek Kubernetes menggunakan perangkat otomatisasi yang disebut prow untuk melakukan automatisasi
 yang terkait dengan isu dan _pull request_ dalam GitHub.
 [Repositori situs web Kubernetes](https://github.com/kubernetes/website) menggunakan
-dua buah [prow _plugin_](https://github.com/kubernetes/test-infra/tree/master/prow/plugins):
+dua buah [prow _plugin_](https://github.com/kubernetes-sigs/prow/tree/main/pkg/plugins)):
 
 - blunderbuss
 - approve
 
 Kedua _plugin_ menggunakan berkas
-[OWNERS](https://github.com/kubernetes/website/blob/master/OWNERS) dan
-[OWNERS_ALIASES](https://github.com/kubernetes/website/blob/master/OWNERS_ALIASES)
+[OWNERS](https://github.com/kubernetes/website/blob/main/OWNERS) dan
+[OWNERS_ALIASES](https://github.com/kubernetes/website/blob/main/OWNERS_ALIASES)
 dalam level teratas dari repositori GitHub `kubernetes/website` untuk mengontrol
 bagaimana prow bekerja di dalam repositori.
 

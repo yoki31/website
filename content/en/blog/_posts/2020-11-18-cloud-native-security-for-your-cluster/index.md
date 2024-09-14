@@ -3,9 +3,9 @@ layout: blog
 title: "Cloud native security for your clusters"
 date: 2020-11-18
 slug: cloud-native-security-for-your-clusters
+author: >
+  [Pushkar Joglekar](https://twitter.com/pudijoglekar)
 ---
-
-**Author**: [Pushkar Joglekar](https://twitter.com/pudijoglekar)
 
 Over the last few years a small, security focused community has been working diligently to deepen our understanding of security, given the evolving cloud native infrastructure and corresponding iterative deployment practices. To enable sharing of this knowledge with the rest of the community, members of [CNCF SIG Security](https://github.com/cncf/sig-security) (a group which reports into [CNCF TOC](https://github.com/cncf/toc#sigs) and who are friends with [Kubernetes SIG Security](https://github.com/kubernetes/community/tree/master/sig-security)) led by Emily Fox, collaborated on a whitepaper outlining holistic cloud native security concerns and best practices. After over 1200 comments, changes, and discussions from 35 members across the world, we are proud to share [cloud native security whitepaper v1.0](https://www.cncf.io/blog/2020/11/18/announcing-the-cloud-native-security-white-paper) that serves as essential reading for security leadership in enterprises, financial and healthcare industries, academia, government, and non-profit organizations.
 
@@ -18,9 +18,9 @@ The paper attempts to _not_ focus on any specific [cloud native project](https:/
 
 ## Kubernetes native security controls
 When using Kubernetes as a workload orchestrator, some of the security controls this version of the whitepaper recommends are:
-* [Pod Security Policies](/docs/concepts/policy/pod-security-policy/): Implement a single source of truth for “least privilege” workloads across the entire cluster
+* [Pod Security Policies](/docs/concepts/security/pod-security-policy/): Implement a single source of truth for “least privilege” workloads across the entire cluster
 * [Resource requests and limits](/docs/concepts/configuration/manage-resources-containers/#requests-and-limits): Apply requests (soft constraint) and limits (hard constraint) for shared resources such as memory and CPU
-* [Audit log analysis](/docs/tasks/debug-application-cluster/audit/): Enable Kubernetes API auditing and filtering for security relevant events
+* [Audit log analysis](/docs/tasks/debug/debug-cluster/audit/): Enable Kubernetes API auditing and filtering for security relevant events
 * [Control plane authentication and certificate root of trust](/docs/concepts/architecture/control-plane-node-communication/): Enable mutual TLS authentication with a trusted CA for communication within the cluster
 * [Secrets management](/docs/concepts/configuration/secret/): Integrate with a built-in or external secrets store
 

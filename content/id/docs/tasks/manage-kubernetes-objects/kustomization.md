@@ -80,10 +80,10 @@ Isinya seperti di bawah ini:
 apiVersion: v1
 data:
   application.properties: |
-    FOO=Bar
+    FOO: Bar
 kind: ConfigMap
 metadata:
-  name: example-configmap-1-8mbdf7882g
+  name: example-configmap-1-42cfbf598f
 ```
 
 ConfigMap juga dapat dibangkitkan dari pasangan _key-value_ literal. Untuk membangkitkan secara literal, tambahkan entri pada daftar `literals` di `configMapGenerator`.
@@ -118,7 +118,7 @@ metadata:
 #### secretGenerator
 
 Kamu dapat membangkitkan Secret dari berkas atau pasangan _key-value_ literal. Untuk membangkitkan dari berkas, tambahkan entri pada daftar `files` di `secretGenerator`.
-Contoh di bawah ini membangkitkan Secret dengan data dari berkas: 
+Contoh di bawah ini membangkitkan Secret dengan data dari berkas:
 
 ```shell
 # Membuat berkas password.txt
@@ -719,14 +719,14 @@ _field_ lainnya yang bersinggungan di dalam **overlay** berbeda. Di bawah ini me
 ```shell
 mkdir dev
 cat <<EOF > dev/kustomization.yaml
-bases:
+resources:
 - ../base
 namePrefix: dev-
 EOF
 
 mkdir prod
 cat <<EOF > prod/kustomization.yaml
-bases:
+resources:
 - ../base
 namePrefix: prod-
 EOF
@@ -837,5 +837,3 @@ deployment.apps "dev-my-nginx" deleted
 * [Buku Kubectl](https://kubectl.docs.kubernetes.io)
 * [Rujukan Perintah Kubectl](/docs/reference/generated/kubectl/kubectl-commands/)
 * [Rujukan API Kubernetes](/docs/reference/generated/kubernetes-api/{{< param "version" >}}/)
-
-

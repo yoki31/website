@@ -3,9 +3,10 @@ layout: blog
 title: 'Kubernetes 1.20: The Raddest Release'
 date: 2020-12-08
 slug: kubernetes-1-20-release-announcement
+evergreen: true
+author: >
+  [Kubernetes 1.20 Release Team](https://github.com/kubernetes/sig-release/blob/master/releases/release-1.20/release_team.md)
 ---
-
-**Authors:** [Kubernetes 1.20 Release Team](https://github.com/kubernetes/sig-release/blob/master/releases/release-1.20/release_team.md)
 
 We’re pleased to announce the release of Kubernetes 1.20, our third and final release of 2020! This release consists of 42 enhancements: 11 enhancements have graduated to stable, 15 enhancements are moving to beta, and 16 enhancements are entering alpha.
 
@@ -31,7 +32,7 @@ The `kubectl alpha debug` features graduates to beta in 1.20, becoming `kubectl 
 
 Note that as a new built-in command, `kubectl debug` takes priority over any kubectl plugin named “debug”. You must rename the affected plugin.
 
-Invocations using `kubectl alpha debug` are now deprecated and will be removed in a subsequent release. Update your scripts to use `kubectl debug`. For more information about `kubectl debug`, see [Debugging Running Pods](https://kubernetes.io/docs/tasks/debug-application-cluster/debug-running-pod/).
+Invocations using `kubectl alpha debug` are now deprecated and will be removed in a subsequent release. Update your scripts to use `kubectl debug`. For more information about `kubectl debug`, see [Debugging Running Pods](https://kubernetes.io/docs/tasks/debug/debug-application/debug-running-pod/).
 
 ### Beta: API Priority and Fairness
 

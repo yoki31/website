@@ -1,6 +1,6 @@
 ---
-
-
+# reviewers:
+# - erictune
 title: 초기화 컨테이너
 content_type: concept
 weight: 40
@@ -8,7 +8,7 @@ weight: 40
 
 <!-- overview -->
 이 페이지는 초기화 컨테이너에 대한 개요를 제공한다. 초기화 컨테이너는
-{{< glossary_tooltip text="파드" term_id="pod" >}}의 앱 컨테이너들이 실행되기 전에 실행되는 특수한 컨테이너이며, 앱 이미지에는 없는
+{{< glossary_tooltip text="파드" term_id="pod" >}}의 앱 컨테이너들이 실행되기 전에 실행되는 특수한 컨테이너이다. 초기화 컨테이너는 앱 이미지에는 없는
 유틸리티 또는 설정 스크립트 등을 포함할 수 있다.
 
 초기화 컨테이너는 `containers` 배열(앱 컨테이너를 기술하는)과 나란히
@@ -115,7 +115,7 @@ kind: Pod
 metadata:
   name: myapp-pod
   labels:
-    app: myapp
+    app.kubernetes.io/name: MyApp
 spec:
   containers:
   - name: myapp-container
@@ -159,7 +159,7 @@ kubectl describe -f myapp.yaml
 Name:          myapp-pod
 Namespace:     default
 [...]
-Labels:        app=myapp
+Labels:        app.kubernetes.io/name=MyApp
 Status:        Pending
 [...]
 Init Containers:
@@ -186,8 +186,8 @@ Events:
   16s          16s         1        {default-scheduler }                                              Normal        Scheduled     Successfully assigned myapp-pod to 172.17.4.201
   16s          16s         1        {kubelet 172.17.4.201}    spec.initContainers{init-myservice}     Normal        Pulling       pulling image "busybox"
   13s          13s         1        {kubelet 172.17.4.201}    spec.initContainers{init-myservice}     Normal        Pulled        Successfully pulled image "busybox"
-  13s          13s         1        {kubelet 172.17.4.201}    spec.initContainers{init-myservice}     Normal        Created       Created container with docker id 5ced34a04634; Security:[seccomp=unconfined]
-  13s          13s         1        {kubelet 172.17.4.201}    spec.initContainers{init-myservice}     Normal        Started       Started container with docker id 5ced34a04634
+  13s          13s         1        {kubelet 172.17.4.201}    spec.initContainers{init-myservice}     Normal        Created       Created container init-myservice
+  13s          13s         1        {kubelet 172.17.4.201}    spec.initContainers{init-myservice}     Normal        Started       Started container init-myservice
 ```
 
 파드의 초기화 컨테이너의 상태를 보기 위해, 다음을 실행한다.
@@ -283,7 +283,7 @@ myapp-pod   1/1       Running   0          9m
 초기화 컨테이너들이 실패를 영원히 지속하는 상황을 방지하기 위해서
 파드의 `activeDeadlineSeconds`를 사용한다.
 Active deadline은 초기화 컨테이너를 포함한다.
-그러나 사용자가 애플리케이션을 잡(job)으로 배포한 경우 `activeDeadlineSeconds`를 사용하길 추천한다. 왜냐하면, `activeDeadlineSeconds`는 초기화 컨테이너가 완료된 이후에도 영향을 주기 때문이다.
+그러나 팀에서 애플리케이션을 잡(job)으로 배포한 경우에만 `activeDeadlineSeconds`를 사용하길 추천한다. 왜냐하면, `activeDeadlineSeconds`는 초기화 컨테이너가 완료된 이후에도 영향을 주기 때문이다.
 이미 정상적으로 동작하고 있는 파드도 `activeDeadlineSeconds`를 설정한 경우 종료(killed)될 수 있다.
 
 파드 내의 각 앱과 초기화 컨테이너의 이름은 유일해야 한다. 어떤
@@ -332,4 +332,5 @@ Active deadline은 초기화 컨테이너를 포함한다.
 ## {{% heading "whatsnext" %}}
 
 * [초기화 컨테이너를 가진 파드 생성하기](/ko/docs/tasks/configure-pod-container/configure-pod-initialization/#초기화-컨테이너를-갖는-파드-생성)
-* [초기화 컨테이너 디버깅](/ko/docs/tasks/debug-application-cluster/debug-init-containers/) 알아보기
+* [초기화 컨테이너 디버깅](/ko/docs/tasks/debug/debug-application/debug-init-containers/) 알아보기
+

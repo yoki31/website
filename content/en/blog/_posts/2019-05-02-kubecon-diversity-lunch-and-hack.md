@@ -2,9 +2,10 @@
 title: "Join us for the 2019 KubeCon Diversity Lunch & Hack"
 date: 2019-05-02
 slug: kubecon-diversity-lunch-and-hack
+evergreen: false
+author: >
+  Kiran Oliver (The New Stack)
 ---
-
-**Authors:** Kiran Oliver, Podcast Producer, The New Stack
 
 Join us for the 2019 KubeCon Diversity Lunch & Hack: Building Tech Skills & An Inclusive Community - Sponsored by Google Cloud and VMware
 
@@ -36,4 +37,4 @@ To make this all possible, we need you. Yes, you, to register. As much as we lov
 
 We look forward to seeing you!
 
-_Special thanks to [Leah Petersen](https://www.linkedin.com/in/leahstunts/), [Sarah Conway](https://www.linkedin.com/in/sarah-conway-6166151/) and [Paris Pittman](https://www.linkedin.com/in/parispittman/) for their help in editing this post._ 
+_Special thanks to [Leah Petersen](https://www.linkedin.com/in/leahstunts/), [Sarah Conway](https://www.linkedin.com/in/sarah-conway-6166151/) and [Paris Pittman](https://www.linkedin.com/in/parispittman/) for their help in editing this post._

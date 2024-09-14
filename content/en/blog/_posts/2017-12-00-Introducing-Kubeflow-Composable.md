@@ -3,11 +3,10 @@ title: " Introducing Kubeflow - A Composable, Portable, Scalable ML Stack Built 
 date: 2017-12-21
 slug: introducing-kubeflow-composable
 url: /blog/2017/12/Introducing-Kubeflow-Composable
+author: >
+  Jeremy Lewi (Google),
+  David Aronchick (Google)
 ---
-
-**_Today’s post is by David Aronchick and Jeremy Lewi, a PM and Engineer on the Kubeflow project, a new open source GitHub repo dedicated to making using machine learning (ML) stacks on Kubernetes easy, fast and extensible._**  
-
-
 
 ## Kubernetes and Machine Learning
 Kubernetes has quickly become the hybrid solution for deploying complicated workloads anywhere. While it started with just stateless services, customers have begun to move complex workloads to the platform, taking advantage of rich APIs, reliability and performance provided by Kubernetes. One of the fastest growing use cases is to use Kubernetes as the deployment platform of choice for machine learning.  
@@ -127,13 +126,13 @@ Note how we set those parameters so they are used only when you deploy to GKE. Y
 
 After training, you [export your model](https://www.tensorflow.org/serving/serving_basic) to a serving location.  
 
-Kubeflow also includes a serving package as well. In a separate example, we trained a standard Inception model, and stored the trained model in a bucket we’ve created called ‘gs://kubeflow-models’ with the path ‘/inception’.  
+Kubeflow also includes a serving package as well.  
 
 To deploy a the trained model for serving, execute the following:  
 
 ```  
      ks generate tf-serving inception --name=inception  
-     ---namespace=default --model\_path=gs://kubeflow-models/inception  
+     ---namespace=default --model\_path=gs://$bucket_name/$model_loc
      ks apply gke -c inception  
 ```  
 
@@ -168,5 +167,6 @@ And we’re just getting started! We would love for you to help. How you might a
 - Please download and run kubeflow, and submit bugs!
 Thank you for your support so far, we could not be more excited!  
 
-_Jeremy Lewi & David Aronchick_
-Google
+
+Note:
+* This article was amended in June 2023 to update the trained model bucket location.
